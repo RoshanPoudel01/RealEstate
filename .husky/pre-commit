@@ -1,0 +1,28 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+GREEN='\033[0;32m'
+RED='\033[0;31m'
+NC='\033[0m'
+
+echo "${GREEN}- - - - - - - - - - - - - - - - - - - - - - - - - - - -${NC}"
+echo "${GREEN}Compiling TYPESCRIPT: 🚀 💡 ${NC}"
+yarn tsc --noEmit || {
+    echo "${RED} TYPESCRIPT Compile failed: 🚨 🤡 🚨  ${NC}"
+    exit 1
+}
+echo "${GREEN}Compile success: ✅ 💸 ${NC}"
+echo "${GREEN}- - - - - - - - - - - - - - - - - - - - - - - - - - - -${NC}"
+# Running this command on windows to stop excessive output
+# https://github.com/okonet/lint-staged/issues/1164
+if [ "$OSTYPE" == "msys" ]; then
+    exec >/dev/console 2>&1
+fi
+echo "${GREEN}- - - - - - - - - - - - - - - - - - - - - - - - - - - -${NC}"
+echo "${GREEN}Linting files: 🚚 📝 ${NC}"
+yarn lint-staged || {
+    echo "${RED}Linting failed: 🔥 🤡💩 🔥 ${NC}"
+    exit 1
+}
+echo "${GREEN}Linting success: 🍻 🎉 ${NC}"
+echo "${GREEN}- - - - - - - - - - - - - - - - - - - - - - - - - - - -${NC}"
