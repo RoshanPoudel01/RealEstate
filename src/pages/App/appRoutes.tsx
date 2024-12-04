@@ -1,5 +1,5 @@
-import { PageNotFound } from "../../components/Common/PageNotFound";
-import AdminWrapper from "../../components/Wrapper/AdminWrapper";
+import { PageNotFound } from "@realState/components/Common/PageNotFound";
+import AdminWrapper from "@realState/components/Wrapper/AdminWrapper";
 import Dashboard from "../Admin/Dashboard";
 import Login from "../Admin/Login";
 import { NAVIGATION_ROUTES } from "./navigationRoutes";

@@ -1,26 +1,27 @@
-import { Box, Flex } from "@chakra-ui/react";
+import { Container, Flex } from "@chakra-ui/react";
 
-import { Suspense, useEffect, useMemo, useState } from "react";
+import { Suspense, useState } from "react";
 import { Outlet } from "react-router-dom";
 
-import useWindowSize from "../../hooks/useWindowResize";
-import { colorScheme } from "../../theme/colorScheme";
+import Loader from "@realState/utils/Loader";
 import ErrorBoundary from "../ErrorBoundry";
+import Navbar from "./Navbar";
+import Sidebar from "./Sidebar";
 
 const sidebarAnimate = "all .25s ease";
-const largeSidebarWidth = 290;
-const smallSidebarWidth = 64;
+// const largeSidebarWidth = 290;
+// const smallSidebarWidth = 64;
 
 const AdminWrapper: React.FC = () => {
-  const { width } = useWindowSize();
+  // const { width } = useWindowSize();
 
-  const [open, setOpen] = useState(true);
+  // const [open, setOpen] = useState(true);
   //   const [isHovered, setIsHovered] = useState(false);
 
-  const sidebarWidth = useMemo(
-    () => (open ? largeSidebarWidth : smallSidebarWidth),
-    [open]
-  );
+  // const sidebarWidth = useMemo(
+  //   () => (open ? largeSidebarWidth : smallSidebarWidth),
+  //   [open]
+  // );
 
   //   const handleDrawerToggle = () => {
   //     setOpen((oldState) => !oldState);
@@ -38,63 +39,61 @@ const AdminWrapper: React.FC = () => {
   //     }
   //   };
 
-  useEffect(() => {
-    if (width < 850) {
-      setOpen(false);
-    } else {
-      setOpen(true);
-    }
-    // setIsHovered(false);
-  }, [width]);
+  // useEffect(() => {
+  //   if (width < 850) {
+  //     setOpen(false);
+  //   } else {
+  //     setOpen(true);
+  //   }
+  //   // setIsHovered(false);
+  // }, [width]);
 
+  const sidebarWidth = "250px";
+  const [open, setOpen] = useState(true);
   return (
     <ErrorBoundary>
       <Flex>
-        {/* <Sidebar
-          width={isHovered ? largeSidebarWidth : sidebarWidth}
-          isCollapsed={!open}
-          animate={sidebarAnimate}
-          onEnterSidebar={onEnterSidebar}
-          onExitSidebar={onExitSidebar}
-          isHovered={isHovered}
-        /> */}
-        <Box
+        <Sidebar
+          // width={isHovered ? largeSidebarWidth : sidebarWidth}
+          // isCollapsed={!open}
+          // animate={sidebarAnimate}
+          // onEnterSidebar={onEnterSidebar}
+          // onExitSidebar={onExitSidebar}
+          // isHovered={isHovered}
+          maxW={sidebarWidth}
+          w={sidebarWidth}
+          hideBelow={"md"}
+        />
+        <Container
           flexGrow={1}
-          ml={sidebarWidth + "px"}
+          px={{ base: 2, md: 4 }}
+          ml={{ md: sidebarWidth }}
           transition={sidebarAnimate}
           backgroundColor={"#FFFFFF"}
           zIndex={0}
           overflowX="hidden"
         >
           {/* <AppBar zIndex={1} flex={1} position="sticky" mb={0}>
-            <Header
-              width={open ? largeSidebarWidth : sidebarWidth}
-              handleDrawerToggle={handleDrawerToggle}
-              isDrawerOpen={open}
-            />
-          </AppBar> */}
-          <Suspense
-            fallback={
-              <Flex
-                justifyContent={"center"}
-                alignItems="center"
-                height={"90vh"}
-              >
-                {/* <Image maxHeight={"50vh"} src={imageAssets.Loader} /> */}
-              </Flex>
-            }
-          >
-            <Box
+              <Header
+                width={open ? largeSidebarWidth : sidebarWidth}
+                handleDrawerToggle={handleDrawerToggle}
+                isDrawerOpen={open}
+              />
+            </AppBar> */}
+          <Suspense fallback={<Loader />}>
+            <Flex
+              flexDir={"column"}
+              gap={4}
               minHeight={"80vh"}
-              px={8}
+              px={{ base: 2, md: 8 }}
               py={8}
-              bg={colorScheme.primary_50}
               borderRadius={"30px"}
             >
+              <Navbar />
               <Outlet />
-            </Box>
+            </Flex>
           </Suspense>
-        </Box>
+        </Container>
       </Flex>
     </ErrorBoundary>
   );

@@ -8,10 +8,10 @@ import { ErrorBoundary } from "react-error-boundary";
 import { QueryCache, QueryClient, QueryClientProvider } from "react-query";
 import { BrowserRouter } from "react-router-dom";
 import { toastFail } from "./components/Toast";
-import { Provider } from "./components/ui/provider";
 import { api } from "./services/service-api";
 import TokenService, { authTokenKey } from "./services/service-token";
 import { globalStyles } from "./theme/global";
+import { Provider } from "./components/ui/provider";
 
 const ErrorFallback = () => {
   return (

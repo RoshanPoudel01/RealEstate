@@ -1,12 +1,12 @@
+import { Button } from "@realState/components/ui/button";
+import PageHeader from "@realState/utils/PageHeader";
+
 const Dashboard = () => {
   return (
-    <h1
-      style={{
-        color: "purple",
-      }}
-    >
-      Welcome To the project
-    </h1>
+    <>
+      <PageHeader heading="Dashboard" description="Welcome to the dashboard" />
+      <Button>Click Me</Button>
+    </>
   );
 };
 
