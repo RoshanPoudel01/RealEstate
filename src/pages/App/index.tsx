@@ -1,12 +1,14 @@
 import { Flex, Spinner } from "@chakra-ui/react";
 
 import { Suspense, useEffect } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Outlet, Route, Routes } from "react-router-dom";
 import {
   useAuthentication,
   useLogoutMutation,
 } from "../../services/service-auth";
+import Login from "../Admin/Login";
 import { appRoutes, userRoutes } from "./appRoutes";
+import { NAVIGATION_ROUTES } from "./navigationRoutes";
 
 export default function App() {
   const {
@@ -90,14 +92,14 @@ export default function App() {
             </>
           ) : (
             <>
-              {/* <Route path="/" element={<Outlet />}>
+              <Route path="/" element={<Outlet />}>
                 <Route index element={<Login />} />
                 <Route path={NAVIGATION_ROUTES.LOGIN2} element={<Login />} />
               </Route>
               <Route
                 path="*"
                 element={<Navigate to={NAVIGATION_ROUTES.LOGIN} replace />}
-              /> */}
+              />
               {userRoutes.map((route, index) => {
                 return (
                   <Route key={index} path={route.path} element={route.element}>

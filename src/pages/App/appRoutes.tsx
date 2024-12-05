@@ -37,6 +37,7 @@ export const userRoutes = [
         path: NAVIGATION_ROUTES.PROPERTIES,
         element: <Properties />,
       },
+
       {
         path: "*",
         element: <PageNotFound />,

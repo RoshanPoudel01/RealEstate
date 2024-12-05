@@ -1,3 +1,3 @@
 import { useStoreHeaderData } from "./headerSore";
-
-export { useStoreHeaderData };
+import { useStoreInitData } from "./initStore";
+export { useStoreHeaderData, useStoreInitData };

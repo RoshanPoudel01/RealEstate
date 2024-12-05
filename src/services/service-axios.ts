@@ -18,7 +18,7 @@ const RealStateHttpClient = axios.create({
  * Pass Integito API Key in Header
  */
 RealStateHttpClient.interceptors.request.use(async (config) => {
-  const token = TokenService.getToken()?.accessToken;
+  const token = TokenService.getToken()?.token;
   if (config && config.headers) {
     if (token && config.headers["Authorization"] !== "") {
       config.headers["Authorization"] = "Bearer " + token;

@@ -4,14 +4,18 @@ import { HelmetProvider } from "react-helmet-async";
 import { Toaster } from "react-hot-toast";
 
 import { Button } from "@chakra-ui/react";
+import {
+  QueryCache,
+  QueryClient,
+  QueryClientProvider,
+} from "@tanstack/react-query";
 import { ErrorBoundary } from "react-error-boundary";
-import { QueryCache, QueryClient, QueryClientProvider } from "react-query";
 import { BrowserRouter } from "react-router-dom";
 import { toastFail } from "./components/Toast";
+import { Provider } from "./components/ui/provider";
 import { api } from "./services/service-api";
 import TokenService, { authTokenKey } from "./services/service-token";
 import { globalStyles } from "./theme/global";
-import { Provider } from "./components/ui/provider";
 
 const ErrorFallback = () => {
   return (
@@ -43,7 +47,7 @@ const queryClient = new QueryClient({
         (err.request?.status === 401 || err.request?.status === 500) &&
         err.config?.url?.includes(api.auth.refreshToken)
       ) {
-        queryClient.setQueryData(authTokenKey, () => false);
+        queryClient.setQueryData([authTokenKey], () => false);
         setTimeout(() => {
           TokenService.clearToken();
           queryClient.clear();
