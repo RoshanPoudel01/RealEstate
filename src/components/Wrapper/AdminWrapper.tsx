@@ -5,7 +5,7 @@ import { Outlet } from "react-router-dom";
 
 import Loader from "@realState/utils/Loader";
 import ErrorBoundary from "../ErrorBoundry";
-import Navbar from "./Navbar";
+import Header from "./Header";
 import Sidebar from "./Sidebar";
 
 const sidebarAnimate = "all .25s ease";
@@ -89,7 +89,7 @@ const AdminWrapper: React.FC = () => {
               py={8}
               borderRadius={"30px"}
             >
-              <Navbar />
+              <Header />
               <Outlet />
             </Flex>
           </Suspense>

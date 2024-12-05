@@ -1,22 +1,21 @@
 import { Flex, Spinner } from "@chakra-ui/react";
 
 import { Suspense, useEffect } from "react";
-import { Navigate, Outlet, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import {
   useAuthentication,
   useLogoutMutation,
 } from "../../services/service-auth";
-import Login from "../Admin/Login";
-import { appRoutes } from "./appRoutes";
-import { NAVIGATION_ROUTES } from "./navigationRoutes";
+import { appRoutes, userRoutes } from "./appRoutes";
 
 export default function App() {
   const {
-    data: isAuthenticated,
+    // data: isAuthenticated,
     isLoading: isAuthLoading,
     refetch: checkTokenAndRefresh,
   } = useAuthentication();
 
+  const isAuthenticated = true;
   const { mutate: logoutUser } = useLogoutMutation();
 
   //   const {
@@ -58,7 +57,7 @@ export default function App() {
       </Flex>
     );
   }
-
+  console.log(isAuthenticated);
   return (
     <Suspense
       fallback={
@@ -71,30 +70,51 @@ export default function App() {
         <Routes>
           {!isAuthenticated ? (
             <>
-              {appRoutes.map((route, index) => (
-                <Route key={index} path={route.path} element={route.element}>
-                  {route.children &&
-                    route.children.map((childRoute, childIndex) => (
-                      <Route
-                        key={childIndex}
-                        path={childRoute.path}
-                        element={childRoute.element}
-                        {...(childRoute.index && { index: childRoute.index })}
-                      />
-                    ))}
-                </Route>
-              ))}
+              {appRoutes.map((route, index) => {
+                return (
+                  <Route key={index} path={route.path} element={route.element}>
+                    {route.children &&
+                      route.children.map((childRoute, childIndex) => (
+                        <Route
+                          key={childIndex}
+                          path={childRoute?.path}
+                          element={childRoute?.element}
+                          {...(childRoute?.index && {
+                            index: childRoute.index,
+                          })}
+                        />
+                      ))}
+                  </Route>
+                );
+              })}
             </>
           ) : (
             <>
-              <Route path="/" element={<Outlet />}>
+              {/* <Route path="/" element={<Outlet />}>
                 <Route index element={<Login />} />
                 <Route path={NAVIGATION_ROUTES.LOGIN2} element={<Login />} />
               </Route>
               <Route
                 path="*"
                 element={<Navigate to={NAVIGATION_ROUTES.LOGIN} replace />}
-              />
+              /> */}
+              {userRoutes.map((route, index) => {
+                return (
+                  <Route key={index} path={route.path} element={route.element}>
+                    {route.children &&
+                      route.children.map((childRoute, childIndex) => (
+                        <Route
+                          key={childIndex}
+                          path={childRoute?.path}
+                          element={childRoute?.element}
+                          {...(childRoute?.index && {
+                            index: childRoute.index,
+                          })}
+                        />
+                      ))}
+                  </Route>
+                );
+              })}
             </>
           )}
         </Routes>

@@ -1,26 +1,22 @@
-import { Flex, Stack, Text } from "@chakra-ui/react";
-import { useStoreHeaderData } from "@realState/store";
+import { Flex, HStack, Image } from "@chakra-ui/react";
+import { imageAssets } from "@realState/assets/images";
+import { NAVIGATION_ROUTES } from "@realState/pages/App/navigationRoutes";
+import { NavLink } from "react-router-dom";
 import MobileNav from "./MobileNav";
-import UserMenu from "./UserMenu";
 
 const Navbar = () => {
-  const { headerData } = useStoreHeaderData();
-
   return (
     <Flex w={"full"} justify={"space-between"}>
+      <HStack
+        textAlign={{ base: "center", md: "start" }}
+        justifyContent={"space-between"}
+      >
+        <Image src={imageAssets.Logo} height={"50px"} />
+        <HStack>
+          <NavLink to={NAVIGATION_ROUTES.PROPERTIES}>Properties</NavLink>
+        </HStack>
+      </HStack>
       <MobileNav />
-      <Stack gap={0} textAlign={{ base: "center", md: "start" }}>
-        <Text
-          fontSize={{ base: "xl", sm: "2xl", lg: "4xl" }}
-          fontWeight={"bold"}
-        >
-          {headerData?.heading}
-        </Text>
-        <Text color={"gray.500"} fontSize={{ base: "sm", md: "md" }}>
-          {headerData?.description}
-        </Text>
-      </Stack>
-      <UserMenu />
     </Flex>
   );
 };
