@@ -1,7 +1,9 @@
 import {
+  Building,
   House,
   Images,
   Package,
+  QuestionMark,
   Rectangle,
   SquaresFour,
   Users,
@@ -11,33 +13,43 @@ export const sidebarItems = [
   {
     title: "Dashboard",
     icon: <House />,
-    to: "/",
+    to: "/admin",
   },
   {
     title: "Sliders",
     icon: <Images />,
-    to: "/sliders",
+    to: "/admin/sliders",
   },
   {
     title: "Sections",
     icon: <Rectangle />,
-    to: "/sections",
+    to: "/admin/sections",
   },
 
   {
     title: "Category",
     icon: <SquaresFour />,
-    to: "/category",
+    to: "/admin/category",
   },
   {
     title: "Services",
     icon: <Package />,
-    to: "/services",
+    to: "/admin/services",
   },
 
   {
     title: "Teams",
     icon: <Users />,
-    to: "/teams",
+    to: "/admin/teams",
+  },
+  {
+    title: "Properties",
+    icon: <Building />,
+    to: "/admin/properties",
+  },
+  {
+    title: "FAQs",
+    icon: <QuestionMark />,
+    to: "/admin/faqs",
   },
 ];

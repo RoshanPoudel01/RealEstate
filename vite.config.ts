@@ -1,7 +1,6 @@
 import react from "@vitejs/plugin-react";
 import path from "path";
 import { defineConfig } from "vite";
-import checker from "vite-plugin-checker";
 import svgr from "vite-plugin-svgr";
 import tsconfigPaths from "vite-tsconfig-paths";
 
@@ -12,11 +11,11 @@ export default defineConfig(() => {
       svgr(),
       react(),
       tsconfigPaths(),
-      checker({
-        typescript: true,
-        eslint: { lintCommand: "eslint src" },
-        overlay: false,
-      }),
+      // checker({
+      //   typescript: true,
+      //   eslint: { lintCommand: "eslint src" },
+      //   overlay: false,
+      // }),
     ],
     publicDir: "public",
     resolve: {

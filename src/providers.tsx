@@ -13,7 +13,7 @@ import { ErrorBoundary } from "react-error-boundary";
 import { BrowserRouter } from "react-router-dom";
 import { toastFail } from "./components/Toast";
 import { Provider } from "./components/ui/provider";
-import { api } from "./services/service-api";
+
 import TokenService, { authTokenKey } from "./services/service-token";
 import { globalStyles } from "./theme/global";
 
@@ -42,10 +42,11 @@ const queryClient = new QueryClient({
   },
   queryCache: new QueryCache({
     onError: async (error) => {
+      const isAuthenticated = TokenService.isAuthenticated();
       const err = error as AxiosError;
       if (
         (err.request?.status === 401 || err.request?.status === 500) &&
-        err.config?.url?.includes(api.auth.refreshToken)
+        !isAuthenticated
       ) {
         queryClient.setQueryData([authTokenKey], () => false);
         setTimeout(() => {

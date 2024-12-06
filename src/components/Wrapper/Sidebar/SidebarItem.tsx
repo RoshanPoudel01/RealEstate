@@ -67,7 +67,9 @@ const SidebarItem: FC<ISidebarItemProps> = ({
             pathname.includes(item.to) ? activeBg ?? "gray.300" : "transparent"
           }
           p={3}
-          fontWeight={pathname.includes(item.to) || isOpen ? 500 : "normal"}
+          fontWeight={
+            pathname.includes(item.to.split("/")[2]) || isOpen ? 500 : "normal"
+          }
           justify={item.icon ? "space-between" : "center"}
           cursor={"pointer"}
           {...attributes}
@@ -98,7 +100,11 @@ const SidebarItem: FC<ISidebarItemProps> = ({
                 p={3}
                 gap={2}
                 key={index}
-                _currentPage={pathname === subItem.to ? active : {}}
+                _currentPage={
+                  pathname.split("/")[2] === subItem.to.split("/")[2]
+                    ? active
+                    : {}
+                }
                 asChild
                 onClick={onClick}
                 {...attributes}
@@ -125,7 +131,9 @@ const SidebarItem: FC<ISidebarItemProps> = ({
       <Flex
         p={3}
         h={"full"}
-        _currentPage={active}
+        _currentPage={
+          pathname.split("/")[2] === item.to.split("/")[2] ? active : {}
+        }
         w={"100%"}
         {...attributes}
         whiteSpace={"nowrap"}

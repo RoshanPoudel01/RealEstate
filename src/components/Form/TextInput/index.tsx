@@ -14,7 +14,6 @@ import {
 import { PasswordInput } from "@realState/components/ui/password-input";
 import { FC, ReactNode } from "react";
 import { Control, Controller } from "react-hook-form";
-
 interface ITextInputProps {
   name: string;
   control?: Control<any>;
@@ -75,7 +74,7 @@ const TextInput: FC<ITextInputProps & InputProps & TextareaProps> = ({
             >
               {type === "textarea" ? (
                 <Textarea
-                  size={"lg"}
+                  size={"xl"}
                   colorPalette={"primary"}
                   value={value}
                   onChange={onChange}

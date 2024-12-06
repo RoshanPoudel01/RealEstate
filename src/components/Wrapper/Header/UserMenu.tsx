@@ -1,5 +1,5 @@
 import { Icon } from "@chakra-ui/react";
-import { SignOut, User } from "@phosphor-icons/react";
+import { Gear, SignOut } from "@phosphor-icons/react";
 import { Avatar } from "@realState/components/ui/avatar";
 import {
   MenuContent,
@@ -32,11 +32,11 @@ const UserMenu = () => {
           p={2}
           alignContent={"center"}
         >
-          <Link to="/profile">
+          <Link to="/admin/settings">
             <Icon asChild boxSize={5} mr={2}>
-              <User />
+              <Gear />
             </Icon>
-            Profile
+            Settings
           </Link>
         </MenuItem>
         <MenuItem

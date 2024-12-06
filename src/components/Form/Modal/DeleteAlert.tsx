@@ -6,6 +6,7 @@ import {
   DialogBody,
   DialogCloseTrigger,
   DialogContent,
+  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogRoot,
@@ -37,6 +38,7 @@ const DeleteAlert: React.FC<IDeleteAlertProps> = ({
   open,
   setOpen,
 }) => {
+  console.log({ open });
   return (
     <DialogRoot
       role="alertdialog"
@@ -48,7 +50,12 @@ const DeleteAlert: React.FC<IDeleteAlertProps> = ({
     >
       <DialogTrigger asChild>
         {trigger ?? (
-          <IconButton size={"sm"} colorPalette={"red"} aria-label="Delete">
+          <IconButton
+            size={"sm"}
+            variant={"subtle"}
+            colorPalette={"red"}
+            aria-label="Delete"
+          >
             <Icon asChild boxSize={6} borderRadius={5}>
               <Trash />
             </Icon>
@@ -60,12 +67,16 @@ const DeleteAlert: React.FC<IDeleteAlertProps> = ({
           <DialogTitle>{heading ?? "Are you sure?"}</DialogTitle>
         </DialogHeader>
         <DialogBody>
-          {description ??
-            "Are you sure you want to delete this item? This cannot be undone."}
+          <DialogDescription>
+            {description ??
+              "Are you sure you want to delete this item? This cannot be undone."}
+          </DialogDescription>
         </DialogBody>
         <DialogFooter>
           <DialogActionTrigger asChild>
-            <Button variant="outline">{cancelText ?? "Cancel"}</Button>
+            <Button colorPalette={"gray"} variant="outline">
+              {cancelText ?? "Cancel"}
+            </Button>
           </DialogActionTrigger>
           <Button
             colorPalette="red"

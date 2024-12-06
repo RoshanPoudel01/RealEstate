@@ -69,7 +69,6 @@ const AdminWrapper: React.FC = () => {
           px={{ base: 2, md: 4 }}
           ml={{ md: sidebarWidth }}
           transition={sidebarAnimate}
-          backgroundColor={"#FFFFFF"}
           zIndex={0}
           overflowX="hidden"
         >
@@ -83,10 +82,10 @@ const AdminWrapper: React.FC = () => {
           <Suspense fallback={<Loader />}>
             <Flex
               flexDir={"column"}
-              gap={4}
+              gap={12}
               minHeight={"80vh"}
               px={{ base: 2, md: 8 }}
-              py={8}
+              py={4}
               borderRadius={"30px"}
             >
               <Header />

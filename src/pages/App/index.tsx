@@ -1,18 +1,19 @@
 import { Flex, Spinner } from "@chakra-ui/react";
 
 import { Suspense, useEffect } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Outlet, Route, Routes } from "react-router-dom";
 import {
   useAuthentication,
   useLogoutMutation,
 } from "../../services/service-auth";
+import Login from "../Admin/Login";
 import { appRoutes, userRoutes } from "./appRoutes";
+import { NAVIGATION_ROUTES } from "./navigationRoutes";
 
 export default function App() {
   const {
     // data: isAuthenticated,
-    isLoading: isAuthLoading,
-    refetch: checkTokenAndRefresh,
+    isPending: isAuthLoading,
   } = useAuthentication();
 
   const isAuthenticated = false;
@@ -37,18 +38,18 @@ export default function App() {
     }
   }, [isAuthenticated]);
 
-  useEffect(() => {
-    let iID = null as null | NodeJS.Timeout;
-    if (isAuthenticated) {
-      iID = setInterval(() => checkTokenAndRefresh(), 30_000);
-    }
+  // useEffect(() => {
+  //   let iID = null as null | NodeJS.Timeout;
+  //   if (isAuthenticated) {
+  //     iID = setInterval(() => checkTokenAndRefresh(), 30_000);
+  //   }
 
-    return () => {
-      if (iID) {
-        clearInterval(iID);
-      }
-    };
-  }, [isAuthenticated, checkTokenAndRefresh]);
+  //   return () => {
+  //     if (iID) {
+  //       clearInterval(iID);
+  //     }
+  //   };
+  // }, [isAuthenticated, checkTokenAndRefresh]);
 
   if (isAuthLoading) {
     return (
@@ -67,7 +68,7 @@ export default function App() {
     >
       <>
         <Routes>
-          {isAuthenticated ? (
+          {isAuthenticated && (
             <>
               {appRoutes.map((route, index) => {
                 return (
@@ -87,35 +88,38 @@ export default function App() {
                 );
               })}
             </>
-          ) : (
-            <>
-              {/* <Route path="/" element={<Outlet />}>
-                <Route index element={<Login />} />
-                <Route path={NAVIGATION_ROUTES.LOGIN2} element={<Login />} />
-              </Route>
-              <Route
-                path="*"
-                element={<Navigate to={NAVIGATION_ROUTES.LOGIN} replace />}
-              /> */}
-              {userRoutes.map((route, index) => {
-                return (
-                  <Route key={index} path={route.path} element={route.element}>
-                    {route.children &&
-                      route.children.map((childRoute, childIndex) => (
-                        <Route
-                          key={childIndex}
-                          path={childRoute?.path}
-                          element={childRoute?.element}
-                          {...(childRoute?.index && {
-                            index: childRoute.index,
-                          })}
-                        />
-                      ))}
-                  </Route>
-                );
-              })}
-            </>
           )}
+          <>
+            {!isAuthenticated && (
+              <>
+                <Route path="/" element={<Outlet />}>
+                  <Route index element={<Login />} />
+                  <Route path={NAVIGATION_ROUTES.LOGIN2} element={<Login />} />
+                </Route>
+                <Route
+                  path="*"
+                  element={<Navigate to={NAVIGATION_ROUTES.LOGIN} replace />}
+                />
+              </>
+            )}
+            {userRoutes.map((route, index) => {
+              return (
+                <Route key={index} path={route.path} element={route.element}>
+                  {route.children &&
+                    route.children.map((childRoute, childIndex) => (
+                      <Route
+                        key={childIndex}
+                        path={childRoute?.path}
+                        element={childRoute?.element}
+                        {...(childRoute?.index && {
+                          index: childRoute.index,
+                        })}
+                      />
+                    ))}
+                </Route>
+              );
+            })}
+          </>
         </Routes>
       </>
     </Suspense>
