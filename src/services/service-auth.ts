@@ -18,7 +18,8 @@ export interface ILogin {
 }
 
 const initLogin = (data: ILogin) => {
-  return RealStateHttpClient.post(`${baseURL}/${api.auth.login}`, data);
+  console.log("here");
+  return RealStateHttpClient.post(api.auth.login, data);
 };
 
 const useLogin = () => {

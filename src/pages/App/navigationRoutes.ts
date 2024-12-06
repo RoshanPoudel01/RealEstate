@@ -3,4 +3,6 @@ export const NAVIGATION_ROUTES = {
   LOGIN: "/",
   LOGIN2: "/login",
   PROPERTIES: "/all-properties",
+  ABOUT: "/about-us",
+  HOME: "/home",
 };

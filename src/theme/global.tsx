@@ -16,7 +16,7 @@ const globalStyles = () => {
           min-height: 100%;
           font-family: "Mulish";
           scroll-behavior: smooth;
-          background: #fefefe;
+          background: #fff;
         }
         body {
           -moz-osx-font-smoothing: grayscale;

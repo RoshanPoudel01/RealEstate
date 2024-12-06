@@ -83,7 +83,6 @@ const LayoutWrapper: React.FC = () => {
               flexDir={"column"}
               gap={4}
               minHeight={"80vh"}
-              px={{ base: 2, md: 8 }}
               py={8}
               borderRadius={"30px"}
             >
