@@ -6,7 +6,7 @@ export default [
   {
     files: ["**/*.{js,mjs,cjs,ts,tsx,jsx}"],
     rules: {
-      // Disallow unused variables
+      // Treat unused variables as errors
       "no-unused-vars": "error",
       "@typescript-eslint/no-unused-vars": [
         "error",
@@ -14,14 +14,16 @@ export default [
           vars: "all",
           args: "after-used",
           ignoreRestSiblings: false,
+          varsIgnorePattern: "^_", // Optional: allow variables starting with _
+          argsIgnorePattern: "^_",
         },
       ],
 
-      // Disallow console.log statements
+      // Block console.log completely
       "no-console": [
         "error",
         {
-          allow: ["warn", "error"],
+          allow: ["warn", "error"], // No console methods allowed
         },
       ],
     },
