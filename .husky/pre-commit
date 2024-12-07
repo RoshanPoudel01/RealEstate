@@ -1,5 +1,4 @@
-#!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
+#!/bin/bash
 
 GREEN='\033[0;32m'
 RED='\033[0;31m'
@@ -13,13 +12,16 @@ yarn tsc --noEmit || {
 }
 echo "${GREEN}Compile success: ✅ 💸 ${NC}"
 echo "${GREEN}- - - - - - - - - - - - - - - - - - - - - - - - - - - -${NC}"
+
 # Running this command on windows to stop excessive output
 # https://github.com/okonet/lint-staged/issues/1164
 if [ "$OSTYPE" == "msys" ]; then
     exec >/dev/console 2>&1
 fi
+
 echo "${GREEN}- - - - - - - - - - - - - - - - - - - - - - - - - - - -${NC}"
 echo "${GREEN}Linting files: 🚚 📝 ${NC}"
+# Add explicit ESLint check for unused variables and console.log
 npx lint-staged || {
     echo "${RED}Linting failed: 🔥 🤡💩 🔥 ${NC}"
     exit 1
