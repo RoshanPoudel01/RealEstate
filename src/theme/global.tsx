@@ -1,20 +1,22 @@
 import { css, Global } from "@emotion/react";
+import Lexend from "@realState/assets/fonts/Lexend/static/Lexend-VariableFont_wght.ttf";
 
 const globalStyles = () => {
   return (
     <Global
       styles={() => css`
         @font-face {
-          font-family: "Mulish";
+          font-family: "Lexend";
           font-style: normal;
           font-weight: regular;
+          src: url(${Lexend}) format("truetype");
         }
         html,
         body {
           margin: 0;
           padding: 0;
           min-height: 100%;
-          font-family: "Mulish";
+          font-family: "Lexend";
           scroll-behavior: smooth;
           background: #fff;
         }
@@ -25,7 +27,7 @@ const globalStyles = () => {
           font-size: 14px;
           padding-top: 0px;
           margin: 0px;
-          font-family: "Mulish";
+          font-family: "Lexend";
         }
         * {
           box-sizing: border-box;

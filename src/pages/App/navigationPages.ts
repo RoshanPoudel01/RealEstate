@@ -9,6 +9,9 @@ const SERVICEFORM = lazy(() => import("@realState/pages/Admin/Services/Form"));
 const TEAMS = lazy(() => import("@realState/pages/Admin/Teams"));
 const TEAMFORM = lazy(() => import("@realState/pages/Admin/Teams/Form"));
 const SETTINGS = lazy(() => import("@realState/pages/Admin/Settings"));
+const PROPERTYPAGE = lazy(
+  () => import("@realState/pages/User/Properties/PropertyPage")
+);
 export const NAVIGATION_PAGES = {
   SLIDERS,
   SLIDERFORM,
@@ -19,4 +22,5 @@ export const NAVIGATION_PAGES = {
   TEAMS,
   TEAMFORM,
   SETTINGS,
+  PROPERTYPAGE,
 };

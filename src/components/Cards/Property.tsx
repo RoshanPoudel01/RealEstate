@@ -1,41 +1,51 @@
-import { Card, Stack } from "@chakra-ui/react";
+import { Box, HStack, Text } from "@chakra-ui/react";
 import LazyLoadImage from "../Image";
+import "./Propertycard.css";
 interface PropertyCardProps {
   img: string;
   title: string;
   price: string;
+  description: string;
+  address: string;
+  city: string;
+  status: string;
+  onClick?: () => void;
 }
-const PropertyCard = ({ img, title, price }: PropertyCardProps) => {
+
+const PropertyCard = ({
+  img,
+  title,
+  price,
+  description,
+  city,
+  address,
+  status,
+  onClick,
+}: PropertyCardProps) => {
   return (
-    <Card.Root border={"none"} borderRadius={"2px"}>
-      <Card.Body gap={6} display={"flex"} flexDir={"column"}>
+    <Box className="card" onClick={onClick}>
+      <Box
+        className="card__img--hover"
+        style={{ backgroundImage: `url(${img})` }}
+      >
         <LazyLoadImage
           src={img}
           alt={title}
-          borderRadius={"24px"}
-          //   height={"382px"}
-          w={"full"}
-          aspectRatio={4 / 3}
+          className="card__img"
+          height={"375px"}
+          width={"100%"}
         />
-        <Stack gap={2}>
-          <Card.Title
-            color={"#0E1735"}
-            fontSize={"24px"}
-            fontWeight={600}
-            lineHeight={"32px"}
-          >
-            {title}
-          </Card.Title>
-          <Card.Description
-            color={"#3C4563"}
-            fontSize={"20px"}
-            lineHeight={"32px"}
-          >
-            {price}
-          </Card.Description>
-        </Stack>
-      </Card.Body>
-    </Card.Root>
+        <Text className="card__status">{status}</Text>
+      </Box>
+      <Box className="card__info">
+        <Text className="card__category">{title}</Text>
+        <HStack justify={"space-between"}>
+          <Text className="card__title">{description}</Text>
+        </HStack>
+        <Text className="card__address">{`${address}, ${city}`}</Text>
+        <Text className="card__price">{price}</Text>
+      </Box>
+    </Box>
   );
 };
 

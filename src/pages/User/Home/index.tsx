@@ -6,7 +6,7 @@ import Featured from "./Sections/Featured";
 
 const Home = () => {
   return (
-    <Stack p={0}>
+    <Stack p={0} gap={5}>
       <Box position={"relative"}>
         <HStack gap={0}>
           <Box bg="#E4E3E8" height={"700px"} w={"900px"} />
@@ -40,7 +40,7 @@ const Home = () => {
           position={"absolute"}
           top={{
             base: "40%",
-            md: "45%",
+            md: "52%",
           }}
           left={"13%"}
           maxW={"550px"}

@@ -38,7 +38,6 @@ const DeleteAlert: React.FC<IDeleteAlertProps> = ({
   open,
   setOpen,
 }) => {
-  console.log({ open });
   return (
     <DialogRoot
       role="alertdialog"

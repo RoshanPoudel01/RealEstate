@@ -10,4 +10,5 @@ export const NAVIGATION_ROUTES = {
   SERVICES: "services",
   TEAMS: "teams",
   SETTINGS: "settings",
+  PROPERTY_DETAILS: "/property-details",
 };

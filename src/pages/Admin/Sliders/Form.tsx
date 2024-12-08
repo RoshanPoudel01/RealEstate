@@ -93,10 +93,6 @@ const SliderForm = () => {
   }, [isAddError, addError, isUpdateError, updateError]);
 
   const onSubmit = async (data: SliderFormValues) => {
-    console.log({
-      dirtyData: useGetDirtyData(formState, data),
-    });
-
     const formData = toFormData(id ? useGetDirtyData(formState, data) : data);
     if (removeImage) {
       formData.append("remove_image", "1");

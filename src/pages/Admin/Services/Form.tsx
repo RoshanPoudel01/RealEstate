@@ -100,10 +100,6 @@ const ServiceForm = () => {
   }, [isAddError, addError, isUpdateError, updateError]);
 
   const onSubmit = async (data: ServiceFormValues) => {
-    console.log({
-      dirtyData: useGetDirtyData(formState, data),
-    });
-
     const formData = toFormData(id ? useGetDirtyData(formState, data) : data);
     if (removeImage) {
       formData.append("remove_image", "1");

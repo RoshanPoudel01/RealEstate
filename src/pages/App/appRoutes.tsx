@@ -71,6 +71,7 @@ export const appRoutes = [
         path: NAVIGATION_ROUTES.SETTINGS,
         element: <NAVIGATION_PAGES.SETTINGS />,
       },
+
       {
         path: "*",
         element: <PageNotFound />,
@@ -100,7 +101,10 @@ export const userRoutes = [
         path: NAVIGATION_ROUTES.ABOUT,
         element: <About />,
       },
-
+      {
+        path: NAVIGATION_ROUTES.PROPERTY_DETAILS,
+        element: <NAVIGATION_PAGES.PROPERTYPAGE />,
+      },
       {
         path: "*",
         element: <PageNotFound />,

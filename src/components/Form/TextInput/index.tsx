@@ -2,6 +2,7 @@ import {
   Icon,
   Input,
   InputProps,
+  NativeSelectRootProps,
   Textarea,
   TextareaProps,
 } from "@chakra-ui/react";
@@ -27,7 +28,9 @@ interface ITextInputProps {
   options?: ReactNode;
 }
 
-const TextInput: FC<ITextInputProps & InputProps & TextareaProps> = ({
+const TextInput: FC<
+  ITextInputProps & InputProps & TextareaProps & NativeSelectRootProps
+> = ({
   name,
   control,
   isControlled = true,
@@ -89,7 +92,7 @@ const TextInput: FC<ITextInputProps & InputProps & TextareaProps> = ({
                   {...rest}
                 />
               ) : type === "select" ? (
-                <NativeSelectRoot>
+                <NativeSelectRoot {...rest}>
                   <NativeSelectField value={value} onChange={onChange}>
                     {options}
                   </NativeSelectField>

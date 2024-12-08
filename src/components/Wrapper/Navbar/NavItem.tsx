@@ -78,7 +78,6 @@ export default function NavItem({
       ? false
       : window.location.href.includes(href));
 
-  console.log(window.location.href);
   return (
     <VStack>
       <Link
