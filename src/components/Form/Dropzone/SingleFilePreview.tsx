@@ -54,9 +54,9 @@ const SingleFilePreview: React.FC<SingleFilePreviewProps> = ({
       <IconButton
         alignSelf={"center"}
         aria-label="Delete Image"
-        borderRadius={"sm"}
+        borderRadius={2}
         colorPalette="red"
-        size="sm"
+        size="xs"
         variant={"subtle"}
         position="absolute"
         top={0}

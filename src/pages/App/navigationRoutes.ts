@@ -11,4 +11,10 @@ export const NAVIGATION_ROUTES = {
   TEAMS: "teams",
   SETTINGS: "settings",
   PROPERTY_DETAILS: "/property-details",
+  ADMIN_SLIDERS: "sliders",
+  ADMIN_CATEGORY: "category",
+  ADMIN_SERVICES: "services",
+  ADMIN_TEAMS: "teams",
+  ADMIN_SETTINGS: "settings",
+  ADMIN_PROPERTIES: "properties",
 };

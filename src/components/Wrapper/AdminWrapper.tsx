@@ -84,7 +84,7 @@ const AdminWrapper: React.FC = () => {
               flexDir={"column"}
               gap={12}
               minHeight={"80vh"}
-              px={{ base: 2, md: 8 }}
+              px={2}
               py={4}
               borderRadius={"30px"}
             >

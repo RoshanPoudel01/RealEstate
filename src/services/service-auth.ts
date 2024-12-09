@@ -34,7 +34,7 @@ const useLogin = () => {
       };
       TokenService.setToken(token);
       queryClient.setQueryData([authTokenKey], () => true);
-      navigate("/", { replace: true });
+      navigate("/admin", { replace: true });
     },
     onError: (error) => {
       const err = error as AxiosError<{ error: string; message: string }>;

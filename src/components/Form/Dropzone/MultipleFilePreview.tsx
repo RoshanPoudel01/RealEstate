@@ -5,7 +5,6 @@ import {
   Flex,
   Icon,
   IconButton,
-  Image,
   Text,
 } from "@chakra-ui/react";
 import { Trash } from "@phosphor-icons/react";
@@ -28,6 +27,8 @@ interface MultipleFilePreviewsProps {
   setPrevFiles?: Dispatch<SetStateAction<IPrevFiles[]>>;
   setDeleteImages?: Dispatch<SetStateAction<string[]>>;
   onDelete: (index: number) => void;
+  width?: ConditionalValue<string | number>;
+  height?: ConditionalValue<string | number>;
 }
 
 const flexProps = {
@@ -68,11 +69,10 @@ const textProps = {
 const buttonProps = {
   alignSelf: "center",
   "aria-label": "Delete Image",
-  borderRadius: "sm",
+  borderRadius: 2,
   colorPalette: "red",
-  size: "sm" as ConditionalValue<
-    "sm" | "xs" | "md" | "lg" | "xl" | "2xl" | "2xs" | undefined
-  >,
+  variant: "subtle" as const,
+  size: "xs" as const,
 
   position: "absolute",
   top: 0,
@@ -85,6 +85,8 @@ const MultipleFilePreviews: React.FC<MultipleFilePreviewsProps> = ({
   setPrevFiles,
   setDeleteImages,
   onDelete,
+  width,
+  height,
 }) => {
   return (
     <>
@@ -93,7 +95,8 @@ const MultipleFilePreviews: React.FC<MultipleFilePreviewsProps> = ({
         prevFiles?.map((file, index) => (
           <Flex {...flexProps} key={index}>
             <LazyLoadImage
-              maxW={"250px"}
+              w={width}
+              h={height}
               objectFit={"cover"}
               aspectRatio={1}
               src={file.url}
@@ -121,8 +124,9 @@ const MultipleFilePreviews: React.FC<MultipleFilePreviewsProps> = ({
         ))}
       {files.map((file, index) => (
         <Flex {...flexProps} key={index}>
-          <Image
-            maxW={"250px"}
+          <LazyLoadImage
+            w={width}
+            h={height}
             objectFit={"cover"}
             aspectRatio={1}
             src={file.url}

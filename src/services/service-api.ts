@@ -62,17 +62,17 @@ export const api = {
     update: `admin/team/:id`,
     delete: `admin/team/:id`,
   },
-  faqs: {
+  properties: {
     fetch: ({ page = 1, perPage = 10, keyword = "" }) => {
-      let url = `/admin/faq?page=${page}&per_page=${perPage}`;
+      let url = `/admin/property?page=${page}&per_page=${perPage}`;
       if (keyword) {
         url += `&keyword=${keyword}`;
       }
       return url;
     },
-    fetchById: `admin/faq/:id`,
-    create: `admin/faq`,
-    update: `admin/faq/:id`,
-    delete: `admin/faq/:id`,
+    fetchById: `admin/property/:id`,
+    create: `admin/property`,
+    update: `admin/property/:id`,
+    delete: `admin/property/:id`,
   },
 };

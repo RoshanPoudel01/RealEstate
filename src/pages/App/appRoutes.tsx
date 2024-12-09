@@ -19,59 +19,75 @@ export const appRoutes = [
       },
 
       {
-        path: NAVIGATION_ROUTES.SLIDERS,
+        path: NAVIGATION_ROUTES.ADMIN_SLIDERS,
 
         element: <NAVIGATION_PAGES.SLIDERS />,
       },
       {
-        path: NAVIGATION_ROUTES.SLIDERS + "/create",
-        element: <NAVIGATION_PAGES.SLIDERFORM />,
+        path: NAVIGATION_ROUTES.ADMIN_SLIDERS + "/create",
+        element: <NAVIGATION_PAGES.SLIDER_FORM />,
       },
       {
-        path: NAVIGATION_ROUTES.SLIDERS + "/edit/:id",
-        element: <NAVIGATION_PAGES.SLIDERFORM />,
+        path: NAVIGATION_ROUTES.ADMIN_SLIDERS + "/edit/:id",
+        element: <NAVIGATION_PAGES.SLIDER_FORM />,
       },
       {
-        path: NAVIGATION_ROUTES.CATEGORY,
+        path: NAVIGATION_ROUTES.ADMIN_CATEGORY,
         element: <NAVIGATION_PAGES.CATEGORIES />,
       },
       {
-        path: NAVIGATION_ROUTES.CATEGORY + "/create",
-        element: <NAVIGATION_PAGES.CATEGORYFORM />,
+        path: NAVIGATION_ROUTES.ADMIN_CATEGORY + "/create",
+        element: <NAVIGATION_PAGES.CATEGORY_FORM />,
       },
       {
-        path: NAVIGATION_ROUTES.CATEGORY + "/edit/:id",
-        element: <NAVIGATION_PAGES.CATEGORYFORM />,
+        path: NAVIGATION_ROUTES.ADMIN_CATEGORY + "/edit/:id",
+        element: <NAVIGATION_PAGES.CATEGORY_FORM />,
       },
       {
-        path: NAVIGATION_ROUTES.SERVICES,
+        path: NAVIGATION_ROUTES.ADMIN_SERVICES,
         element: <NAVIGATION_PAGES.SERVICES />,
       },
       {
-        path: NAVIGATION_ROUTES.SERVICES + "/create",
-        element: <NAVIGATION_PAGES.SERVICEFORM />,
+        path: NAVIGATION_ROUTES.ADMIN_SERVICES + "/create",
+        element: <NAVIGATION_PAGES.SERVICE_FORM />,
       },
       {
-        path: NAVIGATION_ROUTES.SERVICES + "/edit/:id",
-        element: <NAVIGATION_PAGES.SERVICEFORM />,
+        path: NAVIGATION_ROUTES.ADMIN_SERVICES + "/edit/:id",
+        element: <NAVIGATION_PAGES.SERVICE_FORM />,
       },
       {
-        path: NAVIGATION_ROUTES.TEAMS,
+        path: NAVIGATION_ROUTES.ADMIN_TEAMS,
         element: <NAVIGATION_PAGES.TEAMS />,
       },
       {
-        path: NAVIGATION_ROUTES.TEAMS + "/create",
-        element: <NAVIGATION_PAGES.TEAMFORM />,
+        path: NAVIGATION_ROUTES.ADMIN_TEAMS + "/create",
+        element: <NAVIGATION_PAGES.TEAM_FORM />,
       },
       {
-        path: NAVIGATION_ROUTES.TEAMS + "/edit/:id",
-        element: <NAVIGATION_PAGES.TEAMFORM />,
+        path: NAVIGATION_ROUTES.ADMIN_TEAMS + "/edit/:id",
+        element: <NAVIGATION_PAGES.TEAM_FORM />,
       },
       {
-        path: NAVIGATION_ROUTES.SETTINGS,
+        path: NAVIGATION_ROUTES.ADMIN_SETTINGS,
         element: <NAVIGATION_PAGES.SETTINGS />,
       },
 
+      {
+        path: NAVIGATION_ROUTES.ADMIN_PROPERTIES,
+        element: <NAVIGATION_PAGES.PROPERTIES />,
+      },
+      {
+        path: NAVIGATION_ROUTES.ADMIN_PROPERTIES + "/create",
+        element: <NAVIGATION_PAGES.PROPERTY_FORM />,
+      },
+      {
+        path: NAVIGATION_ROUTES.ADMIN_PROPERTIES + "/create/:id",
+        element: <NAVIGATION_PAGES.PROPERTY_FORM />,
+      },
+      {
+        path: NAVIGATION_ROUTES.ADMIN_PROPERTIES + "/edit/:id",
+        element: <NAVIGATION_PAGES.PROPERTY_FORM />,
+      },
       {
         path: "*",
         element: <PageNotFound />,

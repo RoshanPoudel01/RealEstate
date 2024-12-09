@@ -18,7 +18,7 @@ const Login = () => {
     try {
       const response = await login(data);
       if (response.data.status) {
-        navigate("/");
+        navigate("/admin");
       }
     } catch (e) {
       console.error(e);

@@ -11,12 +11,9 @@ import { appRoutes, userRoutes } from "./appRoutes";
 import { NAVIGATION_ROUTES } from "./navigationRoutes";
 
 export default function App() {
-  const {
-    // data: isAuthenticated,
-    isPending: isAuthLoading,
-  } = useAuthentication();
+  const { data: isAuthenticated, isPending: isAuthLoading } =
+    useAuthentication();
 
-  const isAuthenticated = false;
   const { mutate: logoutUser } = useLogoutMutation();
 
   //   const {
@@ -31,6 +28,8 @@ export default function App() {
   //       isError: isInitDataError,
   //     };
   //   }, [isInitDataLoading, isInitDataError]);
+
+  console.log({ isAuthenticated });
 
   useEffect(() => {
     if (typeof isAuthenticated === "boolean" && !isAuthenticated) {
@@ -68,7 +67,7 @@ export default function App() {
     >
       <>
         <Routes>
-          {isAuthenticated && (
+          {isAuthenticated ? (
             <>
               {appRoutes.map((route, index) => {
                 return (
@@ -88,38 +87,34 @@ export default function App() {
                 );
               })}
             </>
+          ) : (
+            <>
+              <Route path="/" element={<Outlet />}>
+                <Route path={NAVIGATION_ROUTES.LOGIN2} element={<Login />} />
+              </Route>
+              <Route
+                path="*"
+                element={<Navigate to={NAVIGATION_ROUTES.LOGIN} replace />}
+              />
+              {userRoutes.map((route, index) => {
+                return (
+                  <Route key={index} path={route.path} element={route.element}>
+                    {route.children &&
+                      route.children.map((childRoute, childIndex) => (
+                        <Route
+                          key={childIndex}
+                          path={childRoute?.path}
+                          element={childRoute?.element}
+                          {...(childRoute?.index && {
+                            index: childRoute.index,
+                          })}
+                        />
+                      ))}
+                  </Route>
+                );
+              })}
+            </>
           )}
-          <>
-            {!isAuthenticated && (
-              <>
-                <Route path="/" element={<Outlet />}>
-                  <Route index element={<Login />} />
-                  <Route path={NAVIGATION_ROUTES.LOGIN2} element={<Login />} />
-                </Route>
-                <Route
-                  path="*"
-                  element={<Navigate to={NAVIGATION_ROUTES.LOGIN} replace />}
-                />
-              </>
-            )}
-            {userRoutes.map((route, index) => {
-              return (
-                <Route key={index} path={route.path} element={route.element}>
-                  {route.children &&
-                    route.children.map((childRoute, childIndex) => (
-                      <Route
-                        key={childIndex}
-                        path={childRoute?.path}
-                        element={childRoute?.element}
-                        {...(childRoute?.index && {
-                          index: childRoute.index,
-                        })}
-                      />
-                    ))}
-                </Route>
-              );
-            })}
-          </>
         </Routes>
       </>
     </Suspense>

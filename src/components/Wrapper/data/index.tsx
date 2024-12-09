@@ -3,7 +3,6 @@ import {
   House,
   Images,
   Package,
-  QuestionMark,
   Rectangle,
   SquaresFour,
   Users,
@@ -46,10 +45,5 @@ export const sidebarItems = [
     title: "Properties",
     icon: <Building />,
     to: "/admin/properties",
-  },
-  {
-    title: "FAQs",
-    icon: <QuestionMark />,
-    to: "/admin/faqs",
   },
 ];

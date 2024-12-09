@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // import { BaseURL } from "@/api/axiosSetup";
 import { ConditionalValue, Flex, Icon, Text } from "@chakra-ui/react";
-import { CloudArrowUp, Plus } from "@phosphor-icons/react";
-import { Field } from "@realState/components/ui/field";
+import { CloudArrowUp } from "@phosphor-icons/react";
+import { Field, FieldProps } from "@realState/components/ui/field";
 import Compressor from "compressorjs";
 import convert from "convert";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, FC, SetStateAction, useEffect, useState } from "react";
 import Dropzone, { Accept, FileRejection } from "react-dropzone";
 import { Control, Controller } from "react-hook-form";
 import MultipleFilePreviews from "./MultipleFilePreview";
@@ -42,10 +42,11 @@ type DropzoneProps = {
   message?: string;
   isMultiple?: boolean;
   padding?: ConditionalValue<string | number>;
-  width?: ConditionalValue<string | number>;
   boxWidth?: ConditionalValue<string | number>;
   boxHeight?: ConditionalValue<string | number>;
-  height?: ConditionalValue<string | number>;
+  boxAspectRatio?: ConditionalValue<string | number>;
+  imageWidth?: ConditionalValue<string | number>;
+  imageHeight?: ConditionalValue<string | number>;
   marginX?: ConditionalValue<string | number>;
   noMaxSize?: boolean;
   options: {
@@ -54,7 +55,7 @@ type DropzoneProps = {
   };
 };
 
-function ReactDropzone({
+const ReactDropzone: FC<DropzoneProps & FieldProps> = ({
   name,
   control,
   isMultiple,
@@ -63,17 +64,20 @@ function ReactDropzone({
   file,
   required,
   helperText,
-  boxWidth,
   prevFiles,
   setPrevFiles,
   setDeleteImages,
   setRemoveImage,
   noMaxSize,
   backendError,
-  width,
-  padding,
+  boxWidth,
+  boxHeight,
   options,
-}: DropzoneProps) {
+  imageWidth,
+  imageHeight,
+  boxAspectRatio,
+  ...rest
+}) => {
   const { accept, maxSize } = options;
 
   const [acceptedFileList, setAcceptedFileList] = useState<Blob[]>([]);
@@ -161,7 +165,6 @@ function ReactDropzone({
         };
         return (
           <Field
-            width={width ?? { base: "150px", md: "200px" }}
             label={label}
             helperText={helperText}
             invalid={!!error || !!fileError || !!backendError}
@@ -169,6 +172,7 @@ function ReactDropzone({
               fileError?.message ?? error?.message ?? backendError?.[0]
             }
             required={required}
+            {...rest}
           >
             <Flex
               flexDir={isMultiple ? "row" : "column"}
@@ -183,6 +187,8 @@ function ReactDropzone({
                     prevFiles={prevFiles || []}
                     setDeleteImages={setDeleteImages}
                     setPrevFiles={setPrevFiles}
+                    width={imageWidth ?? { base: "150px", md: "200px" }}
+                    height={imageHeight ?? { base: "150px", md: "200px" }}
                     onDelete={(index) => {
                       setPreview(preview.filter((_, i) => i !== index));
                       setAcceptedFileList(
@@ -210,8 +216,8 @@ function ReactDropzone({
                     flexDir="column"
                     {...getRootProps()}
                     w={boxWidth ?? { base: "150px", md: "200px" }}
-                    // h={boxHeight ?? { base: "150px", md: "200px" }}
-                    aspectRatio={1}
+                    h={boxHeight ?? { base: "150px", md: "200px" }}
+                    aspectRatio={boxAspectRatio ?? 1}
                     border={"2px dashed rgba(200, 204, 209, 0.70)"}
                     bg={"gray.50"}
                     _hover={{ bg: "gray.100" }}
@@ -224,25 +230,26 @@ function ReactDropzone({
                     borderRadius={"sm"}
                   >
                     <input {...getInputProps()} />
-                    {!isMultiple && preview.length === 0 ? (
-                      <Flex flexDir={"column"} gap={2} align={"center"}>
-                        <Icon asChild boxSize={10}>
-                          <CloudArrowUp />
-                        </Icon>
-                        <Text>Select a file </Text>
-                        {message && (
-                          <Text color={"gray.800"} fontSize="sm">
-                            {message}
-                          </Text>
-                        )}
-                      </Flex>
-                    ) : (
-                      isMultiple && (
-                        <Flex flexDir={"column"} gap={2} align={"center"}>
-                          <Icon as={Plus} boxSize={16} />
-                        </Flex>
-                      )
-                    )}
+                    <Flex
+                      display={
+                        !isMultiple && preview.length > 0 ? "none" : "flex"
+                      }
+                      flexDir="column"
+                      gap={2}
+                      align="center"
+                    >
+                      <Icon asChild boxSize={10}>
+                        <CloudArrowUp />
+                      </Icon>
+                      <Text>
+                        {isMultiple ? "Select file/s" : "Select a file"}
+                      </Text>
+                      {message && (
+                        <Text color="gray.800" fontSize="sm">
+                          {message}
+                        </Text>
+                      )}
+                    </Flex>
 
                     {!isMultiple && preview.length > 0 && (
                       <SingleFilePreview
@@ -264,6 +271,6 @@ function ReactDropzone({
       }}
     />
   );
-}
+};
 
 export default ReactDropzone;
