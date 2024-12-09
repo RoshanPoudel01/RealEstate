@@ -63,7 +63,7 @@ export default function NavBar({
   //   };
   const navigate = useNavigate();
   return (
-    <Flex bg="FFFFFF" position={"sticky"}>
+    <Flex bg="FFFFFF" position={"sticky"} pt={8}>
       <Stack
         as="nav"
         gap={3}

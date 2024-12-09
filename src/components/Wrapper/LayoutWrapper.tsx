@@ -1,4 +1,4 @@
-import { Suspense, useState } from "react";
+import { Suspense } from "react";
 import { Outlet } from "react-router-dom";
 
 import { Flex, Stack } from "@chakra-ui/react";
@@ -46,38 +46,18 @@ const LayoutWrapper: React.FC = () => {
   //   // setIsHovered(false);
   // }, [width]);
 
-  const sidebarWidth = "250px";
-  const [open, setOpen] = useState(true);
   return (
     <ErrorBoundary>
       <Flex>
-        {/* <Sidebar
-          // width={isHovered ? largeSidebarWidth : sidebarWidth}
-          // isCollapsed={!open}
-          // animate={sidebarAnimate}
-          // onEnterSidebar={onEnterSidebar}
-          // onExitSidebar={onExitSidebar}
-          // isHovered={isHovered}
-          maxW={sidebarWidth}
-          w={sidebarWidth}
-          hideBelow={"md"}
-        /> */}
         <Stack
           flexGrow={1}
-          //   px={{ base: 2, md: 4 }}
-          //   ml={{ md: sidebarWidth }}
           transition={sidebarAnimate}
           backgroundColor={"#FFFFFF"}
           zIndex={0}
           overflowX="hidden"
         >
-          {/* <AppBar zIndex={1} flex={1} position="sticky" mb={0}>
-              <Header
-                width={open ? largeSidebarWidth : sidebarWidth}
-                handleDrawerToggle={handleDrawerToggle}
-                isDrawerOpen={open}
-              />
-            </AppBar> */}
+          <Navbar />
+
           <Suspense fallback={<Loader />}>
             <Flex
               flexDir={"column"}
@@ -86,7 +66,6 @@ const LayoutWrapper: React.FC = () => {
               py={8}
               borderRadius={"30px"}
             >
-              <Navbar />
               <Outlet />
             </Flex>
           </Suspense>

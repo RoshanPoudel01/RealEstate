@@ -104,6 +104,10 @@ const TextInput: FC<
                   value={value}
                   type={type}
                   onChange={onChange}
+                  onWheel={(e) => {
+                    const target = e.target as HTMLInputElement;
+                    type == "number" && target.blur();
+                  }}
                   {...rest}
                 />
               )}

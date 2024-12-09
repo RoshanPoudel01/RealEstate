@@ -57,6 +57,21 @@ const globalStyles = () => {
           box-shadow: 0 0 0 30px white inset !important;
           z-index: 0;
         }
+        .slick-slider {
+          width: 100% !important;
+        }
+        .slick-arrow {
+          background-color: #1c3988 !important;
+          height: 48px !important;
+          width: 48px !important;
+          border-radius: 50% !important;
+        }
+        .slick-prev {
+          left: -70px !important;
+        }
+        .slick-next {
+          right: -70px !important;
+        }
       `}
     />
   );
