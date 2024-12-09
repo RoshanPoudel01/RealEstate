@@ -7,15 +7,12 @@ import {
   useLogoutMutation,
 } from "../../services/service-auth";
 import Login from "../Admin/Login";
-import { appRoutes } from "./appRoutes";
+import { appRoutes, userRoutes } from "./appRoutes";
 import { NAVIGATION_ROUTES } from "./navigationRoutes";
 
 export default function App() {
-  const {
-    data: isAuthenticated,
-    isLoading: isAuthLoading,
-    refetch: checkTokenAndRefresh,
-  } = useAuthentication();
+  const { data: isAuthenticated, isPending: isAuthLoading } =
+    useAuthentication();
 
   const { mutate: logoutUser } = useLogoutMutation();
 
@@ -32,24 +29,26 @@ export default function App() {
   //     };
   //   }, [isInitDataLoading, isInitDataError]);
 
+  console.log({ isAuthenticated });
+
   useEffect(() => {
     if (typeof isAuthenticated === "boolean" && !isAuthenticated) {
       localStorage.getItem("token") ? logoutUser() : null;
     }
   }, [isAuthenticated]);
 
-  useEffect(() => {
-    let iID = null as null | NodeJS.Timeout;
-    if (isAuthenticated) {
-      iID = setInterval(() => checkTokenAndRefresh(), 30_000);
-    }
+  // useEffect(() => {
+  //   let iID = null as null | NodeJS.Timeout;
+  //   if (isAuthenticated) {
+  //     iID = setInterval(() => checkTokenAndRefresh(), 30_000);
+  //   }
 
-    return () => {
-      if (iID) {
-        clearInterval(iID);
-      }
-    };
-  }, [isAuthenticated, checkTokenAndRefresh]);
+  //   return () => {
+  //     if (iID) {
+  //       clearInterval(iID);
+  //     }
+  //   };
+  // }, [isAuthenticated, checkTokenAndRefresh]);
 
   if (isAuthLoading) {
     return (
@@ -58,7 +57,6 @@ export default function App() {
       </Flex>
     );
   }
-
   return (
     <Suspense
       fallback={
@@ -69,32 +67,52 @@ export default function App() {
     >
       <>
         <Routes>
-          {!isAuthenticated ? (
+          {isAuthenticated ? (
             <>
-              {appRoutes.map((route, index) => (
-                <Route key={index} path={route.path} element={route.element}>
-                  {route.children &&
-                    route.children.map((childRoute, childIndex) => (
-                      <Route
-                        key={childIndex}
-                        path={childRoute.path}
-                        element={childRoute.element}
-                        {...(childRoute.index && { index: childRoute.index })}
-                      />
-                    ))}
-                </Route>
-              ))}
+              {appRoutes.map((route, index) => {
+                return (
+                  <Route key={index} path={route.path} element={route.element}>
+                    {route.children &&
+                      route.children.map((childRoute, childIndex) => (
+                        <Route
+                          key={childIndex}
+                          path={childRoute?.path}
+                          element={childRoute?.element}
+                          {...(childRoute?.index && {
+                            index: childRoute.index,
+                          })}
+                        />
+                      ))}
+                  </Route>
+                );
+              })}
             </>
           ) : (
             <>
               <Route path="/" element={<Outlet />}>
-                <Route index element={<Login />} />
                 <Route path={NAVIGATION_ROUTES.LOGIN2} element={<Login />} />
               </Route>
               <Route
                 path="*"
                 element={<Navigate to={NAVIGATION_ROUTES.LOGIN} replace />}
               />
+              {userRoutes.map((route, index) => {
+                return (
+                  <Route key={index} path={route.path} element={route.element}>
+                    {route.children &&
+                      route.children.map((childRoute, childIndex) => (
+                        <Route
+                          key={childIndex}
+                          path={childRoute?.path}
+                          element={childRoute?.element}
+                          {...(childRoute?.index && {
+                            index: childRoute.index,
+                          })}
+                        />
+                      ))}
+                  </Route>
+                );
+              })}
             </>
           )}
         </Routes>

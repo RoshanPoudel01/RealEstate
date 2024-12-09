@@ -1,22 +1,24 @@
 import { css, Global } from "@emotion/react";
+import Lexend from "@realState/assets/fonts/Lexend/static/Lexend-VariableFont_wght.ttf";
 
 const globalStyles = () => {
   return (
     <Global
       styles={() => css`
         @font-face {
-          font-family: "Mulish";
+          font-family: "Lexend";
           font-style: normal;
           font-weight: regular;
+          src: url(${Lexend}) format("truetype");
         }
         html,
         body {
           margin: 0;
           padding: 0;
           min-height: 100%;
-          font-family: "Mulish";
+          font-family: "Lexend";
           scroll-behavior: smooth;
-          background: #fefefe;
+          background: #fff;
         }
         body {
           -moz-osx-font-smoothing: grayscale;
@@ -25,7 +27,7 @@ const globalStyles = () => {
           font-size: 14px;
           padding-top: 0px;
           margin: 0px;
-          font-family: "Mulish";
+          font-family: "Lexend";
         }
         * {
           box-sizing: border-box;
@@ -54,6 +56,21 @@ const globalStyles = () => {
         input:-webkit-autofill:active {
           box-shadow: 0 0 0 30px white inset !important;
           z-index: 0;
+        }
+        .slick-slider {
+          width: 100% !important;
+        }
+        .slick-arrow {
+          background-color: #1c3988 !important;
+          height: 48px !important;
+          width: 48px !important;
+          border-radius: 50% !important;
+        }
+        .slick-prev {
+          left: -70px !important;
+        }
+        .slick-next {
+          right: -70px !important;
         }
       `}
     />
