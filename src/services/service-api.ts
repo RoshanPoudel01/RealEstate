@@ -31,6 +31,7 @@ export const api = {
       }
       return url;
     },
+    list: "admin/category/get-list",
     fetchById: `admin/category/:id`,
     create: `admin/category`,
     update: `admin/category/:id`,
@@ -72,6 +73,9 @@ export const api = {
     },
     fetchById: `admin/property/:id`,
     create: `admin/property`,
+    images: `admin/property/images/:id`,
+    amenity: `admin/property/amenity/:id`,
+    faqs: `admin/property/faqs/:id`,
     update: `admin/property/:id`,
     delete: `admin/property/:id`,
   },

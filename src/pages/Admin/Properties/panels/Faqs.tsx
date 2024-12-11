@@ -11,6 +11,9 @@ import {
 import { X } from "@phosphor-icons/react";
 import { TextInput } from "@realState/components/Form";
 import { Button } from "@realState/components/ui/button";
+import { useFetchFaqs, useUpdateFaqs } from "@realState/services/service-properties";
+import Loader from "@realState/utils/Loader";
+import { useEffect } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import * as yup from "yup";
@@ -43,10 +46,9 @@ const FAQs = () => {
       },
     ] as IFaq[],
   };
-
+  const { id } = useParams<{ id: string }>();
   const location = useLocation();
   const urlParams = new URLSearchParams(location.search);
-  const productId = useParams().id || urlParams.get("id");
   const navigate = useNavigate();
   const { control, handleSubmit } = useForm({ defaultValues });
 
@@ -63,15 +65,27 @@ const FAQs = () => {
     remove(index);
   };
 
+const {data: faqs, isPending: isFaqsPending, isFetching: isFaqsFetching} = useFetchFaqs (id!);
+
+
+useEffect(() => {
+  if(faqs?.data) {
+    append(faqs?.data?.rows);
+  }
+  }, [faqs]);
+
+  const {mutateAsync: createFaqs, isPending} = useUpdateFaqs();
+
   const onSubmit = async (data: FAQFormValues) => {
     // const response = await createFaqs({ id: productId, data });
     // if (response.data.status) {
     //   navigate("/product");
     // }
-    console.log({ id: productId, data });
+    console.log({ id: id!, data });
   };
 
   return (
+    isFaqsFetching || isFaqsPending ? <Loader /> :
     <Flex
       flexDir={"column"}
       gap={4}

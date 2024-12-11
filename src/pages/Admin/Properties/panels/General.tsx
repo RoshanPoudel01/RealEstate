@@ -1,11 +1,11 @@
 import { Flex, HStack, SimpleGrid } from "@chakra-ui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { ReactDropzone, TextInput } from "@realState/components/Form";
+import { TextInput } from "@realState/components/Form";
 import StatusRadio from "@realState/components/Form/StatusRadio";
 import { Button } from "@realState/components/ui/button";
 import useGetDirtyData from "@realState/hooks/useGetDirtyData";
 import useGetErrors from "@realState/hooks/useGetErrors";
-import { toFormData } from "@realState/services/service-axios";
+import { useFetchCategoryList } from "@realState/services/service-category";
 import {
   useCreateProperty,
   useFetchPropertyById,
@@ -13,7 +13,7 @@ import {
 } from "@realState/services/service-properties";
 import Loader from "@realState/utils/Loader";
 import PageHeader from "@realState/utils/PageHeader";
-import { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 import * as yup from "yup";
@@ -30,13 +30,21 @@ const schema = yup.object().shape({
   map: yup.string().required("Map is required"),
   category_id: yup.string().required("Select atleast one category."),
   status: yup.string().required("Status is required").default("available"),
-  image: yup.mixed().required("Image is required"),
+  land_area: yup.string().required("Land Area is required"),
+  built_year: yup.string().required("Built Year is required"),
+  price: yup.number().required("Price is required"),
   is_active: yup.string().required("Status is required"),
 });
 
 type GeneralValues = yup.InferType<typeof schema>;
 
-const General = () => {
+interface GeneralProps {
+  setTabValue: (value: string) => void;
+}
+
+const General: FC<GeneralProps> = (
+  {  setTabValue },
+) => {
   const defaultValues: GeneralValues = {
     title_en: "",
     title_np: "",
@@ -49,7 +57,9 @@ const General = () => {
     category_id: "",
     map: "",
     status: "available",
-    image: "",
+    land_area: "",
+    built_year: "",
+    price: "" as never as number,
     is_active: "1",
   };
 
@@ -79,6 +89,15 @@ const General = () => {
     resolver: yupResolver(schema),
   });
 
+
+  const {data: categories} = useFetchCategoryList();
+
+  const categoryOptions = categories?.data?.rows.map((category) => (
+    <option key={category.id} value={category.id}>
+      {category.name_en}
+    </option>
+  ));
+
   const {
     mutateAsync: addProperty,
     isPending: isAdding,
@@ -97,7 +116,6 @@ const General = () => {
     {}
   );
 
-  const [removeImage, setRemoveImage] = useState(false);
 
   useEffect(() => {
     if (isAddError) {
@@ -108,28 +126,27 @@ const General = () => {
   }, [isAddError, addError, isUpdateError, updateError]);
 
   const onSubmit = async (data: GeneralValues) => {
-    console.log({
-      dirtyData: useGetDirtyData(formState, data),
-    });
-
-    const formData = toFormData(id ? useGetDirtyData(formState, data) : data);
-    if (removeImage) {
-      formData.append("remove_image", "1");
-    }
+    const 
+      dirtyData = useGetDirtyData(formState, data)
+    
 
     if (id) {
-      //   const response = await updateProperty({ data: formData, id });
-      //   if (response.data.status) {
-      //     reset(defaultValues);
-      //     navigate("/admin/properties");
-      //   }
+        const response = await updateProperty({ data: dirtyData, id });
+        if (response.data.status) {
+          reset(defaultValues);
+          navigate(`/admin/properties/edit/${id}`);
+          setTabValue("amenities");
+        }
       console.log({ data, id });
     } else {
-      //   const response = await addProperty({ data: formData });
-      //   if (response.data.status) {
-      //     reset(defaultValues);
-      //     navigate("/admin/properties");
-      //   }
+        const response = await addProperty({ data });
+        console.log({ response });
+        if (response.data.status) {
+          const id = response.data.data.id;
+          reset(defaultValues);
+          navigate(`/admin/properties/create/${id}`);
+          setTabValue("amenities");
+        }
       console.log({ data });
     }
   };
@@ -222,6 +239,13 @@ const General = () => {
                 name="map"
                 label="Map"
               />
+              <TextInput control={control} required name="land_area" label="Land Area" />
+              <TextInput 
+                helperText="Enter the year in YYYY format"              
+              control={control} required name="built_year" label="Built Year" />
+              <TextInput
+              control={control} required name="price" label="Price" />
+              
               <TextInput
                 control={control}
                 required
@@ -231,12 +255,8 @@ const General = () => {
                 type="select"
                 options={
                   <>
-                    <option value="" disabled>
-                      Select Category
-                    </option>
-                    <option value="1">Category 1</option>
-                    <option value="2">Category 2</option>
-                    <option value="3">Category 3</option>
+                    <option value="">Select Category</option>
+                    {categoryOptions}
                   </>
                 }
               />
@@ -261,7 +281,7 @@ const General = () => {
                   { label: "Inactive", value: "0" },
                 ]}
               />
-              <ReactDropzone
+              {/* <ReactDropzone
                 control={control}
                 required
                 backendError={backendError.image}
@@ -273,7 +293,7 @@ const General = () => {
                 }}
                 file={property?.data?.image ?? ""}
                 setRemoveImage={setRemoveImage}
-              />
+              /> */}
             </form>
           </SimpleGrid>
           <HStack align={"center"}>

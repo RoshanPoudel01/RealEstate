@@ -1,11 +1,16 @@
 import { Tabs } from "@chakra-ui/react";
 import PageHeader from "@realState/utils/PageHeader";
+import { useState } from "react";
 import { FAQs, General, Images } from "./panels";
+import Amenities from "./panels/Amenities";
 
 const triggers = [
   {
     label: "General",
     value: "general",
+  },{
+    label: "Amenities"  ,
+    value: "amenities",
   },
   {
     label: "Images",
@@ -18,6 +23,9 @@ const triggers = [
 ];
 
 const PropertyForm = () => {
+
+  const [tabValue, setTabValue] = useState(triggers[0].value);
+
   return (
     <>
       <PageHeader heading="Property Form" description="Add new property" />
@@ -27,21 +35,34 @@ const PropertyForm = () => {
         lazyMount
         unmountOnExit
         defaultValue={triggers[0].value}
+        value={tabValue}
+        onValueChange={(e) => setTabValue(e.value)}
       >
         <Tabs.List>
           {triggers.map((trigger, index) => (
-            <Tabs.Trigger key={index} value={trigger.value}>
+            <Tabs.Trigger key={index}
+            value={trigger.value}>
               {trigger.label}
             </Tabs.Trigger>
           ))}
         </Tabs.List>
         <Tabs.Content value={triggers[0].value}>
-          <General />
+          <General 
+          setTabValue={setTabValue}
+          />
         </Tabs.Content>
         <Tabs.Content value={triggers[1].value}>
-          <Images />
+          <Amenities
+          setTabValue={setTabValue}
+          />
         </Tabs.Content>
         <Tabs.Content value={triggers[2].value}>
+          <Images 
+          setTabValue={setTabValue}
+          
+          />
+        </Tabs.Content>
+        <Tabs.Content value={triggers[3].value}>
           <FAQs />
         </Tabs.Content>
       </Tabs.Root>
