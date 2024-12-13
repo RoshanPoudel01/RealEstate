@@ -33,6 +33,7 @@ export const api = {
       }
       return url;
     },
+    list: "admin/category/get-list",
     fetchById: `admin/category/:id`,
     create: `admin/category`,
     update: `admin/category/:id`,
@@ -74,11 +75,29 @@ export const api = {
     },
     fetchById: `admin/property/:id`,
     create: `admin/property`,
+    images: `admin/property/images/:id`,
+    amenity: `admin/property/amenity/:id`,
+    faqs: `admin/faq/:id`,
     update: `admin/property/:id`,
     delete: `admin/property/:id`,
-    properties: ({ propertyType, language = "en" }: PropertyParams) => {
+    properties: ({ propertyType }: PropertyParams) => {
       return `/property${propertyType ? "/" + propertyType : ""}`;
     },
     propertyById: `/property/{id}`,
+    featured: `admin/property/featured`,
+    trending: `admin/property/trending`,
+    new: `admin/property/new`,
+  },
+
+  testimonials: {
+    fetch: ({ page = 1, perPage = 10, keyword = "" }) => {
+      let url = `/admin/testimonial?page=${page}&per_page=${perPage}`;
+      if (keyword) {
+        url += `&keyword=${keyword}`;
+      }
+      return url;
+    },
+    create: `/admin/testimonial`,
+    byId: `/admin/testimonial/:id`,
   },
 };

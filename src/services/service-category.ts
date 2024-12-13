@@ -1,18 +1,20 @@
+export interface CateGoryListResponse {
+  id:number;
+  name_en: string;
+  name_np: string;
+}
+
 export interface CategoryResponse {
   id: number;
-  slug: string;
   is_active: number;
   display_order: number;
-  items: Item[];
+  name_en: string;
+  name_np: string;
+  description_en: string;
+  description_np: string;
   image: string;
 }
 
-export interface Item {
-  id: number;
-  name: string;
-  description: string;
-  lang: string;
-}
 
 import { api } from "./service-api";
 import { useFetch, useMutate } from "./service-form-methods";
@@ -32,6 +34,13 @@ const useFetchCategoryById = (id: string) => {
     enabled: !!id,
   });
 };
+
+const useFetchCategoryList = () => {
+  return useFetch<RootResponse<CateGoryListResponse>>({
+    url: api.categories.list,
+    queryKey: [`category-list`],
+  });
+}
 
 const useCreateCategory = () => {
   return useMutate({
@@ -66,6 +75,6 @@ export {
   useCreateCategory,
   useDeleteCategory,
   useFetchCategories,
-  useFetchCategoryById,
-  useUpdateCategory,
+  useFetchCategoryById, useFetchCategoryList, useUpdateCategory
 };
+

@@ -4,6 +4,7 @@ import { FC, useEffect, useRef, useState } from "react";
 import "ckeditor5/ckeditor5.css";
 import "./style.css";
 
+import { Box } from "@chakra-ui/react";
 import { Field, FieldProps } from "@realState/components/ui/field";
 import { ClassicEditor } from "ckeditor5";
 import { Controller } from "react-hook-form";
@@ -39,15 +40,19 @@ const CkEditor: FC<CkEditorProps & FieldProps> = ({
         <Field
           invalid={!!error || !!backendError}
           errorText={backendError?.[0] ?? error?.message}
+          w={'full'}
           {...rest}
           className="main-container"
         >
-          <div
+          <Box
+           minH={'200px'}
             className="editor-container editor-container_classic-editor"
             ref={editorContainerRef}
           >
-            <div className="editor-container__editor">
-              <div ref={editorRef}>
+            <Box
+            className="editor-container__editor">
+              <Box
+              ref={editorRef}>
                 {isLayoutReady && (
                   <CKEditor
                     editor={ClassicEditor}
@@ -61,9 +66,9 @@ const CkEditor: FC<CkEditorProps & FieldProps> = ({
                     }}
                   />
                 )}
-              </div>
-            </div>
-          </div>
+              </Box>
+            </Box>
+          </Box>
         </Field>
       )}
     />

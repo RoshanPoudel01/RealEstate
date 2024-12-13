@@ -36,9 +36,9 @@ const Category = () => {
       header: "Name (EN)",
       accessorKey: "name_en",
       cell: ({ row }: IRow<CategoryResponse>) => {
-        const { items } = row.original;
+        const { name_en } = row.original;
         return (
-          <Text>{items.find((item) => item.lang === "en")?.name ?? ""}</Text>
+          <Text>{name_en ?? ""}</Text>
         );
       },
       enableSorting: false,
@@ -47,9 +47,9 @@ const Category = () => {
       header: "Name (NP)",
       accessorKey: "name_np",
       cell: ({ row }: IRow<CategoryResponse>) => {
-        const { items } = row.original;
+        const { name_np } = row.original;
         return (
-          <Text>{items.find((item) => item.lang === "np")?.name ?? ""}</Text>
+          <Text>{name_np ?? ""}</Text>
         );
       },
       enableSorting: false,
@@ -59,10 +59,10 @@ const Category = () => {
       header: "Description (EN)",
       accessorKey: "description_en",
       cell: ({ row }: IRow<CategoryResponse>) => {
-        const { items } = row.original;
+        const { description_en } = row.original;
         return (
           <Text maxW={"400px"} lineClamp={2} mx={"auto"}>
-            {items.find((item) => item.lang === "en")?.description ?? ""}
+            {description_en ?? ""}
           </Text>
         );
       },
@@ -72,10 +72,10 @@ const Category = () => {
       header: "Description (NP)",
       accessorKey: "description_np",
       cell: ({ row }: IRow<CategoryResponse>) => {
-        const { items } = row.original;
+        const { description_np } = row.original;
         return (
           <Text maxW={"400px"} lineClamp={2} mx={"auto"}>
-            {items.find((item) => item.lang === "en")?.description ?? ""}
+            {description_np ?? ""}
           </Text>
         );
       },

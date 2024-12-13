@@ -17,6 +17,7 @@ const PROPERTIES = lazy(() => import("@realState/pages/Admin/Properties"));
 const PROPERTY_FORM = lazy(
   () => import("@realState/pages/Admin/Properties/Form")
 );
+const TESTIMONIALS = lazy(() => import("@realState/pages/Admin/Testimonials"));
 export const NAVIGATION_PAGES = {
   SLIDERS,
   SLIDER_FORM,
@@ -30,4 +31,5 @@ export const NAVIGATION_PAGES = {
   PROPERTYPAGE,
   PROPERTIES,
   PROPERTY_FORM,
+  TESTIMONIALS
 };

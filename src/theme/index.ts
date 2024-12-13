@@ -22,9 +22,10 @@ const config = defineConfig({
       colors: {
         primary: {
           solid: { value: "{colors.primary.500}" },
-          contrast: { value: "#FFF" },
+          contrast: { value: "white" },
           fg: { value: "{colors.primary.700}" },
-          muted: { value: "#FFF" },
+          muted: { value: "{colors.primary.100}" },
+
           subtle: { value: "{colors.primary.50}" },
           emphasized: { value: "{colors.primary.900}" },
           focusRing: { value: "{colors.primary.500}" },
