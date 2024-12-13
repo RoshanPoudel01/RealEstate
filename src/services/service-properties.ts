@@ -36,8 +36,6 @@ export interface PropertyFrontResponse {
   city_np: string;
 }
 
-<<<<<<< Updated upstream
-=======
 export interface AmenityResponse {
   is_road_access: number;
   floor: string;
@@ -55,7 +53,6 @@ export interface PropertyParams {
   language?: string;
 }
 
->>>>>>> Stashed changes
 const useFetchProperties = ({ page = 1, perPage = 10, keyword = "" }) => {
   return useFetch<RootResponse<PropertyResponse>>({
     url: api.properties.fetch({ page, perPage, keyword }),
@@ -117,80 +114,12 @@ const useDeleteProperty = () => {
   });
 };
 
-<<<<<<< Updated upstream
-export {
-  useCreateProperty,
-  useDeleteProperty,
-  useFetchProperties,
-  useFetchPropertyById,
-=======
-const useFetchAmenities = (id: string) => {
-  return useFetch<SingleResponse<AmenityResponse>>({
-    url: api.properties.amenity.replace(":id", id),
-    queryKey: [`amenities`],
-    enabled: !!id,
-  });
-};
-
-const useUpdateAmenities = () => {
-  return useMutate({
-    url: api.properties.amenity,
-    queryKey: [`update-amenity`],
-    invalidates: [`amenities`],
-    method: `POST`,
-    message: `Amenity updated successfully`,
-  });
-};
-
-const useFetchImages = (id: string) => {
-  return useFetch<RootResponse<ImagesResponse>>({
-    url: api.properties.images.replace(":id", id),
-    queryKey: [`images`],
-    enabled: !!id,
-  });
-};
-
-const useUpdateImages = () => {
-  return useMutate({
-    url: api.properties.images,
-    queryKey: [`update-images`],
-    method: `POST`,
-    invalidates: [`images`],
-    message: `Images updated successfully`,
-  });
-};
-
-const useFetchFaqs = (id: string) => {
-  return useFetch<RootResponse<any>>({
-    url: api.properties.faqs.replace(":id", id),
-    queryKey: [`faqs`],
-    message: `FAQs created successfully`,
-  });
-};
-
-const useUpdateFaqs = () => {
-  return useMutate({
-    url: api.properties.faqs,
-    queryKey: [`update-faqs`],
-    method: `POST`,
-    invalidates: [`faqs`],
-    message: `FAQs updated successfully`,
-  });
-};
-
 export {
   useCreateProperty,
   useDeleteProperty,
   useFetchAllProperties,
-  useFetchAmenities,
-  useFetchFaqs,
-  useFetchImages,
   useFetchProperties,
   useFetchPropertyById,
   useGetPropertyDetails,
-  useUpdateAmenities,
-  useUpdateFaqs,
-  useUpdateImages,
->>>>>>> Stashed changes
   useUpdateProperty,
 };
