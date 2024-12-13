@@ -84,7 +84,7 @@ const Amenities: FC<AmenitiesProps> = (
             </form>
     </SimpleGrid>
     <HStack mt={4}>
-        <Button onClick={() => setTabValue("general")} colorScheme="secondary">Back</Button>
+        <Button onClick={() => setTabValue("general")} variant="outline">Back</Button>
     <Button form="amenities-form" type="submit" loading={isCreatingAmenities} loadingText="Saving" colorScheme="primary">Save & Next</Button>
     </HStack>
     </Flex>

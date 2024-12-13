@@ -9,20 +9,18 @@ import { MagnifyingGlass } from "@phosphor-icons/react";
 import { Field } from "@realState/components/ui/field";
 import { InputGroup } from "@realState/components/ui/input-group";
 import { debounce } from "lodash";
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { useLocation } from "react-router-dom";
 
 interface ISearchInputProps {
-  value?: string;
   name?: string;
   label?: string;
-  setValue?: (value: string) => void;
   onSearch: (value: string) => void;
   width?: ConditionalValue<number | string>;
   helperText?: string;
 }
 
 const SearchInput: React.FC<ISearchInputProps & InputProps> = ({
-  value,
   onSearch = () => {},
   name,
   label,
@@ -31,8 +29,20 @@ const SearchInput: React.FC<ISearchInputProps & InputProps> = ({
   my,
   ...rest
 }) => {
+
+  const location = useLocation();
+
+  const urlParams = new URLSearchParams(location.search);
+  const queryFromUrl = urlParams.get("q") || "";
+
   const [searchString, setSearchString] = useState("");
   const [isDebouncing, setIsDebouncing] = useState(false);
+  const [value, setValue] = useState("");
+
+
+  useEffect(() => {
+    setValue(queryFromUrl);
+  }, [queryFromUrl]);
 
   const debouncedSearchFunction = useCallback(
     (value: string) => {
@@ -75,8 +85,10 @@ const SearchInput: React.FC<ISearchInputProps & InputProps> = ({
         <Input
           size={"lg"}
           colorPalette={"primary"}
+          onChange={(e) => {
+            setValue(e.target.value);
+            handleSearch(e.target.value)}}
           value={value}
-          onChange={(e) => handleSearch(e.target.value)}
           onKeyDown={(e) => {
             if (e.key === "Enter") {
               onSearch(searchString);

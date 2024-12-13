@@ -96,7 +96,10 @@ export default function App() {
                 path="*"
                 element={<Navigate to={NAVIGATION_ROUTES.LOGIN} replace />}
               />
-              {userRoutes.map((route, index) => {
+            
+            </>
+          )}
+            {userRoutes.map((route, index) => {
                 return (
                   <Route key={index} path={route.path} element={route.element}>
                     {route.children &&
@@ -113,8 +116,6 @@ export default function App() {
                   </Route>
                 );
               })}
-            </>
-          )}
         </Routes>
       </>
     </Suspense>

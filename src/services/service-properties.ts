@@ -8,8 +8,8 @@ export interface PropertyResponse {
   is_active: number;
   title_en: string;
   title_np: string;
-  caption_en: string;
-  caption_np: string;
+  description_en: string;
+  description_np: string;
   image?: string;
 }
 
@@ -19,6 +19,15 @@ export interface AmenityResponse {
   is_parking: number;
   is_furnished: number;
   is_garden: number;
+}
+
+export interface FaqResponse {
+  id: number;
+  display_order: number;
+  question_en?: string;
+  question_np?: string;
+  answer_en?: string;
+  answer_np?: string;
 }
 
 export interface ImagesResponse {
@@ -107,7 +116,7 @@ const useUpdateImages = () => {
 }
 
 const useFetchFaqs = (id:string) => {
-  return useFetch<RootResponse<any>>({
+  return useFetch<RootResponse<FaqResponse>>({
     url: api.properties.faqs.replace(":id", id),
     queryKey: [`faqs`],
     message: `FAQs created successfully`,
@@ -124,9 +133,57 @@ const useUpdateFaqs = () => {
   })
 }
 
+const useFetchTrendingProperties = () => {
+  return useFetch<RootResponse<PropertyResponse>>({
+    url: api.properties.trending,
+    queryKey: [`trending-properties`],
+  });
+}
+
+const useAddTrendingProperties = () => {
+  return useMutate({
+    url: api.properties.trending,
+    queryKey: [`add-trending-property`],
+    invalidates: [`trending-properties`],
+    message: `Property added to trending successfully`,
+  });
+}
+
+const useFetchFeaturedProperties = () => {
+  return useFetch<RootResponse<PropertyResponse>>({
+    url: api.properties.featured,
+    queryKey: [`featured-properties`],
+  });
+}
+
+const useAddFeaturedProperties = () => {
+  return useMutate({
+    url: api.properties.featured,
+    queryKey: [`add-featured-property`],
+    invalidates: [`featured-properties`],
+    message: `Property added to featured successfully`,
+  });
+}
+
+const useFetchNewProperties = () => {
+  return useFetch<RootResponse<PropertyResponse>>({
+    url: api.properties.new,
+    queryKey: [`new-properties`],
+  });
+}
+
+const useAddNewProperties = () => {
+  return useMutate({
+    url: api.properties.new,
+    queryKey: [`add-new-property`],
+    invalidates: [`new-properties`],
+    message: `Property added to new successfully`,
+  });
+}
+
 export {
-  useCreateProperty,
-  useDeleteProperty, useFetchAmenities, useFetchFaqs, useFetchImages, useFetchProperties,
-  useFetchPropertyById, useUpdateAmenities, useUpdateFaqs, useUpdateImages, useUpdateProperty
+  useAddFeaturedProperties, useAddNewProperties, useAddTrendingProperties, useCreateProperty,
+  useDeleteProperty, useFetchAmenities, useFetchFaqs, useFetchFeaturedProperties, useFetchImages, useFetchNewProperties, useFetchProperties,
+  useFetchPropertyById, useFetchTrendingProperties, useUpdateAmenities, useUpdateFaqs, useUpdateImages, useUpdateProperty
 };
 

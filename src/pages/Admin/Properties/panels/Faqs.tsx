@@ -15,20 +15,24 @@ import { useFetchFaqs, useUpdateFaqs } from "@realState/services/service-propert
 import Loader from "@realState/utils/Loader";
 import { useEffect } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import * as yup from "yup";
 
 interface IFaq {
-  question: string;
-  answer: string;
+  question_en: string;
+  answer_en: string;
+  question_np: string;
+  answer_np: string;
   display_order: number;
 }
 
 const schema = yup.object().shape({
   faqs: yup.array().of(
     yup.object().shape({
-      question: yup.string().required("Question is required"),
-      answer: yup.string().required("Answer is required"),
+      question_en: yup.string().required("Question is required"),
+      answer_en: yup.string().required("Answer is required"),
+      question_np: yup.string().required("Question is required"),
+      answer_np: yup.string().required("Answer is required"),
       display_order: yup.number().required("Display Order is required"),
     })
   ),
@@ -38,17 +42,15 @@ type FAQFormValues = yup.InferType<typeof schema>;
 
 const FAQs = () => {
   const defaultValues = {
-    faqs: [
-      {
-        question: "",
-        answer: "",
-        display_order: "" as never as number,
-      },
-    ] as IFaq[],
+    faqs: [{
+      question_en: "",
+      answer_en: "",
+      question_np: "",
+      answer_np: "",
+      display_order: "" as never as number,
+    }] as IFaq[],
   };
   const { id } = useParams<{ id: string }>();
-  const location = useLocation();
-  const urlParams = new URLSearchParams(location.search);
   const navigate = useNavigate();
   const { control, handleSubmit } = useForm({ defaultValues });
 
@@ -58,8 +60,13 @@ const FAQs = () => {
   });
 
   const handleAddField = () => {
-    append({ question: "", answer: "", display_order: 0 as never as number });
+    append({ question_en: "", answer_en: "", 
+    question_np: "", answer_np: "",
+
+      display_order: 0 as never as number });
   };
+
+
 
   const handleRemoveField = (index: number) => {
     remove(index);
@@ -70,18 +77,25 @@ const {data: faqs, isPending: isFaqsPending, isFetching: isFaqsFetching} = useFe
 
 useEffect(() => {
   if(faqs?.data) {
-    append(faqs?.data?.rows);
+    faqs.data.rows.map((faq ) => {
+      append({
+        question_en: faq.question_en ?? "",
+        answer_en: faq.answer_en ?? "",
+        question_np: faq.question_np ?? "",
+        answer_np: faq.answer_np ?? "",
+        display_order: faq.display_order,
+      });
+    })
   }
   }, [faqs]);
 
   const {mutateAsync: createFaqs, isPending} = useUpdateFaqs();
 
   const onSubmit = async (data: FAQFormValues) => {
-    // const response = await createFaqs({ id: productId, data });
-    // if (response.data.status) {
-    //   navigate("/product");
-    // }
-    console.log({ id: id!, data });
+    const response = await createFaqs({ id: id!, data });
+    if (response.data.status) {
+      navigate("/product");
+    }
   };
 
   return (
@@ -116,14 +130,27 @@ useEffect(() => {
               <Stack gap={4}>
                 <TextInput
                   control={control}
-                  name={`faqs[${index}].question`}
-                  label="Question"
+                  name={`faqs[${index}].question_en`}
+                  label="Question (EN)"
                   required
                 />
                 <TextInput
                   control={control}
-                  name={`faqs[${index}].answer`}
-                  label="Answer"
+                  name={`faqs[${index}].answer_en`}
+                  label="Answer (EN)"
+                  type="textarea"
+                  required
+                />
+                <TextInput
+                  control={control}
+                  name={`faqs[${index}].question_np`}
+                  label="Question (NP)"
+                  required
+                />
+                <TextInput
+                  control={control}
+                  name={`faqs[${index}].answer_np`}
+                  label="Answer (NP)"
                   type="textarea"
                   required
                 />
@@ -141,7 +168,9 @@ useEffect(() => {
         <Button variant={"outline"} onClick={handleAddField}>
           Add FAQ
         </Button>
-        <Button type="submit">Save</Button>
+        <Button 
+        loading={isPending}
+        type="submit">Save</Button>
       </HStack>
     </Flex>
   );

@@ -89,6 +89,10 @@ export const appRoutes = [
         element: <NAVIGATION_PAGES.PROPERTY_FORM />,
       },
       {
+        path: NAVIGATION_ROUTES.ADMIN_TESTIMONIALS,
+        element: <NAVIGATION_PAGES.TESTIMONIALS />,
+      },
+      {
         path: "*",
         element: <PageNotFound />,
       },

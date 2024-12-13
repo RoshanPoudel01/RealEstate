@@ -21,8 +21,6 @@ import * as yup from "yup";
 const schema = yup.object().shape({
   title_en: yup.string().required("Title is required"),
   title_np: yup.string().required("Title is required"),
-  description_en: yup.string().required("Description is required"),
-  description_np: yup.string().required("Description is required"),
   address_en: yup.string().required("Address is required"),
   address_np: yup.string().required("Address is required"),
   city_en: yup.string().required("City is required"),
@@ -48,8 +46,7 @@ const General: FC<GeneralProps> = (
   const defaultValues: GeneralValues = {
     title_en: "",
     title_np: "",
-    description_en: "",
-    description_np: "",
+
     address_en: "",
     address_np: "",
     city_en: "",
@@ -187,22 +184,7 @@ const General: FC<GeneralProps> = (
                 name="title_np"
                 label="Title (NP)"
               />
-              <TextInput
-                control={control}
-                required
-                backendError={backendError.description_en}
-                name="description_en"
-                label="Description (EN)"
-                type="textarea"
-              />
-              <TextInput
-                control={control}
-                required
-                backendError={backendError.description_np}
-                name="description_np"
-                label="Description (NP)"
-                type="textarea"
-              />
+             
               <TextInput
                 control={control}
                 required
