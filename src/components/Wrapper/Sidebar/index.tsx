@@ -27,7 +27,9 @@ const Sidebar: FC<SidebarProps> = ({ onClick, ...rest }) => {
       <Card.Body>
         <Stack gap={4}>
           {sidebarItems.map((item, index) => (
-            <SidebarItem onClick={onClick} key={index} item={item} />
+            <SidebarItem onClick={onClick} key={index} item={item} 
+            subItems={item.subItems}
+            />
           ))}
         </Stack>
       </Card.Body>

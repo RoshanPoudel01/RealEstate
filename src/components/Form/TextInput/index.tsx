@@ -92,8 +92,12 @@ const TextInput: FC<
                   {...rest}
                 />
               ) : type === "select" ? (
-                <NativeSelectRoot {...rest}>
-                  <NativeSelectField value={value} onChange={onChange}>
+                <NativeSelectRoot
+                size={"lg"}
+                {...rest}>
+                  <NativeSelectField
+                  
+                  value={value} onChange={onChange}>
                     {options}
                   </NativeSelectField>
                 </NativeSelectRoot>

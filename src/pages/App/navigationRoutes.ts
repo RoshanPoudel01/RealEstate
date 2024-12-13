@@ -17,4 +17,5 @@ export const NAVIGATION_ROUTES = {
   ADMIN_TEAMS: "teams",
   ADMIN_SETTINGS: "settings",
   ADMIN_PROPERTIES: "properties",
+  ADMIN_TESTIMONIALS: "testimonials",
 };

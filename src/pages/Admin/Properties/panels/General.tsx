@@ -1,11 +1,11 @@
 import { Flex, HStack, SimpleGrid } from "@chakra-ui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { ReactDropzone, TextInput } from "@realState/components/Form";
+import { TextInput } from "@realState/components/Form";
 import StatusRadio from "@realState/components/Form/StatusRadio";
 import { Button } from "@realState/components/ui/button";
 import useGetDirtyData from "@realState/hooks/useGetDirtyData";
 import useGetErrors from "@realState/hooks/useGetErrors";
-import { toFormData } from "@realState/services/service-axios";
+import { useFetchCategoryList } from "@realState/services/service-category";
 import {
   useCreateProperty,
   useFetchPropertyById,
@@ -13,7 +13,7 @@ import {
 } from "@realState/services/service-properties";
 import Loader from "@realState/utils/Loader";
 import PageHeader from "@realState/utils/PageHeader";
-import { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 import * as yup from "yup";
@@ -21,8 +21,6 @@ import * as yup from "yup";
 const schema = yup.object().shape({
   title_en: yup.string().required("Title is required"),
   title_np: yup.string().required("Title is required"),
-  description_en: yup.string().required("Description is required"),
-  description_np: yup.string().required("Description is required"),
   address_en: yup.string().required("Address is required"),
   address_np: yup.string().required("Address is required"),
   city_en: yup.string().required("City is required"),
@@ -30,26 +28,23 @@ const schema = yup.object().shape({
   map: yup.string().required("Map is required"),
   category_id: yup.string().required("Select atleast one category."),
   status: yup.string().required("Status is required").default("available"),
-  image: yup.mixed().required("Image is required"),
+  land_area: yup.string().required("Land Area is required"),
+  built_year: yup.string().required("Built Year is required"),
+  price: yup.number().required("Price is required"),
   is_active: yup.string().required("Status is required"),
 });
 
 type GeneralValues = yup.InferType<typeof schema>;
 
-<<<<<<< Updated upstream
-const General = () => {
-=======
 interface GeneralProps {
   setTabValue: (value: string) => void;
 }
 
 const General: FC<GeneralProps> = ({ setTabValue }) => {
->>>>>>> Stashed changes
   const defaultValues: GeneralValues = {
     title_en: "",
     title_np: "",
-    description_en: "",
-    description_np: "",
+
     address_en: "",
     address_np: "",
     city_en: "",
@@ -57,7 +52,9 @@ const General: FC<GeneralProps> = ({ setTabValue }) => {
     category_id: "",
     map: "",
     status: "available",
-    image: "",
+    land_area: "",
+    built_year: "",
+    price: "" as never as number,
     is_active: "1",
   };
 
@@ -87,8 +84,6 @@ const General: FC<GeneralProps> = ({ setTabValue }) => {
     resolver: yupResolver(schema),
   });
 
-<<<<<<< Updated upstream
-=======
   const { data: categories } = useFetchCategoryList();
 
   const categoryOptions = categories?.data?.rows.map((category) => (
@@ -97,7 +92,6 @@ const General: FC<GeneralProps> = ({ setTabValue }) => {
     </option>
   ));
 
->>>>>>> Stashed changes
   const {
     mutateAsync: addProperty,
     isPending: isAdding,
@@ -116,11 +110,6 @@ const General: FC<GeneralProps> = ({ setTabValue }) => {
     {}
   );
 
-<<<<<<< Updated upstream
-  const [removeImage, setRemoveImage] = useState(false);
-
-=======
->>>>>>> Stashed changes
   useEffect(() => {
     if (isAddError) {
       setBackendError(useGetErrors(addError));
@@ -130,30 +119,6 @@ const General: FC<GeneralProps> = ({ setTabValue }) => {
   }, [isAddError, addError, isUpdateError, updateError]);
 
   const onSubmit = async (data: GeneralValues) => {
-<<<<<<< Updated upstream
-    console.log({
-      dirtyData: useGetDirtyData(formState, data),
-    });
-
-    const formData = toFormData(id ? useGetDirtyData(formState, data) : data);
-    if (removeImage) {
-      formData.append("remove_image", "1");
-    }
-
-    if (id) {
-      //   const response = await updateProperty({ data: formData, id });
-      //   if (response.data.status) {
-      //     reset(defaultValues);
-      //     navigate("/admin/properties");
-      //   }
-      console.log({ data, id });
-    } else {
-      //   const response = await addProperty({ data: formData });
-      //   if (response.data.status) {
-      //     reset(defaultValues);
-      //     navigate("/admin/properties");
-      //   }
-=======
     const dirtyData = useGetDirtyData(formState, data);
 
     if (id) {
@@ -173,7 +138,6 @@ const General: FC<GeneralProps> = ({ setTabValue }) => {
         navigate(`/admin/properties/create/${id}`);
         setTabValue("amenities");
       }
->>>>>>> Stashed changes
       console.log({ data });
     }
   };
@@ -214,22 +178,7 @@ const General: FC<GeneralProps> = ({ setTabValue }) => {
                 name="title_np"
                 label="Title (NP)"
               />
-              <TextInput
-                control={control}
-                required
-                backendError={backendError.description_en}
-                name="description_en"
-                label="Description (EN)"
-                type="textarea"
-              />
-              <TextInput
-                control={control}
-                required
-                backendError={backendError.description_np}
-                name="description_np"
-                label="Description (NP)"
-                type="textarea"
-              />
+
               <TextInput
                 control={control}
                 required
@@ -266,8 +215,6 @@ const General: FC<GeneralProps> = ({ setTabValue }) => {
                 name="map"
                 label="Map"
               />
-<<<<<<< Updated upstream
-=======
               <TextInput
                 control={control}
                 required
@@ -288,7 +235,6 @@ const General: FC<GeneralProps> = ({ setTabValue }) => {
                 label="Price"
               />
 
->>>>>>> Stashed changes
               <TextInput
                 control={control}
                 required
@@ -298,12 +244,8 @@ const General: FC<GeneralProps> = ({ setTabValue }) => {
                 type="select"
                 options={
                   <>
-                    <option value="" disabled>
-                      Select Category
-                    </option>
-                    <option value="1">Category 1</option>
-                    <option value="2">Category 2</option>
-                    <option value="3">Category 3</option>
+                    <option value="">Select Category</option>
+                    {categoryOptions}
                   </>
                 }
               />
@@ -328,7 +270,7 @@ const General: FC<GeneralProps> = ({ setTabValue }) => {
                   { label: "Inactive", value: "0" },
                 ]}
               />
-              <ReactDropzone
+              {/* <ReactDropzone
                 control={control}
                 required
                 backendError={backendError.image}
@@ -340,7 +282,7 @@ const General: FC<GeneralProps> = ({ setTabValue }) => {
                 }}
                 file={property?.data?.image ?? ""}
                 setRemoveImage={setRemoveImage}
-              />
+               /> */}
             </form>
           </SimpleGrid>
           <HStack align={"center"}>

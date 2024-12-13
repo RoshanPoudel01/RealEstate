@@ -41,34 +41,8 @@ const Properties = () => {
       },
       enableSorting: false,
     },
-    {
-      header: "Title (NP)",
-      accessorKey: "title_np",
-      cell: ({ row }: IRow<PropertyResponse>) => {
-        const { title_np } = row.original;
-        return <Text>{title_np}</Text>;
-      },
-      enableSorting: false,
-    },
-
-    {
-      header: "Caption (EN)",
-      accessorKey: "caption_en",
-      cell: ({ row }: IRow<PropertyResponse>) => {
-        const { caption_en } = row.original;
-        return <Text>{caption_en}</Text>;
-      },
-      enableSorting: false,
-    },
-    {
-      header: "Caption (NP)",
-      accessorKey: "caption_np",
-      cell: ({ row }: IRow<PropertyResponse>) => {
-        const { caption_np } = row.original;
-        return <Text>{caption_np}</Text>;
-      },
-      enableSorting: false,
-    },
+    
+   
     {
       header: "Image",
       accessorKey: "image",

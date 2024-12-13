@@ -3,11 +3,13 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { ReactDropzone, TextInput } from "@realState/components/Form";
 import StatusRadio from "@realState/components/Form/StatusRadio";
 import { Button } from "@realState/components/ui/button";
+import useGetDirtyData from "@realState/hooks/useGetDirtyData";
 import useGetErrors from "@realState/hooks/useGetErrors";
 import { toFormData } from "@realState/services/service-axios";
 import {
   useCreateCategory,
   useFetchCategoryById,
+  useUpdateCategory,
 } from "@realState/services/service-category";
 import Loader from "@realState/utils/Loader";
 import PageHeader from "@realState/utils/PageHeader";
@@ -44,7 +46,7 @@ const CategoryForm = () => {
 
   const navigate = useNavigate();
 
-  const { control, handleSubmit, reset } = useForm({
+  const { control, handleSubmit, reset, formState } = useForm({
     defaultValues,
     resolver: yupResolver(schema),
   });
@@ -62,12 +64,11 @@ const CategoryForm = () => {
   useEffect(() => {
     if (id) {
       reset({
-        name_en: category?.data.items.find((item) => item.lang === "en")?.name,
-        name_np: category?.data.items.find((item) => item.lang === "np")?.name,
-        description_en: category?.data.items.find((item) => item.lang === "en")
-          ?.description,
-        description_np: category?.data.items.find((item) => item.lang === "np")
-          ?.description,
+        name_en: category?.data.name_en ?? "",
+        name_np: category?.data.name_np ?? "",
+        description_en: category?.data.description_en ?? "",
+        description_np: category?.data.description_np ?? "",
+
         image: category?.data.image,
         is_active: category?.data.is_active ? "1" : "0",
         display_order: category?.data.display_order,
@@ -75,14 +76,23 @@ const CategoryForm = () => {
     } else {
       reset(defaultValues);
     }
-  }, [category]);
+  }, [id, category]);
 
+  
   const {
     mutateAsync: addCategory,
     isPending: isAdding,
     isError: isAddError,
     error: addError,
   } = useCreateCategory();
+
+  const {mutateAsync: updateCategory, isPending: isUpdating,
+  isError: isUpdateError,
+  error: updateError,
+
+  } = useUpdateCategory();
+
+
   const [backendError, setBackendError] = React.useState<
     Record<string, string[]>
   >({});
@@ -90,39 +100,35 @@ const CategoryForm = () => {
   useEffect(() => {
     if (isAddError) {
       setBackendError(useGetErrors(addError));
+    }else if(isUpdateError){
+      setBackendError(useGetErrors(updateError));
     }
-  }, [isAddError, addError]);
+  }, [isAddError, addError, isUpdateError, updateError]);
 
   const onSubmit = async (data: CategoryFormValues) => {
-    const formattedData = {
-      is_active: data.is_active,
-      display_order: data.display_order,
-      image: data.image,
-      items: [
-        {
-          name: data.name_en,
-          description: data.description_en,
-          lang: "en",
-        },
-        {
-          name: data.name_np,
-          description: data.description_np,
-          lang: "np",
-        },
-      ],
-    };
+    
+    const dirtyFields = useGetDirtyData (formState, data);
 
-    const formData = toFormData(formattedData);
+    const formData = toFormData(dirtyFields);
 
     if (removeImage) {
       formData.append("remove_image", "1");
     }
+
+    if(id){
+      const response = await updateCategory({ data: formData, id });
+      if (response.data.status) {
+        reset(defaultValues);
+        navigate("/admin/category");
+      }
+    }else{
 
     const response = await addCategory({ data: formData });
     if (response.data.status) {
       reset(defaultValues);
       navigate("/admin/category");
     }
+  }
   };
 
   return !!id && (isCategoryPending || isCategoryFetching) ? (
@@ -212,7 +218,7 @@ const CategoryForm = () => {
           form="category-form"
           colorPalette={"primary"}
           color={"white"}
-          loading={isAdding}
+          loading={isAdding || isUpdating}
         >
           Submit
         </Button>
