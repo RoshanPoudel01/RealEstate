@@ -11,6 +11,12 @@ import {
 import { X } from "@phosphor-icons/react";
 import { TextInput } from "@realState/components/Form";
 import { Button } from "@realState/components/ui/button";
+<<<<<<< Updated upstream
+=======
+import { useFetchFaqs } from "@realState/services/service-properties";
+import Loader from "@realState/utils/Loader";
+import { useEffect } from "react";
+>>>>>>> Stashed changes
 import { useFieldArray, useForm } from "react-hook-form";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import * as yup from "yup";
@@ -63,6 +69,23 @@ const FAQs = () => {
     remove(index);
   };
 
+<<<<<<< Updated upstream
+=======
+  const {
+    data: faqs,
+    isPending: isFaqsPending,
+    isFetching: isFaqsFetching,
+  } = useFetchFaqs(id!);
+
+  useEffect(() => {
+    if (faqs?.data) {
+      append(faqs?.data?.rows);
+    }
+  }, [faqs]);
+
+  // const {mutateAsync: createFaqs, isPending} = useUpdateFaqs();
+
+>>>>>>> Stashed changes
   const onSubmit = async (data: FAQFormValues) => {
     // const response = await createFaqs({ id: productId, data });
     // if (response.data.status) {
@@ -71,7 +94,13 @@ const FAQs = () => {
     console.log({ id: productId, data });
   };
 
+<<<<<<< Updated upstream
   return (
+=======
+  return isFaqsFetching || isFaqsPending ? (
+    <Loader />
+  ) : (
+>>>>>>> Stashed changes
     <Flex
       flexDir={"column"}
       gap={4}

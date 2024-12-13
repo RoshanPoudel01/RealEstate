@@ -8,7 +8,7 @@ import Properties from "../User/Properties";
 import { NAVIGATION_PAGES } from "./navigationPages";
 import { NAVIGATION_ROUTES } from "./navigationRoutes";
 
-export const appRoutes = [
+export const adminRoutes = [
   {
     path: "/admin",
     element: <AdminWrapper />,

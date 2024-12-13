@@ -1,3 +1,5 @@
+import { PropertyParams } from "./service-properties";
+
 // const service = `internal-service`;
 export const api = {
   auth: {
@@ -74,5 +76,9 @@ export const api = {
     create: `admin/property`,
     update: `admin/property/:id`,
     delete: `admin/property/:id`,
+    properties: ({ propertyType, language = "en" }: PropertyParams) => {
+      return `/property${propertyType ? "/" + propertyType : ""}`;
+    },
+    propertyById: `/property/{id}`,
   },
 };
