@@ -21,8 +21,6 @@ import * as yup from "yup";
 const schema = yup.object().shape({
   title_en: yup.string().required("Title is required"),
   title_np: yup.string().required("Title is required"),
-  description_en: yup.string().required("Description is required"),
-  description_np: yup.string().required("Description is required"),
   address_en: yup.string().required("Address is required"),
   address_np: yup.string().required("Address is required"),
   city_en: yup.string().required("City is required"),
@@ -42,14 +40,11 @@ interface GeneralProps {
   setTabValue: (value: string) => void;
 }
 
-const General: FC<GeneralProps> = (
-  {  setTabValue },
-) => {
+const General: FC<GeneralProps> = ({ setTabValue }) => {
   const defaultValues: GeneralValues = {
     title_en: "",
     title_np: "",
-    description_en: "",
-    description_np: "",
+
     address_en: "",
     address_np: "",
     city_en: "",
@@ -89,8 +84,7 @@ const General: FC<GeneralProps> = (
     resolver: yupResolver(schema),
   });
 
-
-  const {data: categories} = useFetchCategoryList();
+  const { data: categories } = useFetchCategoryList();
 
   const categoryOptions = categories?.data?.rows.map((category) => (
     <option key={category.id} value={category.id}>
@@ -116,7 +110,6 @@ const General: FC<GeneralProps> = (
     {}
   );
 
-
   useEffect(() => {
     if (isAddError) {
       setBackendError(useGetErrors(addError));
@@ -126,27 +119,25 @@ const General: FC<GeneralProps> = (
   }, [isAddError, addError, isUpdateError, updateError]);
 
   const onSubmit = async (data: GeneralValues) => {
-    const 
-      dirtyData = useGetDirtyData(formState, data)
-    
+    const dirtyData = useGetDirtyData(formState, data);
 
     if (id) {
-        const response = await updateProperty({ data: dirtyData, id });
-        if (response.data.status) {
-          reset(defaultValues);
-          navigate(`/admin/properties/edit/${id}`);
-          setTabValue("amenities");
-        }
+      const response = await updateProperty({ data: dirtyData, id });
+      if (response.data.status) {
+        reset(defaultValues);
+        navigate(`/admin/properties/edit/${id}`);
+        setTabValue("amenities");
+      }
       console.log({ data, id });
     } else {
-        const response = await addProperty({ data });
-        console.log({ response });
-        if (response.data.status) {
-          const id = response.data.data.id;
-          reset(defaultValues);
-          navigate(`/admin/properties/create/${id}`);
-          setTabValue("amenities");
-        }
+      const response = await addProperty({ data });
+      console.log({ response });
+      if (response.data.status) {
+        const id = response.data.data.id;
+        reset(defaultValues);
+        navigate(`/admin/properties/create/${id}`);
+        setTabValue("amenities");
+      }
       console.log({ data });
     }
   };
@@ -187,22 +178,7 @@ const General: FC<GeneralProps> = (
                 name="title_np"
                 label="Title (NP)"
               />
-              <TextInput
-                control={control}
-                required
-                backendError={backendError.description_en}
-                name="description_en"
-                label="Description (EN)"
-                type="textarea"
-              />
-              <TextInput
-                control={control}
-                required
-                backendError={backendError.description_np}
-                name="description_np"
-                label="Description (NP)"
-                type="textarea"
-              />
+
               <TextInput
                 control={control}
                 required
@@ -239,13 +215,26 @@ const General: FC<GeneralProps> = (
                 name="map"
                 label="Map"
               />
-              <TextInput control={control} required name="land_area" label="Land Area" />
-              <TextInput 
-                helperText="Enter the year in YYYY format"              
-              control={control} required name="built_year" label="Built Year" />
               <TextInput
-              control={control} required name="price" label="Price" />
-              
+                control={control}
+                required
+                name="land_area"
+                label="Land Area"
+              />
+              <TextInput
+                helperText="Enter the year in YYYY format"
+                control={control}
+                required
+                name="built_year"
+                label="Built Year"
+              />
+              <TextInput
+                control={control}
+                required
+                name="price"
+                label="Price"
+              />
+
               <TextInput
                 control={control}
                 required
@@ -293,7 +282,7 @@ const General: FC<GeneralProps> = (
                 }}
                 file={property?.data?.image ?? ""}
                 setRemoveImage={setRemoveImage}
-              /> */}
+               /> */}
             </form>
           </SimpleGrid>
           <HStack align={"center"}>

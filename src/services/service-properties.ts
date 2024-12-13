@@ -12,6 +12,29 @@ export interface PropertyResponse {
   caption_np: string;
   image?: string;
 }
+export interface PropertyFrontResponse {
+  id: number;
+  category_id: number;
+  price: string;
+  land_area: string;
+  floor: string;
+  is_road_access: number;
+  built_year: string;
+  map: string;
+  is_parking: number;
+  is_furnished: number;
+  is_garden: number;
+  is_active: number;
+  status: string;
+  title_en: string;
+  title_np: string;
+  description_en: string;
+  description_np: string;
+  address_en: string;
+  address_np: string;
+  city_en: string;
+  city_np: string;
+}
 
 export interface AmenityResponse {
   is_road_access: number;
@@ -25,6 +48,10 @@ export interface ImagesResponse {
   id: number;
   image: string;
 }
+export interface PropertyParams {
+  propertyType: string;
+  language?: string;
+}
 
 const useFetchProperties = ({ page = 1, perPage = 10, keyword = "" }) => {
   return useFetch<RootResponse<PropertyResponse>>({
@@ -33,6 +60,23 @@ const useFetchProperties = ({ page = 1, perPage = 10, keyword = "" }) => {
   });
 };
 
+const useFetchAllProperties = ({ propertyType, language }: PropertyParams) => {
+  return useFetch<RootResponse<PropertyFrontResponse>>({
+    url: api.properties.properties({
+      propertyType: propertyType,
+      language: language,
+    }),
+    queryKey: [propertyType],
+  });
+};
+
+const useGetPropertyDetails = (id: number | null) => {
+  return useFetch<SingleResponse<PropertyFrontResponse>>({
+    url: api.properties.propertyById.replace("{id}", id + ""),
+    queryKey: [`property-${id}`],
+    enabled: !!id,
+  });
+};
 const useFetchPropertyById = (id: string) => {
   return useFetch<SingleResponse<PropertyResponse>>({
     url: api.properties.fetchById.replace(":id", id),
@@ -70,13 +114,13 @@ const useDeleteProperty = () => {
   });
 };
 
-const useFetchAmenities = (id:string) => {
+const useFetchAmenities = (id: string) => {
   return useFetch<SingleResponse<AmenityResponse>>({
     url: api.properties.amenity.replace(":id", id),
     queryKey: [`amenities`],
     enabled: !!id,
   });
-}
+};
 
 const useUpdateAmenities = () => {
   return useMutate({
@@ -86,7 +130,7 @@ const useUpdateAmenities = () => {
     method: `POST`,
     message: `Amenity updated successfully`,
   });
-}
+};
 
 const useFetchImages = (id: string) => {
   return useFetch<RootResponse<ImagesResponse>>({
@@ -94,7 +138,7 @@ const useFetchImages = (id: string) => {
     queryKey: [`images`],
     enabled: !!id,
   });
-}
+};
 
 const useUpdateImages = () => {
   return useMutate({
@@ -104,15 +148,15 @@ const useUpdateImages = () => {
     invalidates: [`images`],
     message: `Images updated successfully`,
   });
-}
+};
 
-const useFetchFaqs = (id:string) => {
+const useFetchFaqs = (id: string) => {
   return useFetch<RootResponse<any>>({
     url: api.properties.faqs.replace(":id", id),
     queryKey: [`faqs`],
     message: `FAQs created successfully`,
   });
-}
+};
 
 const useUpdateFaqs = () => {
   return useMutate({
@@ -121,12 +165,21 @@ const useUpdateFaqs = () => {
     method: `POST`,
     invalidates: [`faqs`],
     message: `FAQs updated successfully`,
-  })
-}
+  });
+};
 
 export {
   useCreateProperty,
-  useDeleteProperty, useFetchAmenities, useFetchFaqs, useFetchImages, useFetchProperties,
-  useFetchPropertyById, useUpdateAmenities, useUpdateFaqs, useUpdateImages, useUpdateProperty
+  useDeleteProperty,
+  useFetchAllProperties,
+  useFetchAmenities,
+  useFetchFaqs,
+  useFetchImages,
+  useFetchProperties,
+  useFetchPropertyById,
+  useGetPropertyDetails,
+  useUpdateAmenities,
+  useUpdateFaqs,
+  useUpdateImages,
+  useUpdateProperty,
 };
-

@@ -1,16 +1,17 @@
 import { NAVIGATION_ROUTES } from "@realState/pages/App/navigationRoutes";
+import { t } from "i18next";
 
 export const navLinks = [
   {
-    label: "Home",
+    label: t("navbar:home"),
     href: NAVIGATION_ROUTES.HOME,
   },
   {
-    label: "Properties",
+    label: t("navbar:properties"),
     href: NAVIGATION_ROUTES.PROPERTIES,
   },
   {
-    label: "About Us",
+    label: t("navbar:about"),
     href: NAVIGATION_ROUTES.ABOUT,
   },
 ];
