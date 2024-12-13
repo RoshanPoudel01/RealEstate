@@ -3,12 +3,18 @@ import PageHeader from "@realState/utils/PageHeader";
 import { useState } from "react";
 import { FAQs, General, Images } from "./panels";
 import Amenities from "./panels/Amenities";
+import Descriptions from "./panels/Descriptions";
 
 const triggers = [
   {
     label: "General",
     value: "general",
-  },{
+  },
+  {
+    label: "Descriptions",
+    value: "descriptions",
+  },
+  {
     label: "Amenities"  ,
     value: "amenities",
   },
@@ -52,17 +58,22 @@ const PropertyForm = () => {
           />
         </Tabs.Content>
         <Tabs.Content value={triggers[1].value}>
-          <Amenities
+          <Descriptions
           setTabValue={setTabValue}
           />
         </Tabs.Content>
         <Tabs.Content value={triggers[2].value}>
+          <Amenities
+          setTabValue={setTabValue}
+          />
+        </Tabs.Content>
+        <Tabs.Content value={triggers[3].value}>
           <Images 
           setTabValue={setTabValue}
           
           />
         </Tabs.Content>
-        <Tabs.Content value={triggers[3].value}>
+        <Tabs.Content value={triggers[4].value}>
           <FAQs />
         </Tabs.Content>
       </Tabs.Root>

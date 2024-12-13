@@ -68,7 +68,12 @@ const ModalForm: FC<IModalFormProps & DialogContentProps> = ({
         {trigger ? (
           trigger
         ) : id ? (
-          <IconButton borderRadius={5} colorPalette={"teal"} aria-label="Edit">
+          <IconButton
+            borderRadius={5}
+            colorPalette={"blue"}
+            variant={"subtle"}
+            aria-label="Edit"
+          >
             <Icon asChild boxSize={6}>
               <Pencil />
             </Icon>
@@ -84,9 +89,7 @@ const ModalForm: FC<IModalFormProps & DialogContentProps> = ({
       </DialogTrigger>
       <DialogContent {...rest} mx={2}>
         <DialogHeader>
-          <DialogTitle>
-            {heading && !id ? heading : id ? "Edit" : "Add"}
-          </DialogTitle>
+          <DialogTitle>{heading ? heading : id ? "Edit" : "Add"}</DialogTitle>
         </DialogHeader>
         <DialogBody asChild>
           {isFetching && !!id ? (

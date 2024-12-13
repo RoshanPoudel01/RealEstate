@@ -1,10 +1,13 @@
 import {
   Building,
+  FireSimple,
   House,
   Images,
   Package,
   Rectangle,
   SquaresFour,
+  Star,
+  User,
   Users,
 } from "@phosphor-icons/react";
 
@@ -45,5 +48,34 @@ export const sidebarItems = [
     title: "Properties",
     icon: <Building />,
     to: "/admin/properties",
+
+    subItems: [
+      {
+        title: "Information",
+        to: "/admin/properties",
+        icon: <Building />,
+      },
+      {
+        title: "New",
+        to: "/admin/properties/new",
+        icon: <Star />,
+      },
+      {
+        title: "Featured",
+        to: "/admin/properties/featured",
+        icon: <Star />,
+      },
+      {
+        title: "Trending",
+        to: "/admin/properties/trending",
+        icon: <FireSimple />,
+      }
+      
+    ]
   },
+  {
+    title: "Testimonials",
+    icon: <User />,
+    to: "/admin/testimonials",
+  }
 ];
