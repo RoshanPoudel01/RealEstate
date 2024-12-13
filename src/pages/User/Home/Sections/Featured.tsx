@@ -1,8 +1,21 @@
-import { HStack, SimpleGrid, Stack, Text } from "@chakra-ui/react";
+import {
+  Center,
+  Heading,
+  HStack,
+  SimpleGrid,
+  Stack,
+  Text,
+} from "@chakra-ui/react";
 import { imageAssets } from "@realState/assets/images";
+import LoadingCard from "@realState/components/Cards/LoadingCard";
 import PropertyCard from "@realState/components/Cards/Property";
+import { useFetchAllProperties } from "@realState/services/service-properties";
 
 const Featured = () => {
+  const currenLanguage = localStorage.getItem("language");
+  const { data: featuredProperties, isLoading } = useFetchAllProperties({
+    propertyType: "featured",
+  });
   return (
     <Stack
       px={{
@@ -24,12 +37,18 @@ const Featured = () => {
             Featured Houses
           </Text>
           <Text color={"#263640"} fontSize={"16px"} fontWeight={"bolder"}>
-            View All
+            Filter according to some option
           </Text>
           <Text color={"#263640"} fontSize={"16px"} fontWeight={"bolder"}>
             View All
           </Text>
         </HStack>
+        <HStack>{isLoading && [1, 2, 3].map(() => <LoadingCard />)}</HStack>
+        {featuredProperties?.data?.count === 0 && (
+          <Center>
+            <Heading>No Featured Properties...</Heading>
+          </Center>
+        )}
         <SimpleGrid
           columns={{
             base: 1,
@@ -43,15 +62,16 @@ const Featured = () => {
             md: 12,
           }}
         >
-          {[1, 2, 3, 4].map((item) => (
+          {featuredProperties?.data?.rows?.map((item) => (
             <PropertyCard
-              title={"Roselands House"}
-              price="$ 350000000"
+              title={currenLanguage === "en" ? item?.title_en : item?.title_np}
+              price={item?.price}
               img={imageAssets.Logo}
-              description="This is a beautiful house"
-              address="Roselands House"
-              city="Lagos"
-              status="For Sale"
+              address={
+                currenLanguage === "en" ? item?.address_en : item?.address_np
+              }
+              city={currenLanguage === "en" ? item?.city_en : item?.city_np}
+              status={item?.status}
             />
           ))}
         </SimpleGrid>

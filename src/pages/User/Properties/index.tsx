@@ -1,6 +1,7 @@
 import {
   Box,
   Center,
+  Heading,
   HStack,
   Separator,
   SimpleGrid,
@@ -8,15 +9,27 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { imageAssets } from "@realState/assets/images";
+import LoadingCard from "@realState/components/Cards/LoadingCard";
 import PropertyCard from "@realState/components/Cards/Property";
 import { TextInput } from "@realState/components/Form";
 import RangeSlider from "@realState/components/Form/Slider/RangeSlider";
 import { Button } from "@realState/components/ui/button";
 import { NAVIGATION_ROUTES } from "@realState/pages/App/navigationRoutes";
+import { useFetchAllProperties } from "@realState/services/service-properties";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
 const Properties = () => {
+  const currenLanguage = localStorage.getItem("language");
+
+  // const { pageIndex, setPageIndex, keyword, setKeyword } =
+  //   useSearchParamsState();
+  const { data: properties, isLoading } = useFetchAllProperties({
+    propertyType: "",
+  });
+  // useEffect(() => {
+  //   refetch();
+  // }, [pageIndex, keyword]);
   const navigate = useNavigate();
   const { control, handleSubmit } = useForm();
   const submitFrm = (data: any) => {
@@ -166,6 +179,11 @@ const Properties = () => {
           />
         </Box>
       </Stack>
+      {properties?.data?.count === 0 && (
+        <Center>
+          <Heading>No Properties...</Heading>
+        </Center>
+      )}
       <SimpleGrid
         columns={{ base: 1, sm: 2, md: 3 }}
         w={"full"}
@@ -175,18 +193,20 @@ const Properties = () => {
         }}
         gap={10}
       >
-        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13].map((item) => (
+        {isLoading && [1, 2, 3].map(() => <LoadingCard />)}
+        {properties?.data?.rows.map((item) => (
           <PropertyCard
-            title={"Roselands House"}
-            price="$ 350000000"
+            title={currenLanguage === "en" ? item.title_en : item.title_np}
+            price={item?.price}
             img={imageAssets.Logo}
-            description="This is a beautiful house"
-            address="Roselands House"
-            city="Lagos"
-            status="For Sale"
+            address={
+              currenLanguage === "en" ? item.address_en : item.address_np
+            }
+            city={currenLanguage === "en" ? item.city_en : item.city_np}
+            status={item.status}
             onClick={() =>
               navigate(NAVIGATION_ROUTES.PROPERTY_DETAILS, {
-                state: { id: item },
+                state: { id: item?.id },
               })
             }
           />

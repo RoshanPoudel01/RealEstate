@@ -1,5 +1,6 @@
-import { Button, Flex, Image, Stack } from "@chakra-ui/react";
+import { Flex, Image, Stack, Text } from "@chakra-ui/react";
 import { imageAssets } from "@realState/assets/images";
+import { Switch } from "@realState/components/ui/switch";
 import { NAVIGATION_ROUTES } from "@realState/pages/App/navigationRoutes";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -62,6 +63,13 @@ export default function NavBar({
   //     }
   //   };
   const navigate = useNavigate();
+
+  const changeLangugaeHandler = () => {
+    const lang = localStorage.getItem("language") === "np" ? "en" : "np";
+    localStorage.setItem("language", lang);
+    // i18next.changeLanguage(lang);
+    window.location.reload();
+  };
   return (
     <Flex bg="FFFFFF" position={"sticky"} pt={8}>
       <Stack
@@ -116,7 +124,17 @@ export default function NavBar({
             );
           })}
         </Stack>
-        <Button>Any</Button>
+
+        <Switch
+          colorPalette="blue"
+          size="lg"
+          trackLabel={{
+            on: <Text>NP</Text>,
+            off: <Text>EN</Text>,
+          }}
+          checked={localStorage.getItem("language") === "np"}
+          onChange={changeLangugaeHandler}
+        />
       </Stack>
     </Flex>
   );

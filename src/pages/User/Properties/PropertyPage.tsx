@@ -18,7 +18,10 @@ import {
   AccordionItemTrigger,
   AccordionRoot,
 } from "@realState/components/ui/accordion";
+import { useGetPropertyDetails } from "@realState/services/service-properties";
+import parse from "html-react-parser";
 import { useForm } from "react-hook-form";
+import { useLocation } from "react-router-dom";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
@@ -30,6 +33,11 @@ const defaultValue = {
   message: "",
 };
 const PropertyPage = () => {
+  const currenLanguage = localStorage.getItem("language");
+
+  const location = useLocation();
+  const { data: propertyDetail } = useGetPropertyDetails(location?.state?.id);
+
   var settings = {
     infinite: true,
     speed: 500,
@@ -59,7 +67,11 @@ const PropertyPage = () => {
   };
   return (
     <Container display="flex" flexDirection={"column"} gap={10}>
-      <Heading textAlign={"center"}>Property Name</Heading>
+      <Heading textAlign={"center"}>
+        {currenLanguage === "en"
+          ? propertyDetail?.data?.title_en
+          : propertyDetail?.data?.title_np}
+      </Heading>
       <SimpleGrid columns={3} gap={10}>
         <GridItem display={"flex"} flexDir={"column"} gap={10} colSpan={2}>
           <Stack>
@@ -115,34 +127,11 @@ const PropertyPage = () => {
             fontWeight={400}
             fontSize={"17px"}
           >
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor enim
-            obcaecati cumque, eum quibusdam, iure laudantium nulla quod eligendi
-            incidunt ducimus vel? Pariatur facilis ipsam similique. Doloribus
-            sed placeat atque? Lorem ipsum dolor sit amet consectetur,
-            adipisicing elit. Corrupti temporibus sit deleniti est nulla libero
-            iste architecto fuga, excepturi suscipit accusantium, itaque placeat
-            debitis illum quasi sed explicabo sint mollitia? Lorem ipsum dolor
-            sit amet consectetur adipisicing elit. Dolor enim obcaecati cumque,
-            eum quibusdam, iure laudantium nulla quod eligendi incidunt ducimus
-            vel? Pariatur facilis ipsam similique. Doloribus sed placeat atque?
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Corrupti
-            temporibus sit deleniti est nulla libero iste architecto fuga,
-            excepturi suscipit accusantium, itaque placeat debitis illum quasi
-            sed explicabo sint mollitia? Lorem ipsum dolor sit amet consectetur
-            adipisicing elit. Dolor enim obcaecati cumque, eum quibusdam, iure
-            laudantium nulla quod eligendi incidunt ducimus vel? Pariatur
-            facilis ipsam similique. Doloribus sed placeat atque? Lorem ipsum
-            dolor sit amet consectetur, adipisicing elit. Corrupti temporibus
-            sit deleniti est nulla libero iste architecto fuga, excepturi
-            suscipit accusantium, itaque placeat debitis illum quasi sed
-            explicabo sint mollitia? Lorem ipsum dolor sit amet consectetur
-            adipisicing elit. Dolor enim obcaecati cumque, eum quibusdam, iure
-            laudantium nulla quod eligendi incidunt ducimus vel? Pariatur
-            facilis ipsam similique. Doloribus sed placeat atque? Lorem ipsum
-            dolor sit amet consectetur, adipisicing elit. Corrupti temporibus
-            sit deleniti est nulla libero iste architecto fuga, excepturi
-            suscipit accusantium, itaque placeat debitis illum quasi sed
-            explicabo sint mollitia?
+            {parse(
+              (currenLanguage === "en"
+                ? propertyDetail?.data?.description_en
+                : propertyDetail?.data?.description_np) ?? ""
+            )}
           </Text>
           <Stack w={"70%"}>
             <Heading>FAQ</Heading>

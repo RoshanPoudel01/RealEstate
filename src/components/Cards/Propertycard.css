@@ -38,8 +38,8 @@
   border-top-right-radius: 12px;
 }
 .card:hover .card__img--hover {
-  height: 100%;
-  opacity: 0.3;
+  height: 90%;
+  opacity: 0.6;
 }
 
 /* Status Badge */

@@ -36,7 +36,15 @@ const schema = yup.object().shape({
 
 type GeneralValues = yup.InferType<typeof schema>;
 
+<<<<<<< Updated upstream
 const General = () => {
+=======
+interface GeneralProps {
+  setTabValue: (value: string) => void;
+}
+
+const General: FC<GeneralProps> = ({ setTabValue }) => {
+>>>>>>> Stashed changes
   const defaultValues: GeneralValues = {
     title_en: "",
     title_np: "",
@@ -79,6 +87,17 @@ const General = () => {
     resolver: yupResolver(schema),
   });
 
+<<<<<<< Updated upstream
+=======
+  const { data: categories } = useFetchCategoryList();
+
+  const categoryOptions = categories?.data?.rows.map((category) => (
+    <option key={category.id} value={category.id}>
+      {category.name_en}
+    </option>
+  ));
+
+>>>>>>> Stashed changes
   const {
     mutateAsync: addProperty,
     isPending: isAdding,
@@ -97,8 +116,11 @@ const General = () => {
     {}
   );
 
+<<<<<<< Updated upstream
   const [removeImage, setRemoveImage] = useState(false);
 
+=======
+>>>>>>> Stashed changes
   useEffect(() => {
     if (isAddError) {
       setBackendError(useGetErrors(addError));
@@ -108,6 +130,7 @@ const General = () => {
   }, [isAddError, addError, isUpdateError, updateError]);
 
   const onSubmit = async (data: GeneralValues) => {
+<<<<<<< Updated upstream
     console.log({
       dirtyData: useGetDirtyData(formState, data),
     });
@@ -130,6 +153,27 @@ const General = () => {
       //     reset(defaultValues);
       //     navigate("/admin/properties");
       //   }
+=======
+    const dirtyData = useGetDirtyData(formState, data);
+
+    if (id) {
+      const response = await updateProperty({ data: dirtyData, id });
+      if (response.data.status) {
+        reset(defaultValues);
+        navigate(`/admin/properties/edit/${id}`);
+        setTabValue("amenities");
+      }
+      console.log({ data, id });
+    } else {
+      const response = await addProperty({ data });
+      console.log({ response });
+      if (response.data.status) {
+        const id = response.data.data.id;
+        reset(defaultValues);
+        navigate(`/admin/properties/create/${id}`);
+        setTabValue("amenities");
+      }
+>>>>>>> Stashed changes
       console.log({ data });
     }
   };
@@ -222,6 +266,29 @@ const General = () => {
                 name="map"
                 label="Map"
               />
+<<<<<<< Updated upstream
+=======
+              <TextInput
+                control={control}
+                required
+                name="land_area"
+                label="Land Area"
+              />
+              <TextInput
+                helperText="Enter the year in YYYY format"
+                control={control}
+                required
+                name="built_year"
+                label="Built Year"
+              />
+              <TextInput
+                control={control}
+                required
+                name="price"
+                label="Price"
+              />
+
+>>>>>>> Stashed changes
               <TextInput
                 control={control}
                 required
