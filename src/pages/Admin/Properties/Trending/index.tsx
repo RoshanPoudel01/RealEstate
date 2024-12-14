@@ -13,9 +13,9 @@ import { ProgressBar, ProgressRoot } from "@realState/components/ui/progress";
 import useGetErrors from "@realState/hooks/useGetErrors";
 import { useFetchCategoryList } from "@realState/services/service-category";
 import {
-  useAddFeaturedProperties,
-  useFetchFeaturedProperties,
+  useAddTrendingProperties,
   useFetchPropertyList,
+  useFetchTrendingProperties,
 } from "@realState/services/service-properties";
 import PageHeader from "@realState/utils/PageHeader";
 import { useEffect, useState } from "react";
@@ -24,32 +24,32 @@ import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 const tHeads = ["S.N", "Property Name", "Action"];
 
-const featuredSchema = yup.object().shape({
+const trendingSchema = yup.object().shape({
   properties: yup.array().min(1, "Select at least one property."),
 });
 
-type featuredData = yup.InferType<typeof featuredSchema>;
+type trendingData = yup.InferType<typeof trendingSchema>;
 interface IProperty {
   id: number;
   title_en?: string;
 }
 
-const Featured = () => {
-  const defaultValues: featuredData = {
+const Trending = () => {
+  const defaultValues: trendingData = {
     properties: [],
   };
   const navigate = useNavigate();
 
   const {
-    mutateAsync: addFeatured,
+    mutateAsync: addTrending,
     isPending: isAdding,
     isError: isAddError,
     error: addError,
-  } = useAddFeaturedProperties();
+  } = useAddTrendingProperties();
 
   const { setValue, handleSubmit, reset, formState } = useForm({
     defaultValues,
-    resolver: yupResolver(featuredSchema),
+    resolver: yupResolver(trendingSchema),
   });
   const { data: categoryList } = useFetchCategoryList();
   const [categoryId, setCategoryId] = useState<string | null>(null);
@@ -73,17 +73,17 @@ const Featured = () => {
     refetch();
   }, [categoryId, keyword, refetch]);
 
-  const { data: featured } = useFetchFeaturedProperties();
+  const { data: trending } = useFetchTrendingProperties();
   useEffect(() => {
-    if (featured?.data) {
+    if (trending?.data) {
       setSelectedProperties(
-        featured?.data.rows.map((property) => ({
+        trending?.data.rows.map((property) => ({
           id: property.id,
           title_en: property.title_en,
         }))
       );
     }
-  }, [featured?.data, reset]);
+  }, [trending?.data, reset]);
 
   useEffect(() => {
     if (isAddError) {
@@ -148,11 +148,11 @@ const Featured = () => {
 
   const onSubmit = async (data: typeof defaultValues) => {
     console.log({ data });
-    const response = await addFeatured({
+    const response = await addTrending({
       data: { properties: JSON.stringify(data.properties) },
     });
     if (response.data.status) {
-      navigate("/admin/properties/featured");
+      navigate("/admin/properties/trending");
     }
   };
 
@@ -160,8 +160,8 @@ const Featured = () => {
     <Flex direction="column" gap={8} asChild>
       <form onSubmit={handleSubmit(onSubmit)} id="new-arrival-form" noValidate>
         <PageHeader
-          heading="Featured"
-          description="Select properties to add as featured"
+          heading="Trending"
+          description="Select properties to add as trending"
         />
         <HStack
           align={"center"}
@@ -301,4 +301,4 @@ const Featured = () => {
   );
 };
 
-export default Featured;
+export default Trending;

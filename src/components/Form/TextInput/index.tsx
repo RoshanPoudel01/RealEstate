@@ -43,83 +43,120 @@ const TextInput: FC<
   options,
   ...rest
 }) => {
-  return (
-    isControlled && (
-      <Controller
-        name={name}
-        control={control}
-        render={({ field: { value, onChange }, fieldState: { error } }) => (
-          <Field
-            label={label}
-            invalid={!!error || !!backendError?.length}
-            errorText={backendError?.[0] ?? error?.message}
-            helperText={helperText}
-            readOnly={rest.readOnly}
-            required={rest.required}
+  return isControlled ? (
+    <Controller
+      name={name}
+      control={control}
+      render={({ field: { value, onChange }, fieldState: { error } }) => (
+        <Field
+          label={label}
+          invalid={!!error || !!backendError?.length}
+          errorText={backendError?.[0] ?? error?.message}
+          helperText={helperText}
+          readOnly={rest.readOnly}
+          required={rest.required}
+        >
+          <InputGroup
+            flex={"1"}
+            startElement={
+              startElement && (
+                <Icon boxSize={5} asChild>
+                  {startElement}
+                </Icon>
+              )
+            }
+            endElement={
+              endElement && (
+                <Icon boxSize={5} asChild>
+                  {endElement}
+                </Icon>
+              )
+            }
+            w={"full"}
           >
-            <InputGroup
-              flex={"1"}
-              startElement={
-                startElement && (
-                  <Icon boxSize={5} asChild>
-                    {startElement}
-                  </Icon>
-                )
-              }
-              endElement={
-                endElement && (
-                  <Icon boxSize={5} asChild>
-                    {endElement}
-                  </Icon>
-                )
-              }
-              w={"full"}
-            >
-              {type === "textarea" ? (
-                <Textarea
-                  size={"xl"}
-                  colorPalette={"primary"}
-                  value={value}
-                  onChange={onChange}
-                  {...rest}
-                />
-              ) : type === "password" ? (
-                <PasswordInput
-                  size={"lg"}
-                  colorPalette={"primary"}
-                  value={value}
-                  onChange={onChange}
-                  {...rest}
-                />
-              ) : type === "select" ? (
-                <NativeSelectRoot
+            {type === "textarea" ? (
+              <Textarea
+                size={"xl"}
+                colorPalette={"primary"}
+                value={value}
+                onChange={onChange}
+                {...rest}
+              />
+            ) : type === "password" ? (
+              <PasswordInput
                 size={"lg"}
-                {...rest}>
-                  <NativeSelectField
-                  
-                  value={value} onChange={onChange}>
-                    {options}
-                  </NativeSelectField>
-                </NativeSelectRoot>
-              ) : (
-                <Input
-                  size={"lg"}
-                  colorPalette={"primary"}
-                  value={value}
-                  type={type}
-                  onChange={onChange}
-                  onWheel={(e) => {
-                    const target = e.target as HTMLInputElement;
-                    type == "number" && target.blur();
-                  }}
-                  {...rest}
-                />
-              )}
-            </InputGroup>
-          </Field>
+                colorPalette={"primary"}
+                value={value}
+                onChange={onChange}
+                {...rest}
+              />
+            ) : type === "select" ? (
+              <NativeSelectRoot size={"lg"} {...rest}>
+                <NativeSelectField value={value} onChange={onChange}>
+                  {options}
+                </NativeSelectField>
+              </NativeSelectRoot>
+            ) : (
+              <Input
+                size={"lg"}
+                colorPalette={"primary"}
+                value={value}
+                type={type}
+                onChange={onChange}
+                onWheel={(e) => {
+                  const target = e.target as HTMLInputElement;
+                  type == "number" && target.blur();
+                }}
+                {...rest}
+              />
+            )}
+          </InputGroup>
+        </Field>
+      )}
+    />
+  ) : (
+    <Field
+      label={label}
+      helperText={helperText}
+      readOnly={rest.readOnly}
+      required={rest.required}
+    >
+      <InputGroup
+        flex={"1"}
+        startElement={
+          startElement && (
+            <Icon boxSize={5} asChild>
+              {startElement}
+            </Icon>
+          )
+        }
+        endElement={
+          endElement && (
+            <Icon boxSize={5} asChild>
+              {endElement}
+            </Icon>
+          )
+        }
+        w={"full"}
+      >
+        {type === "select" ? (
+          <NativeSelectRoot size={"lg"} {...rest}>
+            <NativeSelectField>{options}</NativeSelectField>
+          </NativeSelectRoot>
+        ) : (
+          <Input
+            size={"lg"}
+            colorPalette={"primary"}
+            type={type}
+            onWheel={(e) => {
+              const target = e.target as HTMLInputElement;
+              type == "number" && target.blur();
+            }}
+            {...rest}
+          />
         )}
-      />
-    )
+      </InputGroup>
+    </Field>
   );
 };
 

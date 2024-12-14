@@ -29,7 +29,9 @@ export default function App() {
       </Flex>
     );
   }
-  const appRoutes = isAuthenticated ? adminRoutes : userRoutes;
+  const appRoutes = isAuthenticated
+    ? [...userRoutes, ...adminRoutes]
+    : userRoutes;
   return (
     <Suspense
       fallback={

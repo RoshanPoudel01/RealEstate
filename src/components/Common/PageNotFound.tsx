@@ -26,7 +26,7 @@ export function PageNotFound({ isLoading, isError }: IPageNotFound) {
           </Text>
         </VStack>
         <Button onClick={() => navigate("/", { replace: false })}>
-          Go Back to Dashboard
+          Go to Home
         </Button>
       </VStack>
     </Center>

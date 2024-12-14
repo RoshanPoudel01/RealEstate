@@ -21,7 +21,7 @@ import {
 import { useGetPropertyDetails } from "@realState/services/service-properties";
 import parse from "html-react-parser";
 import { useForm } from "react-hook-form";
-import { useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
@@ -33,16 +33,32 @@ const defaultValue = {
   message: "",
 };
 const PropertyPage = () => {
+  const { id } = useParams();
+
   const currenLanguage = localStorage.getItem("language");
 
-  const location = useLocation();
-  const { data: propertyDetail } = useGetPropertyDetails(location?.state?.id);
+  const { data: propertyDetail } = useGetPropertyDetails(id);
 
   var settings = {
     infinite: true,
     speed: 500,
     slidesToShow: 3,
     slidesToScroll: 1,
+    responsive: [
+      {
+        breakpoint: 1280,
+        settings: {
+          slidesToShow: 3,
+        },
+      },
+
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+        },
+      },
+    ],
   };
   const contactSchema = yup.object().shape({
     name: yup.string().required("Name is required"),
@@ -72,43 +88,46 @@ const PropertyPage = () => {
           ? propertyDetail?.data?.title_en
           : propertyDetail?.data?.title_np}
       </Heading>
-      <SimpleGrid columns={3} gap={10}>
-        <GridItem display={"flex"} flexDir={"column"} gap={10} colSpan={2}>
+      <SimpleGrid
+        columns={{
+          md: 3,
+        }}
+        gap={10}
+      >
+        <GridItem
+          display={"flex"}
+          flexDir={"column"}
+          gap={10}
+          colSpan={2}
+          alignItems={"center"}
+        >
           <Stack>
-            <Image src={imageAssets.Logo} alt="Property Image" />
+            <Image
+              src={propertyDetail?.data?.image ?? imageAssets.Logo}
+              alt={propertyDetail?.data?.title_en}
+              maxH={"363px"}
+              w={"full"}
+              objectFit={"contain"}
+            />
           </Stack>
-          <Box width={"50vw"}>
+          <Box
+            width={{
+              base: "60vw",
+              md: "50vw",
+            }}
+          >
             <Slider {...settings}>
-              <div>
+              {propertyDetail?.data?.images?.map((image, index) => (
+                <div key={index}>
+                  <Image src={image.image} alt="Property Image" />
+                </div>
+              ))}
+              {/* <div>
                 <Image
                   src="https://via.placeholder.com/200"
                   alt="Property Image"
                 />
-              </div>
-              <div>
-                <Image
-                  src="https://via.placeholder.com/200"
-                  alt="Property Image"
-                />
-              </div>
-              <div>
-                <Image
-                  src="https://via.placeholder.com/200"
-                  alt="Property Image"
-                />
-              </div>
-              <div>
-                <Image
-                  src="https://via.placeholder.com/200"
-                  alt="Property Image"
-                />
-              </div>
-              <div>
-                <Image
-                  src="https://via.placeholder.com/200"
-                  alt="Property Image"
-                />
-              </div>
+              </div> */}
             </Slider>
           </Box>
           {/* <Stack color="#141B2D" background={"#F3F3FA"} padding={"22px"} w={"70%"}>
@@ -121,7 +140,10 @@ const PropertyPage = () => {
         </Text>
       </Stack> */}
           <Text
-            w={"70%"}
+            w={{
+              base: "90%",
+              md: "70%",
+            }}
             textAlign={"start"}
             color="#141B2D"
             fontWeight={400}
@@ -133,7 +155,12 @@ const PropertyPage = () => {
                 : propertyDetail?.data?.description_np) ?? ""
             )}
           </Text>
-          <Stack w={"70%"}>
+          <Stack
+            w={{
+              base: "90%",
+              md: "70%",
+            }}
+          >
             <Heading>FAQ</Heading>
             <AccordionRoot multiple defaultValue={["a"]} variant={"subtle"}>
               {items.map((item, index) => (
@@ -146,51 +173,68 @@ const PropertyPage = () => {
           </Stack>
         </GridItem>
         <GridItem
-          colSpan={1}
+          colSpan={{
+            base: 2,
+            md: 1,
+          }}
           display={"flex"}
           flexDir={"column"}
           alignItems={"center"}
-          gap={10}
+          gap={{
+            base: 5,
+            md: 10,
+          }}
           w={"full"}
         >
           <Heading>Inquire Property</Heading>
           <Stack
-            as={"form"}
-            onSubmit={handleSubmit(submitContactForm)}
+            asChild
             w={"80%"}
-            align={"flex-end"}
+            align={{
+              base: "center",
+              md: "flex-end",
+            }}
           >
-            <TextInput
-              placeholder={"Name"}
-              type="text"
-              name="name"
-              control={control}
-              size={"lg"}
-            />
-            <TextInput
-              type="text"
-              placeholder={"Email"}
-              name="email"
-              control={control}
-              size={"lg"}
-            />
-            <TextInput
-              type="number"
-              placeholder={"Phone"}
-              name="phone"
-              control={control}
-              size={"lg"}
-            />
-            <TextInput
-              type="textarea"
-              placeholder={"Message"}
-              name="message"
-              control={control}
-              size={"lg"}
-            />
-            <Button type="submit" size={"lg"}>
-              Submit
-            </Button>
+            <form onSubmit={handleSubmit(submitContactForm)}>
+              <TextInput
+                placeholder={"Name"}
+                type="text"
+                name="name"
+                control={control}
+                size={"lg"}
+              />
+              <TextInput
+                type="text"
+                placeholder={"Email"}
+                name="email"
+                control={control}
+                size={"lg"}
+              />
+              <TextInput
+                type="number"
+                placeholder={"Phone"}
+                name="phone"
+                control={control}
+                size={"lg"}
+              />
+              <TextInput
+                type="textarea"
+                placeholder={"Message"}
+                name="message"
+                control={control}
+                size={"lg"}
+              />
+              <Button
+                type="submit"
+                size={"lg"}
+                w={{
+                  base: "full",
+                  md: "auto",
+                }}
+              >
+                Submit
+              </Button>
+            </form>
           </Stack>
         </GridItem>
       </SimpleGrid>

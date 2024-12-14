@@ -13,8 +13,8 @@ import { ProgressBar, ProgressRoot } from "@realState/components/ui/progress";
 import useGetErrors from "@realState/hooks/useGetErrors";
 import { useFetchCategoryList } from "@realState/services/service-category";
 import {
-  useAddFeaturedProperties,
-  useFetchFeaturedProperties,
+  useAddNewProperties,
+  useFetchNewProperties,
   useFetchPropertyList,
 } from "@realState/services/service-properties";
 import PageHeader from "@realState/utils/PageHeader";
@@ -24,32 +24,32 @@ import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 const tHeads = ["S.N", "Property Name", "Action"];
 
-const featuredSchema = yup.object().shape({
+const newSchema = yup.object().shape({
   properties: yup.array().min(1, "Select at least one property."),
 });
 
-type featuredData = yup.InferType<typeof featuredSchema>;
+type newData = yup.InferType<typeof newSchema>;
 interface IProperty {
   id: number;
   title_en?: string;
 }
 
-const Featured = () => {
-  const defaultValues: featuredData = {
+const New = () => {
+  const defaultValues: newData = {
     properties: [],
   };
   const navigate = useNavigate();
 
   const {
-    mutateAsync: addFeatured,
+    mutateAsync: addNew,
     isPending: isAdding,
     isError: isAddError,
     error: addError,
-  } = useAddFeaturedProperties();
+  } = useAddNewProperties();
 
   const { setValue, handleSubmit, reset, formState } = useForm({
     defaultValues,
-    resolver: yupResolver(featuredSchema),
+    resolver: yupResolver(newSchema),
   });
   const { data: categoryList } = useFetchCategoryList();
   const [categoryId, setCategoryId] = useState<string | null>(null);
@@ -73,17 +73,17 @@ const Featured = () => {
     refetch();
   }, [categoryId, keyword, refetch]);
 
-  const { data: featured } = useFetchFeaturedProperties();
+  const { data: newProperties } = useFetchNewProperties();
   useEffect(() => {
-    if (featured?.data) {
+    if (newProperties?.data) {
       setSelectedProperties(
-        featured?.data.rows.map((property) => ({
+        newProperties?.data.rows.map((property) => ({
           id: property.id,
           title_en: property.title_en,
         }))
       );
     }
-  }, [featured?.data, reset]);
+  }, [newProperties?.data, reset]);
 
   useEffect(() => {
     if (isAddError) {
@@ -148,11 +148,11 @@ const Featured = () => {
 
   const onSubmit = async (data: typeof defaultValues) => {
     console.log({ data });
-    const response = await addFeatured({
+    const response = await addNew({
       data: { properties: JSON.stringify(data.properties) },
     });
     if (response.data.status) {
-      navigate("/admin/properties/featured");
+      navigate("/admin/properties/new");
     }
   };
 
@@ -160,8 +160,8 @@ const Featured = () => {
     <Flex direction="column" gap={8} asChild>
       <form onSubmit={handleSubmit(onSubmit)} id="new-arrival-form" noValidate>
         <PageHeader
-          heading="Featured"
-          description="Select properties to add as featured"
+          heading="New"
+          description="Select properties to add as new"
         />
         <HStack
           align={"center"}
@@ -301,4 +301,4 @@ const Featured = () => {
   );
 };
 
-export default Featured;
+export default New;

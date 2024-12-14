@@ -4,6 +4,7 @@ import { Outlet } from "react-router-dom";
 import { Flex, Stack } from "@chakra-ui/react";
 import Loader from "@realState/utils/Loader";
 import ErrorBoundary from "../ErrorBoundry";
+import Footer from "../Footer";
 import Navbar from "./Navbar";
 
 const sidebarAnimate = "all .25s ease";
@@ -69,6 +70,7 @@ const LayoutWrapper: React.FC = () => {
               <Outlet />
             </Flex>
           </Suspense>
+          <Footer />
         </Stack>
       </Flex>
     </ErrorBoundary>

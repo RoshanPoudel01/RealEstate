@@ -4,6 +4,7 @@ import { Switch } from "@realState/components/ui/switch";
 import { NAVIGATION_ROUTES } from "@realState/pages/App/navigationRoutes";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import MobileNav from "./MobileNav";
 import NavItem from "./NavItem";
 import { navLinks } from "./navLinks";
 
@@ -75,7 +76,11 @@ export default function NavBar({
       <Stack
         as="nav"
         gap={3}
-        px={5}
+        paddingX={{
+          base: "20px",
+          sm: "40px",
+          lg: "60px",
+        }}
         flexDir={{
           base: "column",
           md: "row",
@@ -91,50 +96,53 @@ export default function NavBar({
           onClick={() => navigate(NAVIGATION_ROUTES.HOME)}
           cursor={"pointer"}
         />
-        <Stack
-          flexDir={{
-            base: "column",
-            md: "row",
-          }}
-        >
-          {navLinks?.map((nav, index) => {
-            return (
-              <Stack
-                flexDir={{
-                  base: "column",
-                  md: "row",
-                }}
-                key={index}
-              >
-                <NavItem
-                  {...nav}
-                  label={nav.label}
-                  key={nav.href}
-                  href={nav.href}
-                  collapsed={isCollapsed && !isHovered}
-                  onCloseDrawer={onClose}
-                  active={{
-                    activeLink,
-                    setActiveLink,
-                    activeCollapse,
-                    setActiveCollapse,
+        <MobileNav />
+        <>
+          <Stack
+            flexDir={{
+              base: "column",
+              md: "row",
+            }}
+          >
+            {navLinks?.map((nav, index) => {
+              return (
+                <Stack
+                  flexDir={{
+                    base: "column",
+                    md: "row",
                   }}
-                />
-              </Stack>
-            );
-          })}
-        </Stack>
+                  key={index}
+                >
+                  <NavItem
+                    {...nav}
+                    label={nav.label}
+                    key={nav.href}
+                    href={nav.href}
+                    collapsed={isCollapsed && !isHovered}
+                    onCloseDrawer={onClose}
+                    active={{
+                      activeLink,
+                      setActiveLink,
+                      activeCollapse,
+                      setActiveCollapse,
+                    }}
+                  />
+                </Stack>
+              );
+            })}
+          </Stack>
 
-        <Switch
-          colorPalette="blue"
-          size="lg"
-          trackLabel={{
-            on: <Text>NP</Text>,
-            off: <Text>EN</Text>,
-          }}
-          checked={localStorage.getItem("language") === "np"}
-          onChange={changeLangugaeHandler}
-        />
+          <Switch
+            colorPalette="blue"
+            size="lg"
+            trackLabel={{
+              on: <Text>NP</Text>,
+              off: <Text>EN</Text>,
+            }}
+            checked={localStorage.getItem("language") === "np"}
+            onChange={changeLangugaeHandler}
+          />
+        </>
       </Stack>
     </Flex>
   );

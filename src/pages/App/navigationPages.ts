@@ -12,12 +12,21 @@ const TEAMS = lazy(() => import("@realState/pages/Admin/Teams"));
 const TEAM_FORM = lazy(() => import("@realState/pages/Admin/Teams/Form"));
 const SETTINGS = lazy(() => import("@realState/pages/Admin/Settings"));
 const PROPERTYPAGE = lazy(
-  () => import("@realState/pages/User/Properties/PropertyPage"));
+  () => import("@realState/pages/User/Properties/PropertyPage")
+);
 const PROPERTIES = lazy(() => import("@realState/pages/Admin/Properties"));
 const PROPERTY_FORM = lazy(
   () => import("@realState/pages/Admin/Properties/Form")
 );
 const TESTIMONIALS = lazy(() => import("@realState/pages/Admin/Testimonials"));
+const ADD_FEATURED = lazy(
+  () => import("@realState/pages/Admin/Properties/Featured")
+);
+const ADD_TRENDING = lazy(
+  () => import("@realState/pages/Admin/Properties/Trending")
+);
+const ADD_NEW = lazy(() => import("@realState/pages/Admin/Properties/New"));
+const CONTACT = lazy(() => import("@realState/pages/User/Contact"));
 export const NAVIGATION_PAGES = {
   SLIDERS,
   SLIDER_FORM,
@@ -31,5 +40,9 @@ export const NAVIGATION_PAGES = {
   PROPERTYPAGE,
   PROPERTIES,
   PROPERTY_FORM,
-  TESTIMONIALS
+  TESTIMONIALS,
+  ADD_FEATURED,
+  ADD_TRENDING,
+  ADD_NEW,
+  CONTACT,
 };
