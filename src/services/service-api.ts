@@ -78,6 +78,19 @@ export const api = {
     images: `admin/property/images/:id`,
     amenity: `admin/property/amenity/:id`,
     faqs: `admin/faq/:id`,
+    getList: ({ categoryId = "", keyword = "" }) => {
+      let url = `/admin/property-list`;
+      if (categoryId && !keyword) {
+        url += `?category_id=${categoryId}`;
+      }
+      if (keyword && !categoryId) {
+        url += `?keyword=${keyword}`;
+      }
+      if (categoryId && keyword) {
+        url += `?category_id=${categoryId}&keyword=${keyword}`;
+      }
+      return url;
+    },
     update: `admin/property/:id`,
     delete: `admin/property/:id`,
     properties: ({ propertyType }: PropertyParams) => {

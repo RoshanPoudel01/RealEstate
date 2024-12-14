@@ -9,6 +9,7 @@ export const NAVIGATION_ROUTES = {
   CATEGORY: "category",
   SERVICES: "services",
   TEAMS: "teams",
+  CONTACT: "/contact",
   SETTINGS: "settings",
   PROPERTY_DETAILS: "/property-details",
   ADMIN_SLIDERS: "sliders",

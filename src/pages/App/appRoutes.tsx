@@ -89,6 +89,18 @@ export const adminRoutes = [
         element: <NAVIGATION_PAGES.PROPERTY_FORM />,
       },
       {
+        path: NAVIGATION_ROUTES.ADMIN_PROPERTIES + "/featured",
+        element: <NAVIGATION_PAGES.ADD_FEATURED />,
+      },
+      {
+        path: NAVIGATION_ROUTES.ADMIN_PROPERTIES + "/trending",
+        element: <NAVIGATION_PAGES.ADD_TRENDING />,
+      },
+      {
+        path: NAVIGATION_ROUTES.ADMIN_PROPERTIES + "/new",
+        element: <NAVIGATION_PAGES.ADD_NEW />,
+      },
+      {
         path: NAVIGATION_ROUTES.ADMIN_TESTIMONIALS,
         element: <NAVIGATION_PAGES.TESTIMONIALS />,
       },
@@ -124,6 +136,10 @@ export const userRoutes = [
       {
         path: NAVIGATION_ROUTES.PROPERTY_DETAILS,
         element: <NAVIGATION_PAGES.PROPERTYPAGE />,
+      },
+      {
+        path: NAVIGATION_ROUTES.CONTACT,
+        element: <NAVIGATION_PAGES.CONTACT />,
       },
       {
         path: "*",

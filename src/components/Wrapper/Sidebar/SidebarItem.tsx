@@ -37,7 +37,6 @@ const SidebarItem: FC<ISidebarItemProps> = ({
   const attributes = {
     borderRadius: 5,
     align: "center",
-    color: activeColor ?? "",
     _hover: {
       bg: activeBg ?? "primary.300",
       color: "white",
@@ -64,14 +63,17 @@ const SidebarItem: FC<ISidebarItemProps> = ({
       <Collapsible.Trigger asChild>
         <Flex
           bg={
-            pathname.includes(item.to) ? activeBg ?? "gray.300" : "transparent"
+            pathname.includes(item.to)
+              ? (activeBg ?? "primary.300")
+              : "transparent"
           }
           p={3}
           fontWeight={
-            pathname.includes(item.to.split("/")[2]) || isOpen ? 500 : "normal"
+            pathname.includes(item.to.split("/")[3]) || isOpen ? 500 : "normal"
           }
           justify={item.icon ? "space-between" : "center"}
           cursor={"pointer"}
+          color={pathname.includes(item.to) ? "white" : ""}
           {...attributes}
         >
           <Flex align={"center"} gap={2}>
