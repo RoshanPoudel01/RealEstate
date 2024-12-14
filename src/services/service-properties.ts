@@ -103,6 +103,19 @@ const useCreateProperty = () => {
   });
 };
 
+const useFetchPropertyList = ({
+  categoryId,
+  keyword,
+}: {
+  categoryId: string;
+  keyword: string;
+}) => {
+  return useFetch<RootResponse<PropertyResponse>>({
+    url: api.properties.getList({ categoryId, keyword }),
+    queryKey: [`property-list`],
+  });
+};
+
 const useUpdateProperty = () => {
   return useMutate({
     url: api.properties.update,
@@ -239,6 +252,7 @@ export {
   useFetchNewProperties,
   useFetchProperties,
   useFetchPropertyById,
+  useFetchPropertyList,
   useFetchTrendingProperties,
   useGetPropertyDetails,
   useUpdateAmenities,
