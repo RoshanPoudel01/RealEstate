@@ -5,17 +5,26 @@ import { DeleteAlert } from "@realState/components/Form/Modal";
 import LazyLoadImage from "@realState/components/Image";
 import { useSearchParamsState } from "@realState/hooks/useSearchParamState";
 import { IRow } from "@realState/services/service-interface";
-import { TestimonialResponse, useDeleteTestimonial, useFetchTestimonials } from "@realState/services/service-testimonial";
+import {
+  TestimonialResponse,
+  useDeleteTestimonial,
+  useFetchTestimonials,
+} from "@realState/services/service-testimonial";
 import { useEffect, useState } from "react";
 import TestimonialForm from "./Form";
 
 const Testimonials = () => {
-
-  const {pageIndex, setPageIndex, keyword, setKeyword} = useSearchParamsState();
-  const {data: testimonials,refetch, isPending, isFetching} = useFetchTestimonials({
+  const { pageIndex, setPageIndex, keyword, setKeyword } =
+    useSearchParamsState();
+  const {
+    data: testimonials,
+    refetch,
+    isPending,
+    isFetching,
+  } = useFetchTestimonials({
     page: pageIndex,
-    keyword
-  })
+    keyword,
+  });
   const columns = [
     {
       header: "S.N",
@@ -26,20 +35,20 @@ const Testimonials = () => {
       },
     },
     {
-      header: 'Name',
-      accessorKey: 'name',
+      header: "Name",
+      accessorKey: "name",
     },
     {
-      header: 'Message',
-      accessorKey: 'message',
+      header: "Message",
+      accessorKey: "message",
     },
     {
-      header: 'Image',
-      accessorKey: 'image',
+      header: "Image",
+      accessorKey: "image",
       cell: ({ row }: IRow<TestimonialResponse>) => {
         const { image } = row.original;
         return <LazyLoadImage src={image} alt={image} width={50} height={50} />;
-      }
+      },
     },
     {
       header: "Action",
@@ -51,7 +60,7 @@ const Testimonials = () => {
           useDeleteTestimonial();
         return (
           <HStack w={"max-content"} mx={"auto"}>
-            <TestimonialForm id={id}/>
+            <TestimonialForm id={id} />
             <DeleteAlert
               open={open}
               setOpen={setOpen}
@@ -66,44 +75,40 @@ const Testimonials = () => {
             />
           </HStack>
         );
-      }
-    }
-  ]
-
-
-
- 
+      },
+    },
+  ];
 
   useEffect(() => {
-    refetch()
-  }, [pageIndex, keyword])
+    refetch();
+  }, [pageIndex, keyword]);
 
   return (
-    <DataTable columns={columns} 
-    data={testimonials?.data?.rows ?? []}
-    count={testimonials?.data?.count ?? 0}
-    pagination={{
-      manual: true,
-      pageCount: testimonials?.data?.pagination?.last_page ?? 0,
-      totalRows: testimonials?.data?.pagination?.total ?? 0,
-      pageParams: {
-        pageIndex,
-        setPageIndex,
+    <DataTable
+      columns={columns}
+      data={testimonials?.data?.rows ?? []}
+      count={testimonials?.data?.count ?? 0}
+      pagination={{
+        manual: true,
+        pageCount: testimonials?.data?.pagination?.last_page ?? 0,
+        totalRows: testimonials?.data?.pagination?.total ?? 0,
+        pageParams: {
+          pageIndex,
+          setPageIndex,
+        },
+      }}
+      isLoading={isPending || isFetching}
+    >
+      <HStack justify={"space-between"} w={"full"}>
+        <SearchInput
+          maxW={"300px"}
+          onSearch={setKeyword}
+          placeholder="Search Testimonials"
+        />
+        <TestimonialForm />
+      </HStack>
+    </DataTable>
+  );
+};
 
-      }
-    }}
-    isLoading={isPending || isFetching}
-  >
-    <HStack justify={'space-between'} w={'full'}>
-      <SearchInput maxW={'300px'} onSearch={setKeyword} 
-      placeholder="Search Testimonials" 
-      />
-      <TestimonialForm 
-       
-      />
-    </HStack>
-  </DataTable>
-  )
-}
-
-export default Testimonials
+export default Testimonials;

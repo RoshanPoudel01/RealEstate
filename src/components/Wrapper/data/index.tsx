@@ -4,7 +4,6 @@ import {
   House,
   Images,
   Package,
-  Rectangle,
   SquaresFour,
   Star,
   User,
@@ -21,11 +20,6 @@ export const sidebarItems = [
     title: "Sliders",
     icon: <Images />,
     to: "/admin/sliders",
-  },
-  {
-    title: "Sections",
-    icon: <Rectangle />,
-    to: "/admin/sections",
   },
 
   {
@@ -69,13 +63,12 @@ export const sidebarItems = [
         title: "Trending",
         to: "/admin/properties/trending",
         icon: <FireSimple />,
-      }
-      
-    ]
+      },
+    ],
   },
   {
     title: "Testimonials",
     icon: <User />,
     to: "/admin/testimonials",
-  }
+  },
 ];

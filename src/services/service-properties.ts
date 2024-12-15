@@ -2,16 +2,6 @@ import { api } from "./service-api";
 import { useFetch, useMutate } from "./service-form-methods";
 import { RootResponse, SingleResponse } from "./service-interface";
 
-export interface PropertyResponse {
-  id: number;
-  display_order: number;
-  is_active: number;
-  title_en: string;
-  title_np: string;
-  description_en: string;
-  description_np: string;
-  image?: string;
-}
 export interface PropertyFrontResponse {
   id: number;
   category_id: number;
@@ -21,6 +11,7 @@ export interface PropertyFrontResponse {
   is_road_access: number;
   built_year: string;
   map: string;
+  image: string;
   is_parking: number;
   is_furnished: number;
   is_garden: number;
@@ -63,7 +54,7 @@ export interface PropertyParams {
 }
 
 const useFetchProperties = ({ page = 1, perPage = 10, keyword = "" }) => {
-  return useFetch<RootResponse<PropertyResponse>>({
+  return useFetch<RootResponse<PropertyFrontResponse>>({
     url: api.properties.fetch({ page, perPage, keyword }),
     queryKey: [`properties`],
   });
@@ -87,7 +78,7 @@ const useGetPropertyDetails = (id: number | null) => {
   });
 };
 const useFetchPropertyById = (id: string) => {
-  return useFetch<SingleResponse<PropertyResponse>>({
+  return useFetch<SingleResponse<PropertyFrontResponse>>({
     url: api.properties.fetchById.replace(":id", id),
     queryKey: [`property-${id}`],
     enabled: !!id,
@@ -110,7 +101,7 @@ const useFetchPropertyList = ({
   categoryId: string;
   keyword: string;
 }) => {
-  return useFetch<RootResponse<PropertyResponse>>({
+  return useFetch<RootResponse<PropertyFrontResponse>>({
     url: api.properties.getList({ categoryId, keyword }),
     queryKey: [`property-list`],
   });
@@ -191,7 +182,7 @@ const useUpdateFaqs = () => {
 };
 
 const useFetchTrendingProperties = () => {
-  return useFetch<RootResponse<PropertyResponse>>({
+  return useFetch<RootResponse<PropertyFrontResponse>>({
     url: api.properties.trending,
     queryKey: [`trending-properties`],
   });
@@ -207,7 +198,7 @@ const useAddTrendingProperties = () => {
 };
 
 const useFetchFeaturedProperties = () => {
-  return useFetch<RootResponse<PropertyResponse>>({
+  return useFetch<RootResponse<PropertyFrontResponse>>({
     url: api.properties.featured,
     queryKey: [`featured-properties`],
   });
@@ -223,7 +214,7 @@ const useAddFeaturedProperties = () => {
 };
 
 const useFetchNewProperties = () => {
-  return useFetch<RootResponse<PropertyResponse>>({
+  return useFetch<RootResponse<PropertyFrontResponse>>({
     url: api.properties.new,
     queryKey: [`new-properties`],
   });

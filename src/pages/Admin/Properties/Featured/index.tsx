@@ -11,6 +11,7 @@ import {
 } from "@realState/components/ui/native-select";
 import { ProgressBar, ProgressRoot } from "@realState/components/ui/progress";
 import useGetErrors from "@realState/hooks/useGetErrors";
+import { useSearchParamsState } from "@realState/hooks/useSearchParamState";
 import { useFetchCategoryList } from "@realState/services/service-category";
 import {
   useAddFeaturedProperties,
@@ -39,7 +40,7 @@ const Featured = () => {
     properties: [],
   };
   const navigate = useNavigate();
-
+  const { keyword, setKeyword } = useSearchParamsState();
   const {
     mutateAsync: addFeatured,
     isPending: isAdding,
@@ -53,7 +54,7 @@ const Featured = () => {
   });
   const { data: categoryList } = useFetchCategoryList();
   const [categoryId, setCategoryId] = useState<string | null>(null);
-  const [keyword, setKeyword] = useState<string>("");
+
   const [selectedProperties, setSelectedProperties] = useState<IProperty[]>([]);
   const [backendError, setBackendError] = useState<Record<string, string[]>>(
     {}
@@ -174,6 +175,7 @@ const Featured = () => {
             placeholder="Search property"
             onSearch={(keyword) => setKeyword(keyword)}
             maxW={{ base: "full", sm: "300px" }}
+            w={"full"}
           />
           <NativeSelectRoot size={"lg"} maxW={{ base: "full", sm: "300px" }}>
             <NativeSelectField
@@ -196,7 +198,12 @@ const Featured = () => {
         </HStack>
         {isPending || isFetching ? (
           <Flex height={"10dvh"} w={"full"} justify={"center"} align={"center"}>
-            <ProgressRoot w={"full"} maxW="240px" value={null}>
+            <ProgressRoot
+              colorPalette={"primary"}
+              w={"full"}
+              maxW="240px"
+              value={null}
+            >
               <ProgressBar />
             </ProgressRoot>
           </Flex>
@@ -206,6 +213,8 @@ const Featured = () => {
               <CheckboxCard
                 maxW={"200px"}
                 name="properties"
+                colorPalette={"primary"}
+                key={property.id}
                 label={property.title_en}
                 checked={selectedProperties.some((p) => p.id === property.id)}
                 onCheckedChange={(e) => {

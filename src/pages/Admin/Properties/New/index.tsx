@@ -11,6 +11,7 @@ import {
 } from "@realState/components/ui/native-select";
 import { ProgressBar, ProgressRoot } from "@realState/components/ui/progress";
 import useGetErrors from "@realState/hooks/useGetErrors";
+import { useSearchParamsState } from "@realState/hooks/useSearchParamState";
 import { useFetchCategoryList } from "@realState/services/service-category";
 import {
   useAddNewProperties,
@@ -51,9 +52,11 @@ const New = () => {
     defaultValues,
     resolver: yupResolver(newSchema),
   });
+  const { keyword, setKeyword } = useSearchParamsState();
+
   const { data: categoryList } = useFetchCategoryList();
   const [categoryId, setCategoryId] = useState<string | null>(null);
-  const [keyword, setKeyword] = useState<string>("");
+
   const [selectedProperties, setSelectedProperties] = useState<IProperty[]>([]);
   const [backendError, setBackendError] = useState<Record<string, string[]>>(
     {}
@@ -196,7 +199,12 @@ const New = () => {
         </HStack>
         {isPending || isFetching ? (
           <Flex height={"10dvh"} w={"full"} justify={"center"} align={"center"}>
-            <ProgressRoot w={"full"} maxW="240px" value={null}>
+            <ProgressRoot
+              colorPalette={"primary"}
+              w={"full"}
+              maxW="240px"
+              value={null}
+            >
               <ProgressBar />
             </ProgressRoot>
           </Flex>
@@ -205,6 +213,8 @@ const New = () => {
             {propertyList?.data?.rows?.map((property) => (
               <CheckboxCard
                 maxW={"200px"}
+                colorPalette={"primary"}
+                key={property.id}
                 name="properties"
                 label={property.title_en}
                 checked={selectedProperties.some((p) => p.id === property.id)}

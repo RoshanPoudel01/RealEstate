@@ -11,7 +11,7 @@ interface IStatusProps {
 
 const useUpdateStatus = ({ model, id, invalidates }: IStatusProps) => {
   return useMutate({
-    url: `toggle-status/${model}/${id}`,
+    url: `/admin/toggle-status/${model}/${id}`,
     invalidates: invalidates ?? [`${model}s`],
     enabled: !!id,
     method: "POST",

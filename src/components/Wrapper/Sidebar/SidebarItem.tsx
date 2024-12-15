@@ -103,7 +103,7 @@ const SidebarItem: FC<ISidebarItemProps> = ({
                 gap={2}
                 key={index}
                 _currentPage={
-                  pathname.split("/")[2] === subItem.to.split("/")[2]
+                  pathname.split("/")[3] === subItem.to.split("/")[3]
                     ? active
                     : {}
                 }

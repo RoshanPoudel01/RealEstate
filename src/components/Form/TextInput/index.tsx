@@ -80,6 +80,9 @@ const TextInput: FC<
                 colorPalette={"primary"}
                 value={value}
                 onChange={onChange}
+                minH={"150px"}
+                borderColor={"gray.300"}
+                focusRing={"inside"}
                 {...rest}
               />
             ) : type === "password" ? (
@@ -88,11 +91,18 @@ const TextInput: FC<
                 colorPalette={"primary"}
                 value={value}
                 onChange={onChange}
+                borderColor={"gray.300"}
+                focusRing={"inside"}
                 {...rest}
               />
             ) : type === "select" ? (
               <NativeSelectRoot size={"lg"} {...rest}>
-                <NativeSelectField value={value} onChange={onChange}>
+                <NativeSelectField
+                  borderColor={"gray.300"}
+                  focusRing={"inside"}
+                  value={value}
+                  onChange={onChange}
+                >
                   {options}
                 </NativeSelectField>
               </NativeSelectRoot>
@@ -103,6 +113,8 @@ const TextInput: FC<
                 value={value}
                 type={type}
                 onChange={onChange}
+                borderColor={"gray.300"}
+                focusRing={"inside"}
                 onWheel={(e) => {
                   const target = e.target as HTMLInputElement;
                   type == "number" && target.blur();

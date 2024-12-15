@@ -4,6 +4,7 @@ import { ReactDropzone, TextInput } from "@realState/components/Form";
 import { Button } from "@realState/components/ui/button";
 import useGetDirtyData from "@realState/hooks/useGetDirtyData";
 import useGetErrors from "@realState/hooks/useGetErrors";
+import { toFormData } from "@realState/services/service-axios";
 import {
   useFetchSetting,
   useUpdateSetting,
@@ -27,7 +28,7 @@ const schema = yup.object().shape({
   instagram: yup.string(),
   youtube: yup.string(),
   google_map: yup.string(),
-  logo: yup.string(),
+  logo: yup.mixed(),
   // google_id: yup.string().required(),
   // google_password: yup.string().required(),
 });
@@ -89,8 +90,8 @@ const Settings = () => {
 
   const onSubmit = async (data: SettingFormValues) => {
     const dirtyData = useGetDirtyData(formState, data);
-
-    const response = await updateSetting({ data: dirtyData });
+    const formData = toFormData(dirtyData);
+    const response = await updateSetting({ data: formData });
     if (response.data) {
       setEdit(false);
     }

@@ -15,7 +15,7 @@ const triggers = [
     value: "descriptions",
   },
   {
-    label: "Amenities"  ,
+    label: "Amenities",
     value: "amenities",
   },
   {
@@ -29,14 +29,13 @@ const triggers = [
 ];
 
 const PropertyForm = () => {
-
   const [tabValue, setTabValue] = useState(triggers[0].value);
 
   return (
     <>
       <PageHeader heading="Property Form" description="Add new property" />
       <Tabs.Root
-        variant={"enclosed"}
+        variant={"plain"}
         colorPalette={"primary"}
         lazyMount
         unmountOnExit
@@ -46,32 +45,32 @@ const PropertyForm = () => {
       >
         <Tabs.List>
           {triggers.map((trigger, index) => (
-            <Tabs.Trigger key={index}
-            value={trigger.value}>
+            <Tabs.Trigger
+              borderBottom={"6px solid"}
+              borderColor={"primary.200"}
+              _selected={{
+                color: "primary.400",
+                borderColor: "primary.500",
+              }}
+              borderRadius={0}
+              key={index}
+              value={trigger.value}
+            >
               {trigger.label}
             </Tabs.Trigger>
           ))}
         </Tabs.List>
         <Tabs.Content value={triggers[0].value}>
-          <General 
-          setTabValue={setTabValue}
-          />
+          <General setTabValue={setTabValue} />
         </Tabs.Content>
         <Tabs.Content value={triggers[1].value}>
-          <Descriptions
-          setTabValue={setTabValue}
-          />
+          <Descriptions setTabValue={setTabValue} />
         </Tabs.Content>
         <Tabs.Content value={triggers[2].value}>
-          <Amenities
-          setTabValue={setTabValue}
-          />
+          <Amenities setTabValue={setTabValue} />
         </Tabs.Content>
         <Tabs.Content value={triggers[3].value}>
-          <Images 
-          setTabValue={setTabValue}
-          
-          />
+          <Images setTabValue={setTabValue} />
         </Tabs.Content>
         <Tabs.Content value={triggers[4].value}>
           <FAQs />

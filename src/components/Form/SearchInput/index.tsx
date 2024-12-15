@@ -29,7 +29,6 @@ const SearchInput: React.FC<ISearchInputProps & InputProps> = ({
   my,
   ...rest
 }) => {
-
   const location = useLocation();
 
   const urlParams = new URLSearchParams(location.search);
@@ -38,7 +37,6 @@ const SearchInput: React.FC<ISearchInputProps & InputProps> = ({
   const [searchString, setSearchString] = useState("");
   const [isDebouncing, setIsDebouncing] = useState(false);
   const [value, setValue] = useState("");
-
 
   useEffect(() => {
     setValue(queryFromUrl);
@@ -68,7 +66,7 @@ const SearchInput: React.FC<ISearchInputProps & InputProps> = ({
       required={rest.required}
       disabled={rest.disabled}
       readOnly={rest.readOnly}
-      width={width}
+      width={rest}
       helperText={helperText}
     >
       <InputGroup
@@ -81,14 +79,18 @@ const SearchInput: React.FC<ISearchInputProps & InputProps> = ({
             </Icon>
           )
         }
+        {...rest}
       >
         <Input
           size={"lg"}
           colorPalette={"primary"}
           onChange={(e) => {
             setValue(e.target.value);
-            handleSearch(e.target.value)}}
+            handleSearch(e.target.value);
+          }}
+          borderColor={"gray.300"}
           value={value}
+          focusRing={"inside"}
           onKeyDown={(e) => {
             if (e.key === "Enter") {
               onSearch(searchString);

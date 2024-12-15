@@ -57,6 +57,8 @@ const StatusRadio: FC<IStatusRadioProps & RadioCardRootProps> = ({
             justify="center"
             maxW="lg"
             value={value}
+            borderColor={"gray.300"}
+            colorPalette={"primary"}
             onValueChange={(option) => onChange(option.value)}
             defaultValue="paypal"
           >
