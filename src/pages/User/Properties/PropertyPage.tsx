@@ -103,16 +103,12 @@ const PropertyPage = () => {
         flexDirection={"column"}
         gap={10}
       >
-        <Heading textAlign={"center"}>
-          {currenLanguage === "en"
-            ? propertyDetail?.data?.title_en
-            : propertyDetail?.data?.title_np}
-        </Heading>
+        <Heading textAlign={"center"}>{propertyDetail?.data?.title}</Heading>
 
         <Stack w={"full"}>
           <Image
             src={propertyDetail?.data?.image ?? imageAssets.Logo}
-            alt={propertyDetail?.data?.title_en}
+            alt={propertyDetail?.data?.title}
             maxH={"363px"}
             w={"full"}
             objectFit={"contain"}
@@ -165,11 +161,7 @@ const PropertyPage = () => {
         </SimpleGrid>
 
         <Text textAlign={"start"} fontSize={"16px"}>
-          {parse(
-            (currenLanguage === "en"
-              ? propertyDetail?.data?.description_en
-              : propertyDetail?.data?.description_np) ?? ""
-          )}
+          {parse(propertyDetail?.data?.description ?? "")}
         </Text>
       </Container>
       <FAQs

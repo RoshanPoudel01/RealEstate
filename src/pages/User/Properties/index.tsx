@@ -16,7 +16,7 @@ import RangeSlider from "@realState/components/Form/Slider/RangeSlider";
 import { Button } from "@realState/components/ui/button";
 import { useFetchAllProperties } from "@realState/services/service-properties";
 import { useForm } from "react-hook-form";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 const Properties = () => {
   const currenLanguage = localStorage.getItem("language");
@@ -27,9 +27,9 @@ const Properties = () => {
 
   const { data: properties, isLoading } = useFetchAllProperties({
     propertyType: propertyType ?? "",
+    language: currenLanguage ?? "en",
   });
 
-  const navigate = useNavigate();
   const { control, handleSubmit } = useForm();
   const submitFrm = (data: any) => {
     console.warn(data);
@@ -196,13 +196,11 @@ const Properties = () => {
         {properties?.data?.rows.map((item) => (
           <PropertyCard
             id={item?.id}
-            title={currenLanguage === "en" ? item.title_en : item.title_np}
+            title={item?.title}
             price={item?.price}
             img={item?.image ?? imageAssets.Logo}
-            address={
-              currenLanguage === "en" ? item.address_en : item.address_np
-            }
-            city={currenLanguage === "en" ? item.city_en : item.city_np}
+            address={item?.address}
+            city={item?.city}
             status={item.status}
           />
         ))}

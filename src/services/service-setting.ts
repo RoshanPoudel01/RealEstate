@@ -4,20 +4,16 @@ import { RootResponse, SingleResponse } from "./service-interface";
 
 export interface SettingResponse {
   id: number;
-  logo: string;
   email: string;
   facebook: string;
   instagram: string;
   youtube: string;
   google_map: string;
-  name_en: string;
-  name_np: string;
-  phone_en: string;
-  phone_np: string;
-  address_en: string;
-  address_np: string;
-  description_en: string;
-  description_np: string;
+  name: string;
+  phone: string;
+  address: string;
+  description: string;
+  logo: string;
 }
 
 export interface StatisticsResponse {

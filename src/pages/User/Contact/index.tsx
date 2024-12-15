@@ -12,6 +12,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Envelope, MapPin, PhoneCall } from "@phosphor-icons/react";
 import { TextInput } from "@realState/components/Form";
 import { Button } from "@realState/components/ui/button";
+import { useStoreSettingData } from "@realState/store";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import * as yup from "yup";
@@ -22,6 +23,7 @@ const defaultValues = {
   message: "",
 };
 const Contact = () => {
+  const { settingData } = useStoreSettingData();
   const schema = yup.object().shape({
     fullName: yup.string().required("Full name is required"),
     email: yup.string().email().required("Email is required"),
@@ -86,7 +88,7 @@ const Contact = () => {
                   textDecoration: "underline",
                 }}
               >
-                1234 Street Name, City Name, Country Name
+                {settingData?.address}
               </Text>
             </HStack>
             <HStack align={"center"}>
@@ -98,7 +100,7 @@ const Contact = () => {
                   textDecoration: "underline",
                 }}
               >
-                +123 456 7890
+                {settingData?.phone}
               </Text>
             </HStack>
             <HStack align={"center"}>
@@ -111,7 +113,9 @@ const Contact = () => {
                 }}
                 asChild
               >
-                <Link to={`mailto:${"avc.com"}`}>avc.com</Link>
+                <Link to={`mailto:${settingData?.email}`}>
+                  {settingData?.email}
+                </Link>
               </Text>
             </HStack>
           </Flex>

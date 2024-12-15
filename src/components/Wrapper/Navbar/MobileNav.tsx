@@ -4,31 +4,23 @@ import {
   Icon,
   IconButton,
   Stack,
-  Text,
 } from "@chakra-ui/react";
 import { List } from "@phosphor-icons/react";
 import {
   DrawerBackdrop,
   DrawerCloseTrigger,
   DrawerContent,
-  DrawerFooter,
   DrawerRoot,
   DrawerTrigger,
 } from "@realState/components/ui/drawer";
-import { Switch } from "@realState/components/ui/switch";
 import { useState } from "react";
+import Language from "./Language";
 import NavItem from "./NavItem";
 import { navLinks } from "./navLinks";
 
 const MobileNav = () => {
   const [open, setOpen] = useState(false);
 
-  const changeLanguageHandler = () => {
-    const lang = localStorage.getItem("language") === "np" ? "en" : "np";
-    localStorage.setItem("language", lang);
-    // i18next.changeLanguage(lang);
-    window.location.reload();
-  };
   return (
     <DrawerRoot
       open={open}
@@ -77,20 +69,8 @@ const MobileNav = () => {
               );
             })}
           </Stack>
+          <Language />
         </DrawerBody>
-        <DrawerFooter>
-          <Switch
-            hideBelow={"md"}
-            colorPalette="primary"
-            size="lg"
-            trackLabel={{
-              on: <Text>NP</Text>,
-              off: <Text>EN</Text>,
-            }}
-            checked={localStorage.getItem("language") === "np"}
-            onChange={changeLanguageHandler}
-          />
-        </DrawerFooter>
       </DrawerContent>
     </DrawerRoot>
   );

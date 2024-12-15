@@ -24,56 +24,53 @@ const Home = () => {
             alt="background"
           />
         </HStack>
-        <Text
+        <Stack
           position={"absolute"}
           top={{
-            base: "5%",
+            base: "17%",
             md: "20%",
           }}
           left={"13%"}
-          fontSize={"50px"}
-          fontWeight={"bold"}
-          textAlign={"start"}
-          maxW={"550px"}
-          lineHeight={{
-            base: "1.2",
-            md: "1.5",
-          }}
-          color={"primary.500"}
         >
-          Find the place to live your dreams easily here
-        </Text>
-        <Text
-          position={"absolute"}
-          top={{
-            base: "40%",
-            md: "52%",
-          }}
-          left={"13%"}
-          maxW={"550px"}
-          lineHeight={"28px"}
-          color={"#7591A3"}
-          fontSize={"18px"}
-        >
-          Everything you need about finding your place to live will be here,
-          where it will be easier for you. Everything you need about finding
-          your place to live will be here, where it will be easier for you
-        </Text>
-        <Button
-          position={"absolute"}
-          top={"70%"}
-          left={"13%"}
-          bg={"#263640"}
-          size={"lg"}
-          fontSize={"20px"}
-          display={{
-            base: "none",
-            md: "flex",
-          }}
-          asChild
-        >
-          <Link to="/all-properties">View Properties</Link>
-        </Button>
+          <Text
+            fontSize={{
+              base: "35px",
+              md: "50px",
+            }}
+            fontWeight={"bold"}
+            textAlign={"start"}
+            maxW={"550px"}
+            lineHeight={{
+              base: "1.2",
+              md: "1.5",
+            }}
+            color={"primary.500"}
+          >
+            Find the place to live your dreams easily here
+          </Text>
+          <Text
+            maxW={"550px"}
+            lineHeight={"28px"}
+            color={"#7591A3"}
+            fontSize={"18px"}
+          >
+            Everything you need about finding your place to live will be here,
+            where it will be easier for you. Everything you need about finding
+            your place to live will be here, where it will be easier for you
+          </Text>
+          <Button
+            colorPalette={"primary"}
+            size={"lg"}
+            fontSize={"20px"}
+            display={{
+              base: "none",
+              md: "flex",
+            }}
+            asChild
+          >
+            <Link to="/all-properties">View Properties</Link>
+          </Button>
+        </Stack>
         <Flex
           flexDir={{
             base: "column",

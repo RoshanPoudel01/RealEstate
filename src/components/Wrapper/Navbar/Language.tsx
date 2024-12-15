@@ -32,7 +32,7 @@ const Language = () => {
           </Icon>
         </Button>
       </MenuTrigger>
-      <MenuContent maxW={"100px"}>
+      <MenuContent maxW={"100px"} zIndex={99999}>
         <MenuItem onClick={() => changeLanguageHandler("np")} value="np">
           नेपाली
         </MenuItem>

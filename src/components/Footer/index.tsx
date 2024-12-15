@@ -3,7 +3,13 @@ import { imageAssets } from "@realState/assets/images";
 import { useFetchSettingData } from "@realState/services/service-init";
 import { FaFacebook, FaInstagram, FaYoutube } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-const SocialButton = ({ icon, href }: { icon: JSX.Element; href: string }) => {
+export const SocialButton = ({
+  icon,
+  href,
+}: {
+  icon: JSX.Element;
+  href: string;
+}) => {
   return (
     <Link href={href} _hover={{ opacity: 0.8 }}>
       {icon}
@@ -11,9 +17,9 @@ const SocialButton = ({ icon, href }: { icon: JSX.Element; href: string }) => {
   );
 };
 const Footer = () => {
-  const { data: settingData } = useFetchSettingData();
-
   const currentLanguage = localStorage.getItem("language");
+  const { data: settingData } = useFetchSettingData(currentLanguage ?? "en");
+
   const navigate = useNavigate();
   //   const navigate = useNavigate();
   const socialLinks = [
@@ -35,21 +41,15 @@ const Footer = () => {
       title: "Contact",
       links: [
         {
-          text:
-            currentLanguage === "en"
-              ? settingData?.data?.phone_en
-              : settingData?.data?.phone_np,
-          href: `tel:${settingData?.data?.phone_en ?? ""}`,
+          text: settingData?.data?.phone,
+          href: `tel:${settingData?.data?.phone ?? ""}`,
         },
         {
           text: settingData?.data?.email,
           href: `mailto:${settingData?.data?.email}`,
         },
         {
-          text:
-            currentLanguage === "en"
-              ? settingData?.data?.address_en
-              : settingData?.data?.address_np,
+          text: settingData?.data?.address,
           href: "#",
         },
       ],

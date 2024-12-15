@@ -96,8 +96,8 @@ export const api = {
     },
     update: `admin/property/:id`,
     delete: `admin/property/:id`,
-    properties: ({ propertyType }: PropertyParams) => {
-      return `/property${propertyType ? "/" + propertyType : ""}`;
+    properties: ({ propertyType, language = "en" }: PropertyParams) => {
+      return `/property${propertyType ? "/" + propertyType : ""}?lang=${language}`;
     },
     propertyById: `/property/{id}`,
     featured: `admin/property/featured`,

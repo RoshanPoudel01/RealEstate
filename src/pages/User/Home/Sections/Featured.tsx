@@ -9,6 +9,7 @@ const Featured = () => {
   const currenLanguage = localStorage.getItem("language");
   const { data: featuredProperties, isLoading } = useFetchAllProperties({
     propertyType: "featured",
+    language: currenLanguage ?? "en",
   });
   return (
     <>
@@ -46,20 +47,12 @@ const Featured = () => {
                   <PropertyCard
                     id={item?.id}
                     key={index}
-                    title={
-                      currenLanguage === "en" ? item?.title_en : item?.title_np
-                    }
+                    title={item?.title}
                     price={item?.price}
                     img={item?.image ?? imageAssets.Logo}
                     objectFit={item?.image ? "cover" : "contain"}
-                    address={
-                      currenLanguage === "en"
-                        ? item?.address_en
-                        : item?.address_np
-                    }
-                    city={
-                      currenLanguage === "en" ? item?.city_en : item?.city_np
-                    }
+                    address={item?.address}
+                    city={item?.city}
                     status={item?.status}
                   />
                 ))

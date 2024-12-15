@@ -16,19 +16,24 @@ export interface ISettingData {
   moduleList: any[];
 }
 
-const fetchSettingData = () => {
+const fetchSettingData = (language: string) => {
   return RealStateHttpClient.get<SingleResponse<SettingResponse>>(
-    `${baseURL}/${api.settings.front}`
+    `${baseURL}/${api.settings.front}`,
+    {
+      params: {
+        lang: language,
+      },
+    }
   );
 };
 
-const useFetchSettingData = () => {
+const useFetchSettingData = (language: string) => {
   const { setSettingData } = useStoreSettingData();
 
   return useQuery({
     queryKey: ["settingData"],
     queryFn: async () => {
-      const settingData = await fetchSettingData();
+      const settingData = await fetchSettingData(language);
       setSettingData(settingData?.data?.data);
       return settingData?.data;
     },

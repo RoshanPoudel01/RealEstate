@@ -66,13 +66,6 @@ export default function NavBar({
   //   };
   const navigate = useNavigate();
 
-  const changeLanguageHandler = () => {
-    const lang = localStorage.getItem("language") === "np" ? "en" : "np";
-    localStorage.setItem("language", lang);
-    // i18next.changeLanguage(lang);
-    window.location.reload();
-  };
-
   const { settingData } = useStoreSettingData();
 
   return (
@@ -132,9 +125,8 @@ export default function NavBar({
               );
             })}
           </Stack>
-
-          <Language />
         </>
+        <Language />
       </HStack>
     </Flex>
   );
