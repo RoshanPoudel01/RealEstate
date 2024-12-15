@@ -59,18 +59,33 @@ const globalStyles = () => {
         }
         .slick-slider {
           width: 100% !important;
+          height: max-content !important;
         }
+
         .slick-arrow {
           background-color: #1c3988 !important;
           height: 48px !important;
           width: 48px !important;
           border-radius: 50% !important;
         }
+        .slick-list {
+          margin: 0 -5px;
+          & .slick-slide > div {
+            padding: 0 12px;
+          }
+        }
         .slick-prev {
           left: -70px !important;
         }
         .slick-next {
           right: -70px !important;
+        }
+
+        .noOverflow > .slick-list {
+          margin: 0 -300px;
+          & .slick-slide > div {
+            padding: 0 12px;
+          }
         }
       `}
     />

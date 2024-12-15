@@ -11,7 +11,7 @@ export const NAVIGATION_ROUTES = {
   TEAMS: "teams",
   CONTACT: "/contact",
   SETTINGS: "settings",
-  PROPERTY_DETAILS: "/property-details",
+  PROPERTY_DETAILS: "/property-details/:id",
   ADMIN_SLIDERS: "sliders",
   ADMIN_CATEGORY: "category",
   ADMIN_SERVICES: "services",

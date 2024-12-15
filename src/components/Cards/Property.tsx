@@ -1,5 +1,7 @@
 import { Box, Card, Text, VStack } from "@chakra-ui/react";
+import { NAVIGATION_ROUTES } from "@realState/pages/App/navigationRoutes";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import LazyLoadImage from "../Image";
 import { useColorModeValue } from "../ui/color-mode";
 
@@ -10,7 +12,7 @@ interface PropertyCardProps {
   address: string;
   city: string;
   status: string;
-  onClick?: () => void;
+  id: number;
 }
 
 const PropertyCard: React.FC<PropertyCardProps> = ({
@@ -20,10 +22,10 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
   city,
   address,
   status,
-  onClick,
+  id,
 }) => {
   const cardBg = useColorModeValue("white", "gray.700");
-
+  const navigate = useNavigate();
   return (
     <Card.Root
       position="relative"
@@ -37,7 +39,9 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
       transition="all 0.4s cubic-bezier(0.175, 0.885, 0, 1)"
       marginRight="25px"
       p={4}
-      onClick={onClick}
+      onClick={() =>
+        navigate(NAVIGATION_ROUTES.PROPERTY_DETAILS?.replace(":id", id + ""))
+      }
       _hover={{
         opacity: 0.8,
       }}
@@ -49,7 +53,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
         borderTopRightRadius="12px"
         _hover={{
           height: "90%",
-          opacity: 0.6,
+          opacity: 0.8,
         }}
         transition="0.5s all ease-out"
         w={"full"}

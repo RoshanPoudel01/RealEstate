@@ -6,6 +6,7 @@ const resources = {
       home: "Home",
       properties: "Properties",
       about: "About Us",
+      contact: "Contact Us",
     },
   },
   np: {
@@ -13,6 +14,7 @@ const resources = {
       home: "गृहपृष्ठ",
       properties: "प्रोप्रति ",
       about: "हाम्रो बारेमा",
+      contact: "सम्पर्क",
     },
   },
 };

@@ -25,8 +25,14 @@ export interface PropertyFrontResponse {
   address_np: string;
   city_en: string;
   city_np: string;
+  image: string;
+  images: Images[];
 }
 
+interface Images {
+  id: number;
+  image: string;
+}
 export interface AmenityResponse {
   is_road_access: number;
   floor: string;
@@ -70,7 +76,7 @@ const useFetchAllProperties = ({ propertyType, language }: PropertyParams) => {
   });
 };
 
-const useGetPropertyDetails = (id: number | null) => {
+const useGetPropertyDetails = (id: string | undefined) => {
   return useFetch<SingleResponse<PropertyFrontResponse>>({
     url: api.properties.propertyById.replace("{id}", id + ""),
     queryKey: [`property-${id}`],

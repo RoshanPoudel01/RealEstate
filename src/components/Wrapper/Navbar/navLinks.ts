@@ -14,4 +14,8 @@ export const navLinks = [
     label: t("navbar:about"),
     href: NAVIGATION_ROUTES.ABOUT,
   },
+  {
+    label: t("navbar:contact"),
+    href: NAVIGATION_ROUTES.CONTACT,
+  },
 ];

@@ -3,10 +3,11 @@ import { imageAssets } from "@realState/assets/images";
 import InfoCard from "@realState/components/Cards/InfoCard";
 import { Button } from "@realState/components/ui/button";
 import Featured from "./Sections/Featured";
+import TestimonialSection from "./Sections/Testimonials";
 
 const Home = () => {
   return (
-    <Stack p={0} gap={5}>
+    <Stack p={0} gap={9}>
       <Box position={"relative"}>
         <HStack gap={0}>
           <Box bg="#E4E3E8" height={"700px"} w={"900px"} />
@@ -91,7 +92,16 @@ const Home = () => {
           />
         </Flex>
       </Box>
-      <Featured />
+      <Stack
+        px={{
+          base: "10px",
+          md: "80px",
+        }}
+        gap={9}
+      >
+        <Featured />
+        <TestimonialSection />
+      </Stack>
     </Stack>
   );
 };

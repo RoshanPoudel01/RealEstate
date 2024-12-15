@@ -14,7 +14,6 @@ import PropertyCard from "@realState/components/Cards/Property";
 import { TextInput } from "@realState/components/Form";
 import RangeSlider from "@realState/components/Form/Slider/RangeSlider";
 import { Button } from "@realState/components/ui/button";
-import { NAVIGATION_ROUTES } from "@realState/pages/App/navigationRoutes";
 import { useFetchAllProperties } from "@realState/services/service-properties";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -22,14 +21,10 @@ import { useNavigate } from "react-router-dom";
 const Properties = () => {
   const currenLanguage = localStorage.getItem("language");
 
-  // const { pageIndex, setPageIndex, keyword, setKeyword } =
-  //   useSearchParamsState();
   const { data: properties, isLoading } = useFetchAllProperties({
     propertyType: "",
   });
-  // useEffect(() => {
-  //   refetch();
-  // }, [pageIndex, keyword]);
+
   const navigate = useNavigate();
   const { control, handleSubmit } = useForm();
   const submitFrm = (data: any) => {
@@ -196,19 +191,15 @@ const Properties = () => {
         {isLoading && [1, 2, 3].map(() => <LoadingCard />)}
         {properties?.data?.rows.map((item) => (
           <PropertyCard
+            id={item?.id}
             title={currenLanguage === "en" ? item.title_en : item.title_np}
             price={item?.price}
-            img={imageAssets.Logo}
+            img={item?.image ?? imageAssets.Logo}
             address={
               currenLanguage === "en" ? item.address_en : item.address_np
             }
             city={currenLanguage === "en" ? item.city_en : item.city_np}
             status={item.status}
-            onClick={() =>
-              navigate(NAVIGATION_ROUTES.PROPERTY_DETAILS, {
-                state: { id: item?.id },
-              })
-            }
           />
         ))}
       </SimpleGrid>

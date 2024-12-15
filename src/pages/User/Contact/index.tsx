@@ -59,6 +59,7 @@ const Contact = () => {
         alignItems={"start"}
         gap={5}
         p={10}
+        py={20}
         bg={"gray.50"}
         w={"full"}
       >
