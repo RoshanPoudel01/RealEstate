@@ -13,6 +13,7 @@ interface PropertyCardProps {
   city: string;
   status: string;
   id: number;
+  objectFit?: string;
 }
 
 const PropertyCard: React.FC<PropertyCardProps> = ({
@@ -23,6 +24,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
   address,
   status,
   id,
+  objectFit,
 }) => {
   const cardBg = useColorModeValue("white", "gray.700");
   const navigate = useNavigate();
@@ -49,27 +51,33 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
       <Box
         position="relative"
         overflow="hidden"
-        borderTopLeftRadius="12px"
-        borderTopRightRadius="12px"
+        borderTopRadius="12px"
         _hover={{
           height: "90%",
-          opacity: 0.8,
+          opacity: 0.9,
         }}
         transition="0.5s all ease-out"
         w={"full"}
       >
-        <LazyLoadImage src={img} alt={title} height={"375px"} w={"100%"} />
+        <LazyLoadImage
+          src={img}
+          alt={title}
+          objectFit={objectFit}
+          aspectRatio={4 / 3}
+          h={"100%"}
+          w={"100%"}
+        />
 
         <Text
           position="absolute"
-          bottom="16px"
+          bottom="12px"
           left="16px"
           bg="red.500"
           color="white"
           px="2"
           py="1"
           borderRadius="12px"
-          fontSize="sm"
+          fontSize="xs"
           fontWeight="bold"
         >
           {status.toUpperCase()}

@@ -9,6 +9,9 @@ export const api = {
     me: `user`,
   },
   settings: {
+    front: `setting`,
+    statistics: `statistics`,
+
     fetch: `admin/setting`,
     update: `admin/setting`,
   },
@@ -110,6 +113,7 @@ export const api = {
       }
       return url;
     },
+    fetchAll: "/testimonial",
     create: `/admin/testimonial`,
     byId: `/admin/testimonial/:id`,
   },

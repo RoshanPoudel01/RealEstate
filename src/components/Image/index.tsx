@@ -27,6 +27,7 @@ const LazyLoadImage: FC<LazyLoadImageProps & SkeletonProps & ImageProps> = ({
   return (
     <Skeleton
       w={rest.w ?? "100px"}
+      h={rest.h ?? "100px"}
       loading={!isLoaded}
       borderRadius={borderRadius ?? 5}
       mx={"auto"}

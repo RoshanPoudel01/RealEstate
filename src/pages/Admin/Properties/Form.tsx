@@ -1,6 +1,7 @@
 import { Tabs } from "@chakra-ui/react";
 import PageHeader from "@realState/utils/PageHeader";
 import { useState } from "react";
+import { useParams } from "react-router-dom";
 import { FAQs, General, Images } from "./panels";
 import Amenities from "./panels/Amenities";
 import Descriptions from "./panels/Descriptions";
@@ -29,6 +30,8 @@ const triggers = [
 ];
 
 const PropertyForm = () => {
+  const { id } = useParams<{ id: string }>();
+
   const [tabValue, setTabValue] = useState(triggers[0].value);
 
   return (
@@ -55,6 +58,7 @@ const PropertyForm = () => {
               borderRadius={0}
               key={index}
               value={trigger.value}
+              disabled={trigger.value !== "general" && !id}
             >
               {trigger.label}
             </Tabs.Trigger>

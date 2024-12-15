@@ -1,43 +1,58 @@
 import {
-  Box,
-  Button,
   Container,
-  GridItem,
   Heading,
+  HStack,
+  Icon,
   Image,
   SimpleGrid,
   Stack,
   Text,
 } from "@chakra-ui/react";
-import { yupResolver } from "@hookform/resolvers/yup";
+import { CheckCircle, XCircle } from "@phosphor-icons/react";
 import { imageAssets } from "@realState/assets/images";
-import { TextInput } from "@realState/components/Form";
-import {
-  AccordionItem,
-  AccordionItemContent,
-  AccordionItemTrigger,
-  AccordionRoot,
-} from "@realState/components/ui/accordion";
 import { useGetPropertyDetails } from "@realState/services/service-properties";
+import Loader from "@realState/utils/Loader";
 import parse from "html-react-parser";
-import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
-import * as yup from "yup";
-const defaultValue = {
-  name: "",
-  email: "",
-  phone: "",
-  message: "",
+import FAQs from "./FAQs";
+import Queries from "./Queries";
+
+const PropertyFeature = ({
+  label,
+  isAvailable,
+}: {
+  label: string;
+  isAvailable: boolean;
+}) => {
+  return (
+    <HStack>
+      <Text fontWeight={500} fontSize={"16px"}>
+        {label}:
+      </Text>
+      <Icon boxSize={6} asChild>
+        {isAvailable ? (
+          <CheckCircle weight="fill" color="green" />
+        ) : (
+          <XCircle weight="fill" color="red" />
+        )}
+      </Icon>
+    </HStack>
+  );
 };
+
 const PropertyPage = () => {
   const { id } = useParams();
 
   const currenLanguage = localStorage.getItem("language");
 
-  const { data: propertyDetail } = useGetPropertyDetails(id);
+  const {
+    data: propertyDetail,
+    isPending,
+    isFetching,
+  } = useGetPropertyDetails(id);
 
   var settings = {
     infinite: true,
@@ -46,9 +61,22 @@ const PropertyPage = () => {
     slidesToScroll: 1,
     responsive: [
       {
+        breakpoint: 1920,
+        settings: {
+          slidesToShow: 4,
+        },
+      },
+
+      {
         breakpoint: 1280,
         settings: {
           slidesToShow: 3,
+        },
+      },
+      {
+        breakpoint: 720,
+        settings: {
+          slidesToShow: 2,
         },
       },
 
@@ -56,66 +84,42 @@ const PropertyPage = () => {
         breakpoint: 480,
         settings: {
           slidesToShow: 1,
+          showArrows: false,
         },
       },
     ],
   };
-  const contactSchema = yup.object().shape({
-    name: yup.string().required("Name is required"),
-    email: yup.string().email().required("Email is required"),
-    phone: yup
-      .string()
-      .required("Phone is required")
-      .matches(/^\d{10}$/, "Please enter a 10 digit valid phone number"),
-    message: yup.string().required("Message is required"),
-  });
-  const { control, handleSubmit } = useForm({
-    defaultValues: defaultValue,
-    resolver: yupResolver(contactSchema),
-  });
-  const items = [
-    { value: "a", title: "First Item", text: "Some value 1..." },
-    { value: "b", title: "Second Item", text: "Some value 2..." },
-    { value: "c", title: "Third Item", text: "Some value 3..." },
-  ];
-  const submitContactForm = (data: any) => {
-    console.log(data);
-  };
-  return (
-    <Container display="flex" flexDirection={"column"} gap={10}>
-      <Heading textAlign={"center"}>
-        {currenLanguage === "en"
-          ? propertyDetail?.data?.title_en
-          : propertyDetail?.data?.title_np}
-      </Heading>
-      <SimpleGrid
-        columns={{
-          md: 3,
+
+  return isPending || isFetching ? (
+    <Loader />
+  ) : (
+    <Stack>
+      <Container
+        maxW={{
+          base: "90vw",
+          md: "85vw",
         }}
+        display="flex"
+        flexDirection={"column"}
         gap={10}
       >
-        <GridItem
-          display={"flex"}
-          flexDir={"column"}
-          gap={10}
-          colSpan={2}
-          alignItems={"center"}
-        >
-          <Stack>
-            <Image
-              src={propertyDetail?.data?.image ?? imageAssets.Logo}
-              alt={propertyDetail?.data?.title_en}
-              maxH={"363px"}
-              w={"full"}
-              objectFit={"contain"}
-            />
-          </Stack>
-          <Box
-            width={{
-              base: "60vw",
-              md: "50vw",
-            }}
-          >
+        <Heading textAlign={"center"}>
+          {currenLanguage === "en"
+            ? propertyDetail?.data?.title_en
+            : propertyDetail?.data?.title_np}
+        </Heading>
+
+        <Stack w={"full"}>
+          <Image
+            src={propertyDetail?.data?.image ?? imageAssets.Logo}
+            alt={propertyDetail?.data?.title_en}
+            maxH={"363px"}
+            w={"full"}
+            objectFit={"contain"}
+          />
+        </Stack>
+        {(propertyDetail?.data?.images?.length ?? 0) > 0 && (
+          <Container maxW={{ base: "100vw", md: "80vw", xl: "75vw" }}>
             <Slider {...settings}>
               {propertyDetail?.data?.images?.map((image, index) => (
                 <div key={index}>
@@ -129,8 +133,9 @@ const PropertyPage = () => {
                 />
               </div> */}
             </Slider>
-          </Box>
-          {/* <Stack color="#141B2D" background={"#F3F3FA"} padding={"22px"} w={"70%"}>
+          </Container>
+        )}
+        {/* <Stack color="#141B2D" background={"#F3F3FA"} padding={"22px"} w={"70%"}>
         <Text fontWeight={400} fontSize={"17px"}>
           {" "}
           Price :
@@ -139,108 +144,40 @@ const PropertyPage = () => {
           Rs. 1000000
         </Text>
       </Stack> */}
-          <Text
-            w={{
-              base: "90%",
-              md: "70%",
-            }}
-            textAlign={"start"}
-            color="#141B2D"
-            fontWeight={400}
-            fontSize={"17px"}
-          >
-            {parse(
-              (currenLanguage === "en"
-                ? propertyDetail?.data?.description_en
-                : propertyDetail?.data?.description_np) ?? ""
-            )}
-          </Text>
-          <Stack
-            w={{
-              base: "90%",
-              md: "70%",
-            }}
-          >
-            <Heading>FAQ</Heading>
-            <AccordionRoot multiple defaultValue={["a"]} variant={"subtle"}>
-              {items.map((item, index) => (
-                <AccordionItem key={index} value={item.value}>
-                  <AccordionItemTrigger>{item.title}</AccordionItemTrigger>
-                  <AccordionItemContent>{item.text}</AccordionItemContent>
-                </AccordionItem>
-              ))}
-            </AccordionRoot>
-          </Stack>
-        </GridItem>
-        <GridItem
-          colSpan={{
-            base: 2,
-            md: 1,
-          }}
-          display={"flex"}
-          flexDir={"column"}
-          alignItems={"center"}
-          gap={{
-            base: 5,
-            md: 10,
-          }}
-          w={"full"}
-        >
-          <Heading>Inquire Property</Heading>
-          <Stack
-            asChild
-            w={"80%"}
-            align={{
-              base: "center",
-              md: "flex-end",
-            }}
-          >
-            <form onSubmit={handleSubmit(submitContactForm)}>
-              <TextInput
-                placeholder={"Name"}
-                type="text"
-                name="name"
-                control={control}
-                size={"lg"}
-              />
-              <TextInput
-                type="text"
-                placeholder={"Email"}
-                name="email"
-                control={control}
-                size={"lg"}
-              />
-              <TextInput
-                type="number"
-                placeholder={"Phone"}
-                name="phone"
-                control={control}
-                size={"lg"}
-              />
-              <TextInput
-                type="textarea"
-                placeholder={"Message"}
-                name="message"
-                control={control}
-                size={"lg"}
-              />
-              <Button
-                type="submit"
-                size={"lg"}
-                w={{
-                  base: "full",
-                  md: "auto",
-                }}
-              >
-                Submit
-              </Button>
-            </form>
-          </Stack>
-        </GridItem>
-      </SimpleGrid>
 
-      <Stack w={"full"} alignItems={"center"}></Stack>
-    </Container>
+        <SimpleGrid columns={{ base: 2, md: 4 }} gap={5}>
+          <PropertyFeature
+            label="Road Access"
+            isAvailable={propertyDetail?.data?.is_road_access ? true : false}
+          />
+          <PropertyFeature
+            label="Parking"
+            isAvailable={propertyDetail?.data?.is_parking ? true : false}
+          />
+          <PropertyFeature
+            label="Garden"
+            isAvailable={propertyDetail?.data?.is_garden ? true : false}
+          />
+          <PropertyFeature
+            label="Furnished"
+            isAvailable={propertyDetail?.data?.is_furnished ? true : false}
+          />
+        </SimpleGrid>
+
+        <Text textAlign={"start"} fontSize={"16px"}>
+          {parse(
+            (currenLanguage === "en"
+              ? propertyDetail?.data?.description_en
+              : propertyDetail?.data?.description_np) ?? ""
+          )}
+        </Text>
+      </Container>
+      <FAQs
+        faqs={propertyDetail?.data?.faqs ?? []}
+        currentLanguage={currenLanguage}
+      />
+      <Queries />
+    </Stack>
   );
 };
 

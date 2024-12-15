@@ -39,15 +39,41 @@ const Testimonials = () => {
       accessorKey: "name",
     },
     {
+      header: "Title",
+      accessorKey: "title",
+    },
+    {
       header: "Message",
       accessorKey: "message",
+      cell: ({ row }: IRow<TestimonialResponse>) => {
+        const { message } = row.original;
+        return (
+          <Text
+            minW={"300px"}
+            maxW={"300px"}
+            lineClamp={2}
+            overflowWrap={"break-word"}
+            mx={"auto"}
+          >
+            {message}
+          </Text>
+        );
+      },
     },
     {
       header: "Image",
       accessorKey: "image",
       cell: ({ row }: IRow<TestimonialResponse>) => {
         const { image } = row.original;
-        return <LazyLoadImage src={image} alt={image} width={50} height={50} />;
+        return (
+          <LazyLoadImage
+            src={image}
+            alt={image}
+            width={"70px"}
+            height={"70px"}
+            mx={"auto"}
+          />
+        );
       },
     },
     {

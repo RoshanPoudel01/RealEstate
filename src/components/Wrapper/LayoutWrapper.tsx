@@ -52,6 +52,7 @@ const LayoutWrapper: React.FC = () => {
       <Flex>
         <Stack
           flexGrow={1}
+          gap={0}
           transition={sidebarAnimate}
           backgroundColor={"#FFFFFF"}
           zIndex={0}
@@ -64,7 +65,7 @@ const LayoutWrapper: React.FC = () => {
               flexDir={"column"}
               gap={4}
               minHeight={"80vh"}
-              py={8}
+              pb={8}
               borderRadius={"30px"}
             >
               <Outlet />

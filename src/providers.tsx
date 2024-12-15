@@ -16,6 +16,7 @@ import { Provider } from "./components/ui/provider";
 
 import TokenService, { authTokenKey } from "./services/service-token";
 import { globalStyles } from "./theme/global";
+import ScrollTo from "./utils/scrollTo";
 
 const ErrorFallback = () => {
   return (
@@ -66,6 +67,7 @@ const Providers = ({ children }: IProviders) => {
         <Provider>
           <QueryClientProvider client={queryClient}>
             <Toaster position="bottom-right" />
+            <ScrollTo />
             <HelmetProvider>{children}</HelmetProvider>
           </QueryClientProvider>
           {globalStyles()}

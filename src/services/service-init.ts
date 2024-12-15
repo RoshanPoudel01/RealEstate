@@ -1,36 +1,39 @@
-// import { useStoreInitData } from "@neo/store/initData";
-// import { AxiosError } from "axios";
-// import { useQuery } from "react-query";
+import { useStoreSettingData } from "@realState/store";
+import { useQuery } from "@tanstack/react-query";
+import { api } from "./service-api";
+import { baseURL, RealStateHttpClient } from "./service-axios";
+import { SingleResponse } from "./service-interface";
+import { SettingResponse } from "./service-setting";
 
-// export interface Module {
-//   moduleCode: string;
-//   moduleName: string;
-//   scopes: string;
-// }
-// export interface IInitData {
-//   name: string;
-//   role: string;
-//   moduleList: any[];
-// }
+export interface Module {
+  moduleCode: string;
+  moduleName: string;
+  scopes: string;
+}
+export interface ISettingData {
+  name: string;
+  role: string;
+  moduleList: any[];
+}
 
-// const fetchInitData = () => () => {
-//   return NeoHttpClient.get<NeoResponse<IInitData>>(api.init);
-// };
+const fetchSettingData = () => {
+  return RealStateHttpClient.get<SingleResponse<SettingResponse>>(
+    `${baseURL}/${api.settings.front}`
+  );
+};
 
-// const useFetchInitData = (enabled?: boolean) => {
-//   const { setInitData } = useStoreInitData();
+const useFetchSettingData = () => {
+  const { setSettingData } = useStoreSettingData();
 
-//   return useQuery([api.init], fetchInitData(), {
-//     enabled: enabled,
-//     retry: 1,
-//     select: ({ data }) => data?.data || {},
-//     onSuccess: (data: IInitData) => {
-//       setInitData(data);
-//     },
-//     onError: (error: AxiosError) => {
-//       console.error(error);
-//     }
-//   });
-// };
+  return useQuery({
+    queryKey: ["settingData"],
+    queryFn: async () => {
+      const settingData = await fetchSettingData();
+      setSettingData(settingData?.data?.data);
+      return settingData?.data;
+    },
+    retry: 1,
+  });
+};
 
-// export { useFetchInitData };
+export { useFetchSettingData };

@@ -2,6 +2,7 @@ import { Stack } from "@chakra-ui/react";
 import { ReactDropzone, TextInput } from "@realState/components/Form";
 import { ModalForm } from "@realState/components/Form/Modal";
 import StatusRadio from "@realState/components/Form/StatusRadio";
+import useGetDirtyData from "@realState/hooks/useGetDirtyData";
 import useGetErrors from "@realState/hooks/useGetErrors";
 import { toFormData } from "@realState/services/service-axios";
 import {
@@ -19,12 +20,13 @@ interface TestimonialFormProps {
 const TestimonialForm: FC<TestimonialFormProps> = ({ id }) => {
   const defaultValues = {
     name: "",
+    title: "",
     message: "",
     image: "",
     is_active: "1",
   };
 
-  const { control, handleSubmit, reset } = useForm({
+  const { control, handleSubmit, reset, formState } = useForm({
     defaultValues,
   });
 
@@ -59,6 +61,7 @@ const TestimonialForm: FC<TestimonialFormProps> = ({ id }) => {
     if (testimonial?.data) {
       reset({
         name: testimonial.data.name ?? "",
+        title: testimonial.data.title ?? "",
         message: testimonial.data.message ?? "",
         image: testimonial.data.image ?? "",
         is_active: testimonial.data.is_active.toString(),
@@ -76,7 +79,8 @@ const TestimonialForm: FC<TestimonialFormProps> = ({ id }) => {
   }, [isAddError, isUpdateError]);
 
   const onSubmit = async (data: any) => {
-    const formData = toFormData(data);
+    const dirtyData = useGetDirtyData(formState, data);
+    const formData = toFormData(dirtyData);
     if (id) {
       const response = await updateTestimonial({ id, data: formData });
       if (response.data?.status) {
@@ -112,6 +116,13 @@ const TestimonialForm: FC<TestimonialFormProps> = ({ id }) => {
           backendError={backendError?.name}
         />
         <TextInput
+          name="title"
+          label="Title"
+          control={control}
+          required
+          backendError={backendError?.title}
+        />
+        <TextInput
           name="message"
           label="Message"
           type="textarea"
@@ -125,6 +136,7 @@ const TestimonialForm: FC<TestimonialFormProps> = ({ id }) => {
           control={control}
           boxWidth={150}
           boxHeight={150}
+          file={testimonial?.data?.image ?? ""}
           options={{
             accept: { "image/*": [] },
           }}

@@ -1,13 +1,16 @@
 import { Card, Flex, HStack, Icon, Image, Stack, Text } from "@chakra-ui/react";
+import { Star } from "@phosphor-icons/react";
 import { imageAssets } from "@realState/assets/images";
-import Star from "@realState/assets/svgs/star.svg?react";
 import { Avatar } from "@realState/components/ui/avatar";
-const TestimonialCard = () => {
+import { TestimonialResponse } from "@realState/services/service-testimonial";
+
+const TestimonialCard = ({ data }: { data: TestimonialResponse }) => {
   return (
     <Flex
       position={"relative"}
       borderRadius={"8px"}
-      height={"500px !important"}
+      flexDir={"column"}
+      h={"500px"}
     >
       <Image
         src={imageAssets.TestimonialBackground}
@@ -17,23 +20,21 @@ const TestimonialCard = () => {
         maxW={"700px"}
       />
       <Card.Root
-        position={"absolute"}
-        top={"52%"}
-        left={"5%"}
-        maxW={"612px"}
+        w={"full"}
+        pos={"absolute"}
+        left={"50%"}
+        bottom={"30px"}
+        transform={"translateX(-50%)"}
+        maxW={"512px"}
+        mx={"auto"}
         borderRadius={"16px"}
+        h={"max-content"}
       >
-        <Card.Body display={"flex"} flexDir={"column"} gap={4} p={8}>
+        <Card.Body gap={4} p={8}>
           <Card.Header p={0}>
-            <Card.Title color={"1B1C57"}>
-              Best! I got the house I wanted{" "}
-            </Card.Title>
+            <Card.Title color={"1B1C57"}>{data.title}</Card.Title>
           </Card.Header>
-          <Card.Description color={"#626687"}>
-            Through this website I can get a house with the type and
-            specifications I want very easily, without a complicated process to
-            be able to find information on the house we want.
-          </Card.Description>
+          <Card.Description color={"#626687"}>{data.message}</Card.Description>
           <Card.Footer
             p={0}
             display={"flex"}
@@ -45,6 +46,9 @@ const TestimonialCard = () => {
               borderRadius={"40px"}
               height={"40px"}
               w={"40px"}
+              src={data.image}
+              fallback={<Avatar />}
+              name={data.name}
               boxShadow=" 0px 9px 32px 0px rgba(89, 92, 219, 0.10)"
             />
             <Stack align={"flex-start"} w={"full"} gap={0}>
@@ -54,7 +58,7 @@ const TestimonialCard = () => {
                 fontWeight={500}
                 color={"#0E1735"}
               >
-                Dianne Russell
+                {data.name}
               </Text>
               <Text
                 fontSize={"14px"}
@@ -66,17 +70,9 @@ const TestimonialCard = () => {
               </Text>
             </Stack>
             <HStack>
-              <Icon height={"29px"} width={"29px"}>
-                <Star />
+              <Icon boxSize={6} color={"#FFB946"} asChild>
+                <Star weight="fill" />
               </Icon>
-              <Text
-                fontSize={"20px"}
-                lineHeight={"28px"}
-                fontWeight={600}
-                color={"#3C4563"}
-              >
-                5
-              </Text>
             </HStack>
           </Card.Footer>
         </Card.Body>

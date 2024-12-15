@@ -1,6 +1,7 @@
 import { Box } from "@chakra-ui/react";
 import TestimonialCard from "@realState/components/Cards/Testimonials";
 import SectionWrapper from "@realState/components/Wrapper/SectionWrapper";
+import { useFetchAllTestimonials } from "@realState/services/service-testimonial";
 import React from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick-theme.css";
@@ -35,23 +36,19 @@ const TestimonialSection: React.FC = () => {
     ],
   };
 
+  const { data: testimonials } = useFetchAllTestimonials();
+  console.log({ testimonials });
   return (
     <>
       <SectionWrapper
         title="See Our Review"
         heading="What Our Users Say About Us"
         content={
-          <Box>
+          <Box mt={10}>
             <Slider {...settings}>
-              <div>
-                <TestimonialCard />
-              </div>
-              <div>
-                <TestimonialCard />
-              </div>
-              <div>
-                <TestimonialCard />
-              </div>
+              {testimonials?.data?.rows?.map((testimonial, index) => (
+                <TestimonialCard data={testimonial} key={index} />
+              ))}
             </Slider>
           </Box>
         }

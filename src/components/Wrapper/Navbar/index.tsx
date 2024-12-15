@@ -1,9 +1,10 @@
-import { Flex, Image, Stack, Text } from "@chakra-ui/react";
+import { Flex, HStack, Image, Stack } from "@chakra-ui/react";
 import { imageAssets } from "@realState/assets/images";
-import { Switch } from "@realState/components/ui/switch";
 import { NAVIGATION_ROUTES } from "@realState/pages/App/navigationRoutes";
+import { useStoreSettingData } from "@realState/store";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Language from "./Language";
 import MobileNav from "./MobileNav";
 import NavItem from "./NavItem";
 import { navLinks } from "./navLinks";
@@ -65,15 +66,18 @@ export default function NavBar({
   //   };
   const navigate = useNavigate();
 
-  const changeLangugaeHandler = () => {
+  const changeLanguageHandler = () => {
     const lang = localStorage.getItem("language") === "np" ? "en" : "np";
     localStorage.setItem("language", lang);
     // i18next.changeLanguage(lang);
     window.location.reload();
   };
+
+  const { settingData } = useStoreSettingData();
+
   return (
-    <Flex bg="FFFFFF" position={"sticky"} pt={8}>
-      <Stack
+    <Flex position={"sticky"} p={4} align={"center"}>
+      <HStack
         as="nav"
         gap={3}
         paddingX={{
@@ -81,16 +85,12 @@ export default function NavBar({
           sm: "40px",
           lg: "60px",
         }}
-        flexDir={{
-          base: "column",
-          md: "row",
-        }}
         justifyContent={"space-between"}
-        alignItems={"flex-start"}
+        align={"center"}
         w={"full"}
       >
         <Image
-          src={imageAssets.Logo}
+          src={settingData?.logo ?? imageAssets.Logo}
           alt="Logo"
           height={"50px"}
           onClick={() => navigate(NAVIGATION_ROUTES.HOME)}
@@ -103,6 +103,7 @@ export default function NavBar({
               base: "column",
               md: "row",
             }}
+            hideBelow={"md"}
           >
             {navLinks?.map((nav, index) => {
               return (
@@ -132,18 +133,9 @@ export default function NavBar({
             })}
           </Stack>
 
-          <Switch
-            colorPalette="blue"
-            size="lg"
-            trackLabel={{
-              on: <Text>NP</Text>,
-              off: <Text>EN</Text>,
-            }}
-            checked={localStorage.getItem("language") === "np"}
-            onChange={changeLangugaeHandler}
-          />
+          <Language />
         </>
-      </Stack>
+      </HStack>
     </Flex>
   );
 }

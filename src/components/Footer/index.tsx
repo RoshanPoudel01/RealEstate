@@ -1,13 +1,7 @@
 import { Flex, Image, Link, Stack, Text } from "@chakra-ui/react";
 import { imageAssets } from "@realState/assets/images";
-import { colorScheme } from "@realState/theme/colorScheme";
-import {
-  FaFacebook,
-  FaInstagram,
-  FaLinkedin,
-  FaTwitter,
-  FaYoutube,
-} from "react-icons/fa";
+import { useFetchSettingData } from "@realState/services/service-init";
+import { FaFacebook, FaInstagram, FaYoutube } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 const SocialButton = ({ icon, href }: { icon: JSX.Element; href: string }) => {
   return (
@@ -17,14 +11,15 @@ const SocialButton = ({ icon, href }: { icon: JSX.Element; href: string }) => {
   );
 };
 const Footer = () => {
+  const { data: settingData } = useFetchSettingData();
+
+  const currentLanguage = localStorage.getItem("language");
   const navigate = useNavigate();
   //   const navigate = useNavigate();
   const socialLinks = [
-    { icon: <FaFacebook size="20px" />, href: "#" },
-    { icon: <FaInstagram size="20px" />, href: "#" },
-    { icon: <FaTwitter size="20px" />, href: "#" },
-    { icon: <FaLinkedin size="20px" />, href: "#" },
-    { icon: <FaYoutube size="20px" />, href: "#" },
+    { icon: <FaFacebook size="20px" />, href: settingData?.data?.facebook },
+    { icon: <FaInstagram size="20px" />, href: settingData?.data?.instagram },
+    { icon: <FaYoutube size="20px" />, href: settingData?.data?.youtube },
   ];
 
   const footerSections = [
@@ -39,12 +34,24 @@ const Footer = () => {
     {
       title: "Contact",
       links: [
-        { text: "01-12312312, 01-123122233", href: "tel:01-12312312" },
         {
-          text: "realstate@gmail.com ( Dummy Mail )",
-          href: "mailto:realstate@gmail.com",
+          text:
+            currentLanguage === "en"
+              ? settingData?.data?.phone_en
+              : settingData?.data?.phone_np,
+          href: `tel:${settingData?.data?.phone_en ?? ""}`,
         },
-        { text: "Balaju, Kathmandu", href: "#" },
+        {
+          text: settingData?.data?.email,
+          href: `mailto:${settingData?.data?.email}`,
+        },
+        {
+          text:
+            currentLanguage === "en"
+              ? settingData?.data?.address_en
+              : settingData?.data?.address_np,
+          href: "#",
+        },
       ],
     },
     {
@@ -56,7 +63,7 @@ const Footer = () => {
     },
   ];
   return (
-    <Stack as="footer" bg={colorScheme.primary_50}>
+    <Stack as="footer" bg={"primary.50"}>
       <Flex
         direction={"column"}
         w={"100%"}
@@ -65,8 +72,7 @@ const Footer = () => {
           sm: "40px",
           lg: "60px",
         }}
-        paddingTop={"80px"}
-        paddingBottom={"20px"}
+        py={"40px"}
         gap={"32px"}
       >
         <Flex direction={"column"} gap={"60px"}>
@@ -86,7 +92,7 @@ const Footer = () => {
                 alt={"neo-logo"}
                 height={"90px"}
                 w={"full"}
-                src={imageAssets.Logo}
+                src={settingData?.data?.logo ?? imageAssets.Logo}
                 objectFit="contain"
                 cursor={"pointer"}
                 onClick={() => navigate("/")}
@@ -96,7 +102,7 @@ const Footer = () => {
                   <SocialButton
                     key={index}
                     icon={social.icon}
-                    href={social.href}
+                    href={social.href ?? "#"}
                   />
                 ))}
               </Flex>
@@ -104,7 +110,7 @@ const Footer = () => {
 
             {footerSections.map((section, index) => (
               <Stack key={index} minW={{ base: "150px", md: "auto" }} gap={6}>
-                <Text fontWeight="600" fontSize="md">
+                <Text fontWeight="600" color={"red.400"} fontSize="md">
                   {section.title}
                 </Text>
                 <Stack gap={2}>

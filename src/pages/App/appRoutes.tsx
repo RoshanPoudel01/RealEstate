@@ -130,6 +130,10 @@ export const userRoutes = [
         element: <Properties />,
       },
       {
+        path: NAVIGATION_ROUTES.PROPERTIES + "/:propertyType",
+        element: <Properties />,
+      },
+      {
         path: NAVIGATION_ROUTES.ABOUT,
         element: <About />,
       },

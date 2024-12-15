@@ -1,3 +1,5 @@
 import { useStoreHeaderData } from "./headerSore";
 import { useStoreInitData } from "./initStore";
-export { useStoreHeaderData, useStoreInitData };
+import { useStoreSettingData } from "./settingStore";
+
+export { useStoreHeaderData, useStoreInitData, useStoreSettingData };

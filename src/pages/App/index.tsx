@@ -29,6 +29,7 @@ export default function App() {
       </Flex>
     );
   }
+
   const appRoutes = isAuthenticated
     ? [...userRoutes, ...adminRoutes]
     : userRoutes;

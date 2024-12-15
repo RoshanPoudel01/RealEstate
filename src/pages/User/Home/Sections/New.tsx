@@ -5,27 +5,28 @@ import PropertyCard from "@realState/components/Cards/Property";
 import SectionWrapper from "@realState/components/Wrapper/SectionWrapper";
 import { useFetchAllProperties } from "@realState/services/service-properties";
 
-const Featured = () => {
+const New = () => {
   const currenLanguage = localStorage.getItem("language");
-  const { data: featuredProperties, isLoading } = useFetchAllProperties({
-    propertyType: "featured",
+  const { data: newProperties, isLoading } = useFetchAllProperties({
+    propertyType: "new",
   });
   return (
     <>
       <SectionWrapper
-        title="Our Recommendations"
-        heading="Featured Houses"
+        title="Recently Added"
+        heading="New Houses"
+        filterText="Filter"
         viewAllText="View All"
-        viewAllNavigation="/all-properties/featured"
+        viewAllNavigation="/all-properties/new"
         content={
           <>
             <HStack>
               {isLoading &&
                 [1, 2, 3].map((_, index) => <LoadingCard key={index} />)}
             </HStack>
-            {featuredProperties?.data?.count === 0 && (
+            {newProperties?.data?.count === 0 && (
               <Center>
-                <Heading>No Featured Properties...</Heading>
+                <Heading>No New Properties...</Heading>
               </Center>
             )}
             <SimpleGrid
@@ -41,7 +42,7 @@ const Featured = () => {
                 xl: 12,
               }}
             >
-              {featuredProperties?.data?.rows
+              {newProperties?.data?.rows
                 ?.map((item, index) => (
                   <PropertyCard
                     id={item?.id}
@@ -72,4 +73,4 @@ const Featured = () => {
   );
 };
 
-export default Featured;
+export default New;

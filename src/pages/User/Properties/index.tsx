@@ -16,13 +16,17 @@ import RangeSlider from "@realState/components/Form/Slider/RangeSlider";
 import { Button } from "@realState/components/ui/button";
 import { useFetchAllProperties } from "@realState/services/service-properties";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const Properties = () => {
   const currenLanguage = localStorage.getItem("language");
 
+  const { propertyType } = useParams();
+
+  console.log({ propertyType });
+
   const { data: properties, isLoading } = useFetchAllProperties({
-    propertyType: "",
+    propertyType: propertyType ?? "",
   });
 
   const navigate = useNavigate();

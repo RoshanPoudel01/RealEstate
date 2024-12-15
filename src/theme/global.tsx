@@ -75,10 +75,10 @@ const globalStyles = () => {
           }
         }
         .slick-prev {
-          left: -70px !important;
+          left: -50px !important;
         }
         .slick-next {
-          right: -70px !important;
+          right: -50px !important;
         }
 
         .noOverflow > .slick-list {

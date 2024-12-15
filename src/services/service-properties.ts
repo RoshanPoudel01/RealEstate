@@ -25,8 +25,8 @@ export interface PropertyFrontResponse {
   address_np: string;
   city_en: string;
   city_np: string;
-  image: string;
   images: Images[];
+  faqs: FaqResponse[];
 }
 
 interface Images {
