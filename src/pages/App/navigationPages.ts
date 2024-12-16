@@ -27,6 +27,8 @@ const ADD_TRENDING = lazy(
 );
 const ADD_NEW = lazy(() => import("@realState/pages/Admin/Properties/New"));
 const CONTACT = lazy(() => import("@realState/pages/User/Contact"));
+const ENQUIRIES = lazy(() => import("@realState/pages/Admin/Enquiries"));
+const MESSAGES = lazy(() => import("@realState/pages/Admin/Messages"));
 export const NAVIGATION_PAGES = {
   SLIDERS,
   SLIDER_FORM,
@@ -45,4 +47,6 @@ export const NAVIGATION_PAGES = {
   ADD_TRENDING,
   ADD_NEW,
   CONTACT,
+  ENQUIRIES,
+  MESSAGES,
 };

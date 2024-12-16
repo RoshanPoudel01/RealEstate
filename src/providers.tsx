@@ -16,7 +16,7 @@ import { Provider } from "./components/ui/provider";
 
 import TokenService, { authTokenKey } from "./services/service-token";
 import { globalStyles } from "./theme/global";
-import ScrollTo from "./utils/scrollTo";
+import ScrollTo from "./utils/ScrollTo";
 
 const ErrorFallback = () => {
   return (

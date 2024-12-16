@@ -50,10 +50,15 @@ export const api = {
       }
       return url;
     },
-    fetchById: `admin/service/:id`,
+    byId: `admin/service/:id`,
     create: `admin/service`,
-    update: `admin/service/:id`,
-    delete: `admin/service/:id`,
+    front: ({ page = 1, perPage = 10, keyword = "" }) => {
+      let url = `/service?page=${page}&per_page=${perPage}`;
+      if (keyword) {
+        url += `&keyword=${keyword}`;
+      }
+      return url;
+    },
   },
   teams: {
     fetch: ({ page = 1, perPage = 10, keyword = "" }) => {
@@ -63,10 +68,10 @@ export const api = {
       }
       return url;
     },
-    fetchById: `admin/team/:id`,
-    create: `admin/team`,
-    update: `admin/team/:id`,
-    delete: `admin/team/:id`,
+
+    byId: `admin/team/:id`,
+    index: `admin/team`,
+    front: `team`,
   },
   properties: {
     fetch: ({ page = 1, perPage = 10, keyword = "" }) => {
@@ -116,5 +121,24 @@ export const api = {
     fetchAll: "/testimonial",
     create: `/admin/testimonial`,
     byId: `/admin/testimonial/:id`,
+  },
+  messages: {
+    fetchEnquiries: ({ page = 1, perPage = 10, keyword = "" }) => {
+      let url = `/admin/message?page=${page}&per_page=${perPage}`;
+      if (keyword) {
+        url += `&keyword=${keyword}`;
+      }
+      return url;
+    },
+    fetchProperties: ({ page = 1, perPage = 10, keyword = "" }) => {
+      let url = `/admin/property-message?page=${page}&per_page=${perPage}`;
+      if (keyword) {
+        url += `&keyword=${keyword}`;
+      }
+      return url;
+    },
+    send: `/contact-us`,
+    fetchById: `admin/message/:id`,
+    delete: `admin/message/:id`,
   },
 };

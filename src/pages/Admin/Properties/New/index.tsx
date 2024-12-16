@@ -150,7 +150,6 @@ const New = () => {
   }, [selectedProperties, setValue]);
 
   const onSubmit = async (data: typeof defaultValues) => {
-    console.log({ data });
     const response = await addNew({
       data: { properties: JSON.stringify(data.properties) },
     });

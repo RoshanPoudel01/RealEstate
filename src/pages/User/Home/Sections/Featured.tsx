@@ -1,9 +1,10 @@
-import { Center, Heading, HStack, SimpleGrid } from "@chakra-ui/react";
+import { Center, Heading, HStack } from "@chakra-ui/react";
 import { imageAssets } from "@realState/assets/images";
 import LoadingCard from "@realState/components/Cards/LoadingCard";
 import PropertyCard from "@realState/components/Cards/Property";
 import SectionWrapper from "@realState/components/Wrapper/SectionWrapper";
 import { useFetchAllProperties } from "@realState/services/service-properties";
+import Masonry from "react-layout-masonry";
 
 const Featured = () => {
   const currenLanguage = localStorage.getItem("language");
@@ -29,19 +30,7 @@ const Featured = () => {
                 <Heading>No Featured Properties...</Heading>
               </Center>
             )}
-            <SimpleGrid
-              columns={{
-                base: 1,
-                sm: 2,
-                lg: 3,
-                xl: 4,
-              }}
-              gap={{
-                base: 2,
-                md: 5,
-                xl: 12,
-              }}
-            >
+            <Masonry columns={{ 0: 1, 480: 2, 1060: 4 }} gap={12}>
               {featuredProperties?.data?.rows
                 ?.map((item, index) => (
                   <PropertyCard
@@ -57,7 +46,7 @@ const Featured = () => {
                   />
                 ))
                 .slice(0, 4)}
-            </SimpleGrid>
+            </Masonry>
           </>
         }
       />

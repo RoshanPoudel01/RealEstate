@@ -33,8 +33,6 @@ const CheckboxInput: React.FC<ICheckboxInputProps & CheckboxCardProps> = ({
   my,
   ...rest
 }) => {
-  console.log({ options });
-
   return (
     <Controller
       name={name}

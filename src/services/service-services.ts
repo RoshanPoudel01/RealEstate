@@ -22,7 +22,7 @@ const useFetchServices = ({ page = 1, perPage = 10, keyword = "" }) => {
 
 const useFetchServiceById = (id: string) => {
   return useFetch<SingleResponse<ServiceResponse>>({
-    url: api.services.fetchById.replace(":id", id),
+    url: api.services.byId.replace(":id", id),
     queryKey: [`service-${id}`],
     enabled: !!id,
   });
@@ -39,7 +39,7 @@ const useCreateService = () => {
 
 const useUpdateService = () => {
   return useMutate({
-    url: api.services.update,
+    url: api.services.byId,
     queryKey: [`update-service`],
     invalidates: [`services`],
     method: `POST`,
@@ -49,7 +49,7 @@ const useUpdateService = () => {
 
 const useDeleteService = () => {
   return useMutate({
-    url: api.services.delete,
+    url: api.services.byId,
     queryKey: [`delete-service`],
     invalidates: [`services`],
     method: `DELETE`,
@@ -57,9 +57,17 @@ const useDeleteService = () => {
   });
 };
 
+const useFetchFrontServices = ({ page = 1, perPage = 4, keyword = "" }) => {
+  return useFetch<RootResponse<ServiceResponse>>({
+    url: api.services.front({ page, perPage, keyword }),
+    queryKey: [`front-services`],
+  });
+};
+
 export {
   useCreateService,
   useDeleteService,
+  useFetchFrontServices,
   useFetchServiceById,
   useFetchServices,
   useUpdateService,

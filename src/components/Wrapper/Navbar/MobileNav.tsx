@@ -25,7 +25,6 @@ const MobileNav = () => {
     <DrawerRoot
       open={open}
       onOpenChange={(e) => setOpen(e.open)}
-      size={"xs"}
       placement={"end"}
       restoreFocus={false}
     >
@@ -38,7 +37,7 @@ const MobileNav = () => {
       </DrawerTrigger>
 
       <DrawerBackdrop />
-      <DrawerContent w={"full"} maxW={"250px"}>
+      <DrawerContent>
         <DrawerHeader>
           <DrawerCloseTrigger />
         </DrawerHeader>
@@ -64,12 +63,13 @@ const MobileNav = () => {
                     label={nav.label}
                     key={nav.href}
                     href={nav.href}
+                    onCloseDrawer={() => setOpen(false)}
                   />
                 </Stack>
               );
             })}
+            <Language />
           </Stack>
-          <Language />
         </DrawerBody>
       </DrawerContent>
     </DrawerRoot>

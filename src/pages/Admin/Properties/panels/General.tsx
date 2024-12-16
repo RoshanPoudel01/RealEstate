@@ -70,6 +70,8 @@ const General: FC<GeneralProps> = ({ setTabValue }) => {
     if (property?.data) {
       reset({
         ...property?.data,
+        category_id: property?.data.category_id.toString(),
+        price: parseFloat(property?.data.price),
         is_active: property?.data.is_active ? "1" : "0",
       });
     } else {
@@ -128,17 +130,14 @@ const General: FC<GeneralProps> = ({ setTabValue }) => {
         navigate(`/admin/properties/edit/${id}`);
         setTabValue("amenities");
       }
-      console.log({ data, id });
     } else {
       const response = await addProperty({ data });
-      console.log({ response });
       if (response.data.status) {
         const id = response.data.data.id;
         reset(defaultValues);
         navigate(`/admin/properties/create/${id}`);
         setTabValue("amenities");
       }
-      console.log({ data });
     }
   };
 

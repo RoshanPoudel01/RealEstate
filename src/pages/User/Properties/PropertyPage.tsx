@@ -143,19 +143,19 @@ const PropertyPage = () => {
 
         <SimpleGrid columns={{ base: 2, md: 4 }} gap={5}>
           <PropertyFeature
-            label="Road Access"
+            label={currenLanguage === "en" ? "Road Access" : "सडक पहुँच"}
             isAvailable={propertyDetail?.data?.is_road_access ? true : false}
           />
           <PropertyFeature
-            label="Parking"
+            label={currenLanguage === "en" ? "Parking Space" : "पार्किंग"}
             isAvailable={propertyDetail?.data?.is_parking ? true : false}
           />
           <PropertyFeature
-            label="Garden"
+            label={currenLanguage === "en" ? "Garden" : "बगैंचा"}
             isAvailable={propertyDetail?.data?.is_garden ? true : false}
           />
           <PropertyFeature
-            label="Furnished"
+            label={currenLanguage === "en" ? "Furnished" : "सुसज्जित"}
             isAvailable={propertyDetail?.data?.is_furnished ? true : false}
           />
         </SimpleGrid>

@@ -30,10 +30,14 @@ const FAQs: FC<IFaqs> = ({ faqs, currentLanguage }) => {
       py={10}
     >
       <Heading color={"primary.500"} fontSize={{ base: "xl", md: "3xl" }}>
-        Frequently Asked Questions
+        {currentLanguage === "en"
+          ? "Frequently Asked Questions"
+          : "सामान्य प्रश्नहरू"}
       </Heading>
       <Text>
-        Have any questions? We have answers to some of the most common queries.
+        {currentLanguage === "en"
+          ? " Have any questions? We have answers to some of the most common queries."
+          : "कुनै प्रश्न छ? हामीले सबैभन्दा सामान्य प्रश्नहरूको उत्तर छ।"}
       </Text>
       <AccordionRoot
         size={"lg"}

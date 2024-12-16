@@ -1,10 +1,11 @@
 import {
   Box,
   Center,
+  Container,
+  Flex,
   Heading,
   HStack,
   Separator,
-  SimpleGrid,
   Stack,
   Text,
 } from "@chakra-ui/react";
@@ -16,6 +17,7 @@ import RangeSlider from "@realState/components/Form/Slider/RangeSlider";
 import { Button } from "@realState/components/ui/button";
 import { useFetchAllProperties } from "@realState/services/service-properties";
 import { useForm } from "react-hook-form";
+import Masonry from "react-layout-masonry";
 import { useParams } from "react-router-dom";
 
 const Properties = () => {
@@ -35,7 +37,7 @@ const Properties = () => {
     console.warn(data);
   };
   return (
-    <Center flexDir={"column"} gap={4}>
+    <Flex flexDir={"column"} gap={4}>
       <Stack
         textAlign={"center"}
         color={"#141B2D"}
@@ -45,11 +47,18 @@ const Properties = () => {
         }}
         gap={0}
       >
-        <Text fontSize={"50px"} lineHeight={"69px"} fontWeight={700}>
-          Search for Properties
+        <Text
+          color={"primary.400"}
+          fontSize={"50px"}
+          lineHeight={"69px"}
+          fontWeight={700}
+        >
+          {currenLanguage === "np" ? "संपत्तिहरू" : "Properties"}
         </Text>
         <Text fontSize={"21px"} fontWeight={400} lineHeight={"35px"}>
-          Choose from the most advantageous offers
+          {currenLanguage === "np"
+            ? "सबैभन्दा लाभदायक प्रस्तावहरूबाट छनौट गर्नुहोस्"
+            : " Choose from the most advantageous offers"}
         </Text>
       </Stack>
       <Stack
@@ -183,29 +192,32 @@ const Properties = () => {
           <Heading>No Properties...</Heading>
         </Center>
       )}
-      <SimpleGrid
-        columns={{ base: 1, sm: 2, md: 3 }}
-        w={"full"}
+      <Container
         maxW={{
-          base: "90%",
-          md: "75%",
+          base: "95dvw",
+          md: "85dvw",
+          xl: "80dvw",
         }}
-        gap={10}
       >
-        {isLoading && [1, 2, 3].map(() => <LoadingCard />)}
-        {properties?.data?.rows.map((item) => (
-          <PropertyCard
-            id={item?.id}
-            title={item?.title}
-            price={item?.price}
-            img={item?.image ?? imageAssets.Logo}
-            address={item?.address}
-            city={item?.city}
-            status={item.status}
-          />
-        ))}
-      </SimpleGrid>
-    </Center>
+        <Masonry columns={{ 0: 1, 480: 2, 900: 3, 1280: 4 }} gap={10}>
+          {isLoading
+            ? [1, 2, 3, 4].map((_, index) => <LoadingCard key={index} />)
+            : properties?.data?.rows.map((item, index) => (
+                <PropertyCard
+                  id={item?.id}
+                  key={index}
+                  title={item?.title}
+                  price={item?.price}
+                  img={item?.image ?? imageAssets.Logo}
+                  objectFit={item?.image ? "cover" : "contain"}
+                  address={item?.address}
+                  city={item?.city}
+                  status={item.status}
+                />
+              ))}
+        </Masonry>
+      </Container>
+    </Flex>
   );
 };
 

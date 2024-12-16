@@ -26,6 +26,9 @@ const schema = yup.object().shape({
   position_en: yup.string().required("Position is required"),
   position_np: yup.string().required("Position is required"),
   image: yup.mixed().required("Image is required"),
+  facebook: yup.string().url("Invalid URL"),
+  instagram: yup.string().url("Invalid URL"),
+  twitter: yup.string().url("Invalid URL"),
   is_active: yup.string().required("Status is required"),
   display_order: yup
     .number()
@@ -44,6 +47,10 @@ const TeamsForm = () => {
     position_en: "",
     position_np: "",
     image: "",
+
+    facebook: "",
+    instagram: "",
+    twitter: "",
     is_active: "1",
     display_order: "" as never as number,
   };
@@ -181,6 +188,24 @@ const TeamsForm = () => {
                 backendError={backendError.position_np}
                 name="position_np"
                 label="Position (NP)"
+              />
+              <TextInput
+                control={control}
+                backendError={backendError.facebook}
+                name="facebook"
+                label="Facebook"
+              />
+              <TextInput
+                control={control}
+                backendError={backendError.instagram}
+                name="instagram"
+                label="Instagram"
+              />
+              <TextInput
+                control={control}
+                backendError={backendError.twitter}
+                name="twitter"
+                label="Twitter"
               />
               <TextInput
                 control={control}

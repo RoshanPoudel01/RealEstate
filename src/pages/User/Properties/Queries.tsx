@@ -22,6 +22,9 @@ const Queries = () => {
       .matches(/^\d{10}$/, "Please enter a 10 digit valid phone number"),
     message: yup.string().required("Message is required"),
   });
+
+  const currentLanguage = localStorage.getItem("language");
+
   const { control, handleSubmit } = useForm({
     defaultValues: defaultValue,
     resolver: yupResolver(contactSchema),
@@ -57,11 +60,12 @@ const Queries = () => {
         gap={4}
       >
         <Heading color={"primary.500"} fontSize={{ base: "xl", md: "3xl" }}>
-          Have any queries?
+          {currentLanguage === "en" ? "Have any queries?" : "कुनै प्रश्न छ?"}
         </Heading>
         <Text>
-          Our Team will try to address your query regarding this particular
-          product as soon as you enquire about product
+          {currentLanguage === "en"
+            ? " Our Team will try to address your query regarding this particular product as soon as you enquire about product"
+            : "तपाईंले उत्पादनको बारेमा सोधपुछ गर्ने बित्तिकै हाम्रो टोलीले यस विशेष उत्पादनको बारेमा तपाईंको प्रश्नलाई सम्बोधन गर्ने प्रयास गर्नेछ"}
         </Text>
         <Image
           boxSize={20}

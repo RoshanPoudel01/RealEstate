@@ -1,9 +1,11 @@
 import {
   Building,
+  Chat,
   FireSimple,
   House,
   Images,
   Package,
+  QuestionMark,
   SquaresFour,
   Star,
   User,
@@ -70,5 +72,15 @@ export const sidebarItems = [
     title: "Testimonials",
     icon: <User />,
     to: "/admin/testimonials",
+  },
+  {
+    title: "Enquiries",
+    icon: <QuestionMark />,
+    to: "/admin/enquiries",
+  },
+  {
+    title: "Messages",
+    icon: <Chat />,
+    to: "/admin/messages",
   },
 ];

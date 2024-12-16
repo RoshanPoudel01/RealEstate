@@ -26,7 +26,7 @@ const config = defineConfig({
           fg: { value: "{colors.primary.700}" },
           muted: { value: "{colors.primary.100}" },
 
-          subtle: { value: "{colors.primary.50}" },
+          subtle: { value: "{colors.gray.100}" },
           emphasized: { value: "{colors.primary.900}" },
           focusRing: { value: "{colors.primary.500}" },
         },

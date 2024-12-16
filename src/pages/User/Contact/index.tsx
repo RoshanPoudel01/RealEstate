@@ -12,30 +12,39 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Envelope, MapPin, PhoneCall } from "@phosphor-icons/react";
 import { TextInput } from "@realState/components/Form";
 import { Button } from "@realState/components/ui/button";
+import { useSendMessage } from "@realState/services/service-enquiries";
 import { useStoreSettingData } from "@realState/store";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import * as yup from "yup";
 const defaultValues = {
-  fullName: "",
+  name: "",
   email: "",
   phone: "",
-  message: "",
+  question: "",
 };
 const Contact = () => {
   const { settingData } = useStoreSettingData();
   const schema = yup.object().shape({
-    fullName: yup.string().required("Full name is required"),
+    name: yup.string().required("Full name is required"),
     email: yup.string().email().required("Email is required"),
     phone: yup.string().required("Phone number is required"),
-    message: yup.string().required("Message is required"),
+    question: yup.string().required("Message is required"),
   });
-  const { control, handleSubmit } = useForm({
+  const { control, handleSubmit, reset } = useForm({
     defaultValues,
     resolver: yupResolver(schema),
   });
-  const submitFrm = (data: typeof defaultValues) => {
-    console.log(data);
+
+  const currentLanguage = localStorage.getItem("language");
+
+  const { mutateAsync: send, isPending: isSending } = useSendMessage();
+
+  const submitFrm = async (data: typeof defaultValues) => {
+    const response = await send({ data });
+    if (response.data.status) {
+      reset(defaultValues);
+    }
   };
   return (
     <Center flexDir={"column"} gap={4}>
@@ -48,11 +57,20 @@ const Contact = () => {
         }}
         gap={0}
       >
-        <Text fontSize={"50px"} lineHeight={"69px"} fontWeight={700}>
-          Contact Us
+        <Text
+          color={"primary.400"}
+          fontSize={"50px"}
+          lineHeight={"69px"}
+          fontWeight={700}
+        >
+          {currentLanguage === "en"
+            ? "Contact Us"
+            : "हामीलाई सम्पर्क गर्नुहोस्"}
         </Text>
         <Text fontSize={"21px"} fontWeight={400} lineHeight={"35px"}>
-          Get in touch with us
+          {currentLanguage === "en"
+            ? "Get in touch with us"
+            : "हामीसँग सम्पर्क गर्नुहोस्"}
         </Text>
       </Stack>
 
@@ -76,8 +94,9 @@ const Contact = () => {
             w={"full"}
           >
             <Text pl={3} fontSize={"md"}>
-              Questions, comments, or suggestions? Simply fill in the form and
-              we'll be in touch shortly.
+              {currentLanguage === "en"
+                ? " Questions, comments, or suggestions? Simply fill in the form and we'll be in touch shortly."
+                : "प्रश्नहरू, टिप्पणीहरू, वा सुझावहरू? सिम्पली फारम भर्नुहोस् र हामी थोरै गरी सम्पर्क गर्नेछौं।"}
             </Text>
             <HStack align={"center"}>
               <Icon asChild boxSize={8} color={"primary.500"}>
@@ -132,7 +151,7 @@ const Contact = () => {
           >
             <form onSubmit={handleSubmit(submitFrm)} noValidate>
               <TextInput
-                name="fullName"
+                name="name"
                 type="text"
                 placeholder="Full Name"
                 control={control}
@@ -153,13 +172,13 @@ const Contact = () => {
                 required
               />
               <TextInput
-                name="message"
+                name="question"
                 type="textarea"
                 placeholder="Message"
                 control={control}
                 required
               />
-              <Button type="submit" w={"full"}>
+              <Button loading={isSending} type="submit" w={"full"}>
                 Send
               </Button>
             </form>

@@ -24,7 +24,7 @@ const useFetchTeams = ({ page = 1, perPage = 10, keyword = "" }) => {
 
 const useFetchTeamById = (id: string) => {
   return useFetch<SingleResponse<TeamResponse>>({
-    url: api.teams.fetchById.replace(":id", id),
+    url: api.teams.byId.replace(":id", id),
     queryKey: [`team`],
     enabled: !!id,
   });
@@ -32,7 +32,7 @@ const useFetchTeamById = (id: string) => {
 
 const useCreateTeam = () => {
   return useMutate({
-    url: api.teams.create,
+    url: api.teams.index,
     queryKey: [`create-team`],
     invalidates: [`teams`],
     message: "Team created successfully",
@@ -41,7 +41,7 @@ const useCreateTeam = () => {
 
 const useUpdateTeam = () => {
   return useMutate({
-    url: api.teams.update,
+    url: api.teams.byId,
     queryKey: [`update-team`],
     invalidates: [`teams`, `team`],
     method: `POST`,
@@ -51,7 +51,7 @@ const useUpdateTeam = () => {
 
 const useDeleteTeam = () => {
   return useMutate({
-    url: api.teams.delete,
+    url: api.teams.byId,
     queryKey: [`delete-team`],
     invalidates: [`teams`],
     method: `DELETE`,
@@ -59,9 +59,17 @@ const useDeleteTeam = () => {
   });
 };
 
+const useFetchFrontTeams = () => {
+  return useFetch<RootResponse<TeamResponse>>({
+    url: api.teams.front,
+    queryKey: [`front-teams`],
+  });
+};
+
 export {
   useCreateTeam,
   useDeleteTeam,
+  useFetchFrontTeams,
   useFetchTeamById,
   useFetchTeams,
   useUpdateTeam,

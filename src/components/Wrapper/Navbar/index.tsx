@@ -1,4 +1,4 @@
-import { Flex, HStack, Image, Stack } from "@chakra-ui/react";
+import { Box, Flex, HStack, Image, Stack } from "@chakra-ui/react";
 import { imageAssets } from "@realState/assets/images";
 import { NAVIGATION_ROUTES } from "@realState/pages/App/navigationRoutes";
 import { useStoreSettingData } from "@realState/store";
@@ -126,7 +126,9 @@ export default function NavBar({
             })}
           </Stack>
         </>
-        <Language />
+        <Box hideBelow={"md"}>
+          <Language />
+        </Box>
       </HStack>
     </Flex>
   );

@@ -55,8 +55,6 @@ const TestimonialForm: FC<TestimonialFormProps> = ({ id }) => {
     isFetching,
   } = useFetchTestimonialById({ id: id!, enabled: open });
 
-  console.log({ testimonial });
-
   useEffect(() => {
     if (testimonial?.data) {
       reset({

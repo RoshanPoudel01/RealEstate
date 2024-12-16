@@ -36,7 +36,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
       overflow="hidden"
       // boxShadow="10px 13px 10px -7px rgba(0, 0, 0, 0.1)"
       bg={cardBg}
-      border={"none"}
+      border={0}
       cursor="pointer"
       transition="all 0.4s cubic-bezier(0.175, 0.885, 0, 1)"
       marginRight="25px"
@@ -98,12 +98,13 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
           letterSpacing="wider"
           fontWeight="medium"
           color="gray.500"
+          lineClamp={1}
         >
           {title}
         </Text>
 
         <VStack gap={0} align="stretch">
-          <Text fontSize="md" color="gray.600">
+          <Text lineClamp={1} fontSize="md" color="gray.600">
             {`${address}, ${city}`}
           </Text>
           <Text fontSize="md" fontWeight="semibold" color="gray.700">

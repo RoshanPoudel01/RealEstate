@@ -56,7 +56,17 @@ const Services = () => {
       accessorKey: "description_en",
       cell: ({ row }: IRow<ServiceResponse>) => {
         const { description_en } = row.original;
-        return <Text>{description_en}</Text>;
+        return (
+          <Text
+            minW={"300px"}
+            maxW={"300px"}
+            wordBreak={"break-word"}
+            lineClamp={2}
+            mx={"auto"}
+          >
+            {description_en}
+          </Text>
+        );
       },
       enableSorting: false,
     },
@@ -65,7 +75,17 @@ const Services = () => {
       accessorKey: "description_np",
       cell: ({ row }: IRow<ServiceResponse>) => {
         const { description_np } = row.original;
-        return <Text>{description_np}</Text>;
+        return (
+          <Text
+            minW={"300px"}
+            maxW={"300px"}
+            wordBreak={"break-word"}
+            lineClamp={2}
+            mx={"auto"}
+          >
+            {description_np}
+          </Text>
+        );
       },
       enableSorting: false,
     },

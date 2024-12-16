@@ -22,7 +22,7 @@ const LoadingCard = () => {
         <Skeleton height="200px" />
       </Stack>
 
-      <VStack align="stretch" gap={3} p={3} bg={cardBg}>
+      <VStack align="stretch" gap={3} py={3} bg={cardBg}>
         <Skeleton height="5" width="100%" />
         <Skeleton height="5" width="100%" />
 

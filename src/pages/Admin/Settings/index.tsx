@@ -1,6 +1,7 @@
-import { Flex, Group, SimpleGrid } from "@chakra-ui/react";
+import { Flex, Group, SimpleGrid, Stack, Text } from "@chakra-ui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { ReactDropzone, TextInput } from "@realState/components/Form";
+import LazyLoadImage from "@realState/components/Image";
 import { Button } from "@realState/components/ui/button";
 import useGetDirtyData from "@realState/hooks/useGetDirtyData";
 import useGetErrors from "@realState/hooks/useGetErrors";
@@ -203,16 +204,26 @@ const Settings = () => {
           />
         </form>
       </SimpleGrid>
-      <ReactDropzone
-        control={control}
-        name="logo"
-        label="Logo"
-        options={{
-          accept: { "image/*": [] },
-          maxSize: 5,
-        }}
-        file={setting?.data.logo ?? ""}
-      />
+      {edit ? (
+        <ReactDropzone
+          control={control}
+          name="logo"
+          label="Logo"
+          options={{
+            accept: { "image/*": [] },
+            maxSize: 5,
+          }}
+          file={setting?.data.logo ?? ""}
+        />
+      ) : (
+        <Stack>
+          <Text>Logo</Text>
+          <LazyLoadImage
+            src={setting?.data.logo ?? ""}
+            alt={setting?.data.name}
+          />
+        </Stack>
+      )}
       {edit ? (
         <Group mt={4}>
           <Button

@@ -148,7 +148,6 @@ const Featured = () => {
   }, [selectedProperties, setValue]);
 
   const onSubmit = async (data: typeof defaultValues) => {
-    console.log({ data });
     const response = await addFeatured({
       data: { properties: JSON.stringify(data.properties) },
     });

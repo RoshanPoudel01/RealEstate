@@ -2,16 +2,14 @@ import { Box, Flex, HStack, Image, Stack, Text } from "@chakra-ui/react";
 import { imageAssets } from "@realState/assets/images";
 import InfoCard from "@realState/components/Cards/InfoCard";
 import { Button } from "@realState/components/ui/button";
-import { useFetchStatistics } from "@realState/services/service-setting";
 import { Link } from "react-router-dom";
 import Featured from "./Sections/Featured";
 import New from "./Sections/New";
+import Service from "./Sections/Service";
 import Statistics from "./Sections/Statistics";
 import TestimonialSection from "./Sections/Testimonials";
 
 const Home = () => {
-  const { data: statistics } = useFetchStatistics();
-
   return (
     <Stack p={0} gap={9}>
       <Box position={"relative"} zIndex={2}>
@@ -101,11 +99,12 @@ const Home = () => {
           base: "10px",
           md: "80px",
         }}
-        gap={9}
+        gap={12}
       >
         <Statistics />
         <Featured />
         <TestimonialSection />
+        <Service />
         <New />
       </Stack>
     </Stack>

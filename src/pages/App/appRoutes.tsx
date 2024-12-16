@@ -105,6 +105,14 @@ export const adminRoutes = [
         element: <NAVIGATION_PAGES.TESTIMONIALS />,
       },
       {
+        path: NAVIGATION_ROUTES.ADMIN_ENQUIRIES,
+        element: <NAVIGATION_PAGES.ENQUIRIES />,
+      },
+      {
+        path: NAVIGATION_ROUTES.ADMIN_MESSAGES,
+        element: <NAVIGATION_PAGES.MESSAGES />,
+      },
+      {
         path: "*",
         element: <PageNotFound />,
       },
