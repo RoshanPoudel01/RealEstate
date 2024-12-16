@@ -15,10 +15,10 @@ const New = () => {
   return (
     <>
       <SectionWrapper
-        title="Recently Added"
-        heading="New Houses"
+        title={currenLanguage === "en" ? "Recently Added" : "हालै थपिएका"}
+        heading={currenLanguage === "en" ? "New Houses" : "नयाँ घरहरू"}
         filterText="Filter"
-        viewAllText="View All"
+        viewAllText={currenLanguage === "en" ? "View All" : "सबै हेर्नुहोस्"}
         viewAllNavigation="/all-properties/new"
         content={
           <>

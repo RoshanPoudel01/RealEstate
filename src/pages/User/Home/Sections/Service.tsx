@@ -15,8 +15,12 @@ const Service = () => {
 
   return (
     <SectionWrapper
-      title="Our Services"
-      heading="We provide the best services for our customers"
+      title={currentLanguage === "en" ? "Our Services" : "हाम्रो सेवाहरू"}
+      heading={
+        currentLanguage === "en"
+          ? "We provide the best services for our customers"
+          : "हामी हाम्रा ग्राहकहरूका लागि सर्वोत्तम सेवाहरू प्रदान गर्दछौं"
+      }
       content={
         <Masonry columns={{ 0: 1, 480: 2, 1060: 4 }} gap={10}>
           {isLoading ? (

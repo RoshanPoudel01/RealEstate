@@ -11,7 +11,7 @@ import { Button } from "@realState/components/ui/button";
 import { useSearchParamsState } from "@realState/hooks/useSearchParamState";
 import { IRow } from "@realState/services/service-interface";
 import {
-  PropertyFrontResponse,
+  PropertyBackResponse,
   useDeleteProperty,
   useFetchProperties,
 } from "@realState/services/service-properties";
@@ -27,7 +27,7 @@ const Properties = () => {
     {
       header: "S.N",
       accessorKey: "s.no",
-      cell: ({ row }: IRow<PropertyFrontResponse>) => {
+      cell: ({ row }: IRow<PropertyBackResponse>) => {
         const { index } = row;
         return <Text>{(pageIndex - 1) * 10 + index + 1}</Text>;
       },
@@ -35,7 +35,7 @@ const Properties = () => {
     {
       header: "Title (EN)",
       accessorKey: "title_en",
-      cell: ({ row }: IRow<PropertyFrontResponse>) => {
+      cell: ({ row }: IRow<PropertyBackResponse>) => {
         const { title_en } = row.original;
         return <Text>{title_en}</Text>;
       },
@@ -45,7 +45,7 @@ const Properties = () => {
     {
       header: "Image",
       accessorKey: "image",
-      cell: ({ row }: IRow<PropertyFrontResponse>) => {
+      cell: ({ row }: IRow<PropertyBackResponse>) => {
         const { image } = row.original;
         return image ? (
           <LazyLoadImage src={image ?? ""} alt="property" />
@@ -68,7 +68,7 @@ const Properties = () => {
     {
       header: "Status",
       accessorKey: "is_active",
-      cell: ({ row }: IRow<PropertyFrontResponse>) => {
+      cell: ({ row }: IRow<PropertyBackResponse>) => {
         const { id, is_active } = row.original;
         return (
           <StatusSwitch
@@ -83,7 +83,7 @@ const Properties = () => {
     {
       header: "Action",
       accessorKey: "action",
-      cell: ({ row }: IRow<PropertyFrontResponse>) => {
+      cell: ({ row }: IRow<PropertyBackResponse>) => {
         const { id } = row.original;
         const [open, setOpen] = useState(false);
         const { mutateAsync: deleteProperty, isPending: isDeleting } =

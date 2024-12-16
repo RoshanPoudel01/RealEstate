@@ -37,12 +37,20 @@ const TestimonialSection: React.FC = () => {
   };
 
   const { data: testimonials } = useFetchAllTestimonials();
-  console.log({ testimonials });
+  const currenLanguage = localStorage.getItem("language");
   return (
     <>
       <SectionWrapper
-        title="See Our Review"
-        heading="What Our Users Say About Us"
+        title={
+          currenLanguage === "en"
+            ? "See Our Review"
+            : "हाम्रो समीक्षा हेर्नुहोस्"
+        }
+        heading={
+          currenLanguage === "en"
+            ? "What Our Users Say About Us"
+            : "हाम्रा प्रयोगकर्ताहरूले हाम्रो बारेमा के भन्छन्"
+        }
         content={
           <Box mt={10}>
             <Slider {...settings}>

@@ -15,9 +15,11 @@ const Featured = () => {
   return (
     <>
       <SectionWrapper
-        title="Our Recommendations"
-        heading="Featured Houses"
-        viewAllText="View All"
+        title={
+          currenLanguage === "en" ? "Our Recommendations" : "हाम्रो सिफारिसहरू"
+        }
+        heading={currenLanguage === "en" ? "Featured Houses" : "विशेष घरहरू"}
+        viewAllText={currenLanguage === "en" ? "View All" : "सबै हेर्नुहोस्"}
         viewAllNavigation="/all-properties/featured"
         content={
           <>

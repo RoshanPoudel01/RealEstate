@@ -66,6 +66,7 @@ const OurTeam = () => {
                     pos={"relative"}
                     w={"full"}
                     aspectRatio={4 / 3}
+                    borderRadius={0}
                     src={team?.image ?? imageAssets.DefaultAvatar}
                     objectFit={team?.image ? "cover" : "contain"}
                   />

@@ -1,6 +1,31 @@
 import { api } from "./service-api";
 import { useFetch, useMutate } from "./service-form-methods";
 import { RootResponse, SingleResponse } from "./service-interface";
+export interface PropertyBackResponse {
+  id: number;
+  category_id: number;
+  price: string;
+  land_area: string;
+  floor?: string;
+  is_road_access: number;
+  built_year?: string;
+  map: string;
+  is_parking: number;
+  is_furnished: number;
+  is_garden: number;
+  is_active: number;
+  status: string;
+  images: any[];
+  title_en: string;
+  title_np: string;
+  description_en: string;
+  description_np: string;
+  address_en: string;
+  address_np: string;
+  city_en: string;
+  city_np: string;
+  image?: string;
+}
 
 export interface PropertyFrontResponse {
   id: number;
@@ -56,7 +81,7 @@ export interface PropertyParams {
 }
 
 const useFetchProperties = ({ page = 1, perPage = 10, keyword = "" }) => {
-  return useFetch<RootResponse<PropertyFrontResponse>>({
+  return useFetch<RootResponse<PropertyBackResponse>>({
     url: api.properties.fetch({ page, perPage, keyword }),
     queryKey: [`properties`],
   });
@@ -80,7 +105,7 @@ const useGetPropertyDetails = (id: string | undefined) => {
   });
 };
 const useFetchPropertyById = (id: string) => {
-  return useFetch<SingleResponse<PropertyFrontResponse>>({
+  return useFetch<SingleResponse<PropertyBackResponse>>({
     url: api.properties.fetchById.replace(":id", id),
     queryKey: [`property-${id}`],
     enabled: !!id,
