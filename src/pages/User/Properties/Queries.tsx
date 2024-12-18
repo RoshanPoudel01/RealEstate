@@ -3,8 +3,10 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { imageAssets } from "@realState/assets/images";
 import { TextInput } from "@realState/components/Form";
 import { Button } from "@realState/components/ui/button";
+import { useSendMessage } from "@realState/services/service-enquiries";
 import { t } from "i18next";
 import { useForm } from "react-hook-form";
+import { useParams } from "react-router-dom";
 import * as yup from "yup";
 const defaultValue = {
   name: "",
@@ -24,13 +26,20 @@ const Queries = () => {
     message: yup.string().required("Message is required"),
   });
 
-  const { control, handleSubmit } = useForm({
+  type ContactFormValues = yup.InferType<typeof contactSchema>;
+  const { id } = useParams<{ id: string }>();
+  const { control, handleSubmit, reset } = useForm({
     defaultValues: defaultValue,
     resolver: yupResolver(contactSchema),
   });
 
-  const submitContactForm = (data: any) => {
-    console.log(data);
+  const { mutateAsync: sendEnquiry, isPending } = useSendMessage();
+
+  const submitContactForm = async (data: ContactFormValues) => {
+    const response = await sendEnquiry({ id: id!, data });
+    if (response.data.status === "success") {
+      reset(defaultValue);
+    }
   };
   return (
     <Flex
@@ -106,7 +115,7 @@ const Queries = () => {
               control={control}
               size={"lg"}
             />
-            <Button type="submit" size={"lg"} w={"full"}>
+            <Button loading={isPending} type="submit" size={"lg"} w={"full"}>
               Submit
             </Button>
           </form>

@@ -1,4 +1,4 @@
-import { Box, Card, Text, VStack } from "@chakra-ui/react";
+import { Card, Text, VStack } from "@chakra-ui/react";
 import { NAVIGATION_ROUTES } from "@realState/pages/App/navigationRoutes";
 import React from "react";
 import { useNavigate } from "react-router-dom";
@@ -40,7 +40,6 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
       cursor="pointer"
       transition="all 0.4s cubic-bezier(0.175, 0.885, 0, 1)"
       marginRight="25px"
-      p={4}
       onClick={() =>
         navigate(NAVIGATION_ROUTES.PROPERTY_DETAILS?.replace(":id", id + ""))
       }
@@ -48,16 +47,16 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
         opacity: 0.8,
       }}
     >
-      <Box
+      <Card.Header
         position="relative"
         overflow="hidden"
         borderTopRadius="12px"
         _hover={{
-          height: "90%",
           opacity: 0.9,
         }}
         transition="0.5s all ease-out"
-        w={"full"}
+        p={0}
+        borderBottom={"1ps solid"}
       >
         <LazyLoadImage
           src={img}
@@ -82,12 +81,11 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
         >
           {status.toUpperCase()}
         </Text>
-      </Box>
+      </Card.Header>
 
-      <VStack
-        align="stretch"
+      <Card.Body
+        alignItems="stretch"
         gap={3}
-        p={3}
         bg={cardBg}
         borderBottomLeftRadius="12px"
         borderBottomRightRadius="12px"
@@ -111,7 +109,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
             Rs. {price}
           </Text>
         </VStack>
-      </VStack>
+      </Card.Body>
     </Card.Root>
   );
 };

@@ -20,7 +20,12 @@ const SectionWrapper = ({
   const navigate = useNavigate();
 
   return (
-    <Stack>
+    <Stack
+      px={{
+        base: "10px",
+        md: "80px",
+      }}
+    >
       <HStack color={"red.400"} align={"center"}>
         <Separator borderColor={"red.400"} w={"30px"} borderWidth={"1px"} />
         <Text fontSize="14px" fontWeight="bolder">

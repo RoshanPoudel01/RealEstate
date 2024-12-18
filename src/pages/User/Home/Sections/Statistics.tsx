@@ -39,7 +39,14 @@ const Statistics = () => {
   const { data: statistics } = useFetchStatistics();
   console.log({ statistics });
   return (
-    <SimpleGrid columns={{ base: 2, lg: 4 }} gap={4}>
+    <SimpleGrid
+      px={{
+        base: "10px",
+        md: "80px",
+      }}
+      columns={{ base: 2, lg: 4 }}
+      gap={4}
+    >
       {statistics?.data?.rows.map((statistic, index) => (
         <StatisticCard
           image={statistic.image}

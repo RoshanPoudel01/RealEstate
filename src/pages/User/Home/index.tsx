@@ -3,6 +3,7 @@ import { imageAssets } from "@realState/assets/images";
 import InfoCard from "@realState/components/Cards/InfoCard";
 import { Button } from "@realState/components/ui/button";
 import { Link } from "react-router-dom";
+import Contact from "./Sections/Contact";
 import Featured from "./Sections/Featured";
 import New from "./Sections/New";
 import Service from "./Sections/Service";
@@ -94,17 +95,12 @@ const Home = () => {
           />
         </Flex>
       </Box>
-      <Stack
-        px={{
-          base: "10px",
-          md: "80px",
-        }}
-        gap={12}
-      >
+      <Stack gap={12}>
         <Statistics />
         <Featured />
         <TestimonialSection />
         <Service />
+        <Contact />
         <New />
       </Stack>
     </Stack>
