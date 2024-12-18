@@ -29,6 +29,10 @@ const ADD_NEW = lazy(() => import("@realState/pages/Admin/Properties/New"));
 const CONTACT = lazy(() => import("@realState/pages/User/Contact"));
 const ENQUIRIES = lazy(() => import("@realState/pages/Admin/Enquiries"));
 const MESSAGES = lazy(() => import("@realState/pages/Admin/Messages"));
+const STATISTICS = lazy(() => import("@realState/pages/Admin/Statistics"));
+const STATISTICS_FORM = lazy(
+  () => import("@realState/pages/Admin/Statistics/Form")
+);
 export const NAVIGATION_PAGES = {
   SLIDERS,
   SLIDER_FORM,
@@ -49,4 +53,6 @@ export const NAVIGATION_PAGES = {
   CONTACT,
   ENQUIRIES,
   MESSAGES,
+  STATISTICS,
+  STATISTICS_FORM,
 };

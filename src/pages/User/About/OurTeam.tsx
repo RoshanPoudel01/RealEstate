@@ -16,6 +16,7 @@ import { imageAssets } from "@realState/assets/images";
 import LazyLoadImage from "@realState/components/Image";
 import { Skeleton, SkeletonText } from "@realState/components/ui/skeleton";
 import { useFetchFrontTeams } from "@realState/services/service-teams";
+import { t } from "i18next";
 
 const OurTeam = () => {
   const { data: teams, isLoading } = useFetchFrontTeams();
@@ -28,7 +29,7 @@ const OurTeam = () => {
         lineHeight={"69px"}
         textAlign={"center"}
       >
-        {currentLang === "np" ? "हाम्रो संघ" : "Meet Our Team"}
+        {t("team:heading")}
       </Heading>
 
       <SimpleGrid

@@ -6,6 +6,7 @@ import {
   AccordionRoot,
 } from "@realState/components/ui/accordion";
 import { FaqResponse } from "@realState/services/service-properties";
+import { t } from "i18next";
 import { FC } from "react";
 
 interface IFaqs {
@@ -30,15 +31,9 @@ const FAQs: FC<IFaqs> = ({ faqs, currentLanguage }) => {
       py={10}
     >
       <Heading color={"primary.500"} fontSize={{ base: "xl", md: "3xl" }}>
-        {currentLanguage === "en"
-          ? "Frequently Asked Questions"
-          : "सामान्य प्रश्नहरू"}
+        {t("faq:heading")}
       </Heading>
-      <Text>
-        {currentLanguage === "en"
-          ? " Have any questions? We have answers to some of the most common queries."
-          : "कुनै प्रश्न छ? हामीले सबैभन्दा सामान्य प्रश्नहरूको उत्तर छ।"}
-      </Text>
+      <Text>{t("faq:description")}</Text>
       <AccordionRoot
         size={"lg"}
         multiple

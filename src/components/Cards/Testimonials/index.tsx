@@ -11,6 +11,7 @@ const TestimonialCard = ({ data }: { data: TestimonialResponse }) => {
       borderRadius={"8px"}
       flexDir={"column"}
       h={"500px"}
+      mr={2}
     >
       <Image
         src={imageAssets.TestimonialBackground}

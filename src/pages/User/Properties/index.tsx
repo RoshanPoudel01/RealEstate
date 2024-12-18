@@ -16,6 +16,7 @@ import { TextInput } from "@realState/components/Form";
 import RangeSlider from "@realState/components/Form/Slider/RangeSlider";
 import { Button } from "@realState/components/ui/button";
 import { useFetchAllProperties } from "@realState/services/service-properties";
+import { t } from "i18next";
 import { useForm } from "react-hook-form";
 import Masonry from "react-layout-masonry";
 import { useParams } from "react-router-dom";
@@ -53,12 +54,10 @@ const Properties = () => {
           lineHeight={"69px"}
           fontWeight={700}
         >
-          {currenLanguage === "np" ? "संपत्तिहरू" : "Properties"}
+          {t("property:heading")}
         </Text>
         <Text fontSize={"21px"} fontWeight={400} lineHeight={"35px"}>
-          {currenLanguage === "np"
-            ? "सबैभन्दा लाभदायक प्रस्तावहरूबाट छनौट गर्नुहोस्"
-            : " Choose from the most advantageous offers"}
+          {t("property:description")}
         </Text>
       </Stack>
       <Stack

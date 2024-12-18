@@ -3,6 +3,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { imageAssets } from "@realState/assets/images";
 import { TextInput } from "@realState/components/Form";
 import { Button } from "@realState/components/ui/button";
+import { t } from "i18next";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 const defaultValue = {
@@ -22,8 +23,6 @@ const Queries = () => {
       .matches(/^\d{10}$/, "Please enter a 10 digit valid phone number"),
     message: yup.string().required("Message is required"),
   });
-
-  const currentLanguage = localStorage.getItem("language");
 
   const { control, handleSubmit } = useForm({
     defaultValues: defaultValue,
@@ -60,13 +59,9 @@ const Queries = () => {
         gap={4}
       >
         <Heading color={"primary.500"} fontSize={{ base: "xl", md: "3xl" }}>
-          {currentLanguage === "en" ? "Have any queries?" : "कुनै प्रश्न छ?"}
+          {t("queries:heading")}
         </Heading>
-        <Text>
-          {currentLanguage === "en"
-            ? " Our Team will try to address your query regarding this particular product as soon as you enquire about product"
-            : "तपाईंले उत्पादनको बारेमा सोधपुछ गर्ने बित्तिकै हाम्रो टोलीले यस विशेष उत्पादनको बारेमा तपाईंको प्रश्नलाई सम्बोधन गर्ने प्रयास गर्नेछ"}
-        </Text>
+        <Text>{t("queries:description")} </Text>
         <Image
           boxSize={20}
           src={imageAssets.QuestionMark}

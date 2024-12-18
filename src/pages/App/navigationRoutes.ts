@@ -21,4 +21,5 @@ export const NAVIGATION_ROUTES = {
   ADMIN_TESTIMONIALS: "testimonials",
   ADMIN_ENQUIRIES: "enquiries",
   ADMIN_MESSAGES: "messages",
+  ADMIN_STATISTICS: "statistics",
 };

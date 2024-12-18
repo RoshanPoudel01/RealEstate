@@ -14,6 +14,7 @@ import { TextInput } from "@realState/components/Form";
 import { Button } from "@realState/components/ui/button";
 import { useSendMessage } from "@realState/services/service-enquiries";
 import { useStoreSettingData } from "@realState/store";
+import { t } from "i18next";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import * as yup from "yup";
@@ -63,14 +64,10 @@ const Contact = () => {
           lineHeight={"69px"}
           fontWeight={700}
         >
-          {currentLanguage === "en"
-            ? "Contact Us"
-            : "हामीलाई सम्पर्क गर्नुहोस्"}
+          {t("contact:heading")}
         </Text>
         <Text fontSize={"21px"} fontWeight={400} lineHeight={"35px"}>
-          {currentLanguage === "en"
-            ? "Get in touch with us"
-            : "हामीसँग सम्पर्क गर्नुहोस्"}
+          {t("contact:description")}
         </Text>
       </Stack>
 

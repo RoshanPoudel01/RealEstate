@@ -113,6 +113,14 @@ export const adminRoutes = [
         element: <NAVIGATION_PAGES.MESSAGES />,
       },
       {
+        path: NAVIGATION_ROUTES.ADMIN_STATISTICS,
+        element: <NAVIGATION_PAGES.STATISTICS />,
+      },
+      {
+        path: NAVIGATION_ROUTES.ADMIN_STATISTICS + "/:id/edit",
+        element: <NAVIGATION_PAGES.STATISTICS_FORM />,
+      },
+      {
         path: "*",
         element: <PageNotFound />,
       },

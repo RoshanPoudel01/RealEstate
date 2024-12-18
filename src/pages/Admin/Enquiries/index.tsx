@@ -2,7 +2,10 @@ import { Text } from "@chakra-ui/react";
 import { DataTable } from "@realState/components/DataTable";
 import { SearchInput } from "@realState/components/Form";
 import { useSearchParamsState } from "@realState/hooks/useSearchParamState";
-import { useFetchEnquiries } from "@realState/services/service-enquiries";
+import {
+  EnquiryResponse,
+  useFetchEnquiries,
+} from "@realState/services/service-enquiries";
 import { IRow } from "@realState/services/service-interface";
 import PageHeader from "@realState/utils/PageHeader";
 import { useEffect } from "react";
@@ -15,21 +18,21 @@ const Enquiries = () => {
     {
       header: "S.No.",
       accessorKey: "s.no",
-      cell: ({ row }: IRow<any>) => {
+      cell: ({ row }: IRow<EnquiryResponse>) => {
         return <Text>{pageIndex - 1 * 10 + row.index + 1}</Text>;
       },
     },
     {
       header: "Name",
       accessorKey: "name",
-      cell: ({ row }: IRow<any>) => {
+      cell: ({ row }: IRow<EnquiryResponse>) => {
         return <Text>{row.original.name}</Text>;
       },
     },
     {
       header: "Email",
       accessorKey: "email",
-      cell: ({ row }: IRow<any>) => {
+      cell: ({ row }: IRow<EnquiryResponse>) => {
         const { email } = row.original;
         return (
           <Text
@@ -47,7 +50,7 @@ const Enquiries = () => {
     {
       header: "Phone",
       accessorKey: "phone",
-      cell: ({ row }: IRow<any>) => {
+      cell: ({ row }: IRow<EnquiryResponse>) => {
         const { phone } = row.original;
         return (
           <Text
@@ -62,14 +65,27 @@ const Enquiries = () => {
         );
       },
     },
+
     {
-      header: "Message",
-      accessorKey: "message",
-      cell: ({ row }: IRow<any>) => {
-        const { message } = row.original;
+      header: "Property",
+      accessorKey: "property",
+      cell: ({ row }: IRow<EnquiryResponse>) => {
+        const { property } = row.original;
         return (
-          <Text>
-            {message.length > 50 ? message.slice(0, 50) + "..." : message}
+          <Text mx={"auto"} maxW={"500px"} wordBreak={"break-word"}>
+            {property?.name}
+          </Text>
+        );
+      },
+    },
+    {
+      header: "Question",
+      accessorKey: "question",
+      cell: ({ row }: IRow<EnquiryResponse>) => {
+        const { question } = row.original;
+        return (
+          <Text mx={"auto"} maxW={"500px"} wordBreak={"break-word"}>
+            {question}
           </Text>
         );
       },
@@ -90,7 +106,20 @@ const Enquiries = () => {
   }, [pageIndex, keyword]);
 
   return (
-    <DataTable columns={columns} data={enquiries?.data?.rows ?? []}>
+    <DataTable
+      isLoading={isLoading}
+      columns={columns}
+      data={enquiries?.data?.rows ?? []}
+      pagination={{
+        manual: true,
+        pageCount: enquiries?.data?.pagination?.last_page ?? 1,
+        totalRows: enquiries?.data?.pagination?.total ?? 0,
+        pageParams: {
+          pageIndex,
+          setPageIndex,
+        },
+      }}
+    >
       <PageHeader
         heading="Enquiries"
         description="List of all the enquiries from the users."

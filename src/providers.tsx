@@ -1,15 +1,14 @@
-import { HStack, Text } from "@chakra-ui/react";
-import { AxiosError } from "axios";
-import { HelmetProvider } from "react-helmet-async";
-import { Toaster } from "react-hot-toast";
-
-import { Button } from "@chakra-ui/react";
+import { Button, HStack, Text } from "@chakra-ui/react";
 import {
   QueryCache,
   QueryClient,
   QueryClientProvider,
 } from "@tanstack/react-query";
+import { AxiosError } from "axios";
 import { ErrorBoundary } from "react-error-boundary";
+import { HelmetProvider } from "react-helmet-async";
+import { Toaster } from "react-hot-toast";
+import "react-multi-carousel/lib/styles.css";
 import { BrowserRouter } from "react-router-dom";
 import { toastFail } from "./components/Toast";
 import { Provider } from "./components/ui/provider";

@@ -11,12 +11,18 @@ import {
   User,
   Users,
 } from "@phosphor-icons/react";
+import { ChartLine } from "@phosphor-icons/react/dist/ssr";
 
 export const sidebarItems = [
   {
     title: "Dashboard",
     icon: <House />,
     to: "/admin",
+  },
+  {
+    title: "Statistics",
+    icon: <ChartLine />,
+    to: "/admin/statistics",
   },
   {
     title: "Sliders",

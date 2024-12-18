@@ -48,7 +48,14 @@ const Properties = () => {
       cell: ({ row }: IRow<PropertyBackResponse>) => {
         const { image } = row.original;
         return image ? (
-          <LazyLoadImage src={image ?? ""} alt="property" />
+          <LazyLoadImage
+            maxW={"100px"}
+            minW={"100px"}
+            aspectRatio={1}
+            mx={"auto"}
+            src={image ?? ""}
+            alt="property"
+          />
         ) : (
           <Flex
             mx={"auto"}

@@ -123,14 +123,14 @@ export const api = {
     byId: `/admin/testimonial/:id`,
   },
   messages: {
-    fetchEnquiries: ({ page = 1, perPage = 10, keyword = "" }) => {
+    fetchMessages: ({ page = 1, perPage = 10, keyword = "" }) => {
       let url = `/admin/message?page=${page}&per_page=${perPage}`;
       if (keyword) {
         url += `&keyword=${keyword}`;
       }
       return url;
     },
-    fetchProperties: ({ page = 1, perPage = 10, keyword = "" }) => {
+    fetchEnquiries: ({ page = 1, perPage = 10, keyword = "" }) => {
       let url = `/admin/property-message?page=${page}&per_page=${perPage}`;
       if (keyword) {
         url += `&keyword=${keyword}`;
@@ -140,5 +140,9 @@ export const api = {
     send: `/contact-us`,
     fetchById: `admin/message/:id`,
     delete: `admin/message/:id`,
+  },
+  statistics: {
+    index: `admin/statistics`,
+    byId: `admin/statistics/:id`,
   },
 };

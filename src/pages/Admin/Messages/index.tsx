@@ -2,34 +2,37 @@ import { Text } from "@chakra-ui/react";
 import { DataTable } from "@realState/components/DataTable";
 import { SearchInput } from "@realState/components/Form";
 import { useSearchParamsState } from "@realState/hooks/useSearchParamState";
-import { useFetchMessages } from "@realState/services/service-enquiries";
+import {
+  EnquiryResponse,
+  useFetchMessages,
+} from "@realState/services/service-enquiries";
 import { IRow } from "@realState/services/service-interface";
 import PageHeader from "@realState/utils/PageHeader";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 
-const Enquiries = () => {
+const Messages = () => {
   const { pageIndex, setPageIndex, keyword, setKeyword } =
     useSearchParamsState();
   const columns = [
     {
       header: "S.No.",
       accessorKey: "s.no",
-      cell: ({ row }: IRow<any>) => {
+      cell: ({ row }: IRow<EnquiryResponse>) => {
         return <Text>{pageIndex - 1 * 10 + row.index + 1}</Text>;
       },
     },
     {
       header: "Name",
       accessorKey: "name",
-      cell: ({ row }: IRow<any>) => {
+      cell: ({ row }: IRow<EnquiryResponse>) => {
         return <Text>{row.original.name}</Text>;
       },
     },
     {
       header: "Email",
       accessorKey: "email",
-      cell: ({ row }: IRow<any>) => {
+      cell: ({ row }: IRow<EnquiryResponse>) => {
         const { email } = row.original;
         return (
           <Text
@@ -47,7 +50,7 @@ const Enquiries = () => {
     {
       header: "Phone",
       accessorKey: "phone",
-      cell: ({ row }: IRow<any>) => {
+      cell: ({ row }: IRow<EnquiryResponse>) => {
         const { phone } = row.original;
         return (
           <Text
@@ -63,13 +66,13 @@ const Enquiries = () => {
       },
     },
     {
-      header: "Message",
-      accessorKey: "message",
-      cell: ({ row }: IRow<any>) => {
-        const { message } = row.original;
+      header: "Question",
+      accessorKey: "question",
+      cell: ({ row }: IRow<EnquiryResponse>) => {
+        const { question } = row.original;
         return (
-          <Text>
-            {message.length > 50 ? message.slice(0, 50) + "..." : message}
+          <Text mx={"auto"} maxW={"500px"} wordBreak={"break-word"}>
+            {question}
           </Text>
         );
       },
@@ -77,7 +80,7 @@ const Enquiries = () => {
   ];
 
   const {
-    data: enquiries,
+    data: messages,
     isLoading,
     refetch,
   } = useFetchMessages({
@@ -90,10 +93,23 @@ const Enquiries = () => {
   }, [pageIndex, keyword]);
 
   return (
-    <DataTable columns={columns} data={enquiries?.data?.rows ?? []}>
+    <DataTable
+      isLoading={isLoading}
+      columns={columns}
+      data={messages?.data?.rows ?? []}
+      pagination={{
+        manual: true,
+        pageCount: messages?.data?.pagination?.last_page ?? 1,
+        totalRows: messages?.data?.pagination?.total ?? 0,
+        pageParams: {
+          pageIndex,
+          setPageIndex,
+        },
+      }}
+    >
       <PageHeader
-        heading="Enquiries"
-        description="List of all the enquiries from the users."
+        heading="Messages"
+        description="List of all the messages from the users."
       />
       <SearchInput
         placeholder="Search"
@@ -105,4 +121,4 @@ const Enquiries = () => {
   );
 };
 
-export default Enquiries;
+export default Messages;

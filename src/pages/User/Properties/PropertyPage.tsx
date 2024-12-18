@@ -3,18 +3,25 @@ import {
   Heading,
   HStack,
   Icon,
+  IconButton,
   Image,
   SimpleGrid,
   Stack,
   Text,
 } from "@chakra-ui/react";
-import { CheckCircle, XCircle } from "@phosphor-icons/react";
+import {
+  CaretLeft,
+  CaretRight,
+  CheckCircle,
+  XCircle,
+} from "@phosphor-icons/react";
 import { imageAssets } from "@realState/assets/images";
+import LazyLoadImage from "@realState/components/Image";
 import { useGetPropertyDetails } from "@realState/services/service-properties";
 import Loader from "@realState/utils/Loader";
 import parse from "html-react-parser";
+import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
-import Slider from "react-slick";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import FAQs from "./FAQs";
@@ -54,40 +61,31 @@ const PropertyPage = () => {
     isFetching,
   } = useGetPropertyDetails(id);
 
-  var settings = {
-    infinite: true,
-    speed: 500,
-    slidesToShow: 3,
-    slidesToScroll: 1,
-    responsive: [
-      {
-        breakpoint: 1920,
-        settings: {
-          slidesToShow: 4,
-        },
-      },
+  const [mainImage, setMainImage] = useState<string>("");
 
-      {
-        breakpoint: 1280,
-        settings: {
-          slidesToShow: 3,
-        },
-      },
-      {
-        breakpoint: 720,
-        settings: {
-          slidesToShow: 2,
-        },
-      },
+  useEffect(() => {
+    if (propertyDetail?.data?.image) {
+      setMainImage(propertyDetail.data.image);
+    } else if (propertyDetail?.data?.images?.length) {
+      setMainImage(propertyDetail.data.images[0].image);
+    } else {
+      setMainImage(imageAssets.Logo);
+    }
+  }, [propertyDetail]);
 
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 1,
-          showArrows: false,
-        },
-      },
-    ],
+  const imageContainerRef = useRef<HTMLDivElement>(null);
+
+  // Scroll handlers
+  const scrollLeft = () => {
+    if (imageContainerRef.current) {
+      imageContainerRef.current.scrollBy({ left: -200, behavior: "smooth" });
+    }
+  };
+
+  const scrollRight = () => {
+    if (imageContainerRef.current) {
+      imageContainerRef.current.scrollBy({ left: 200, behavior: "smooth" });
+    }
   };
 
   return isPending || isFetching ? (
@@ -107,7 +105,7 @@ const PropertyPage = () => {
 
         <Stack w={"full"}>
           <Image
-            src={propertyDetail?.data?.image ?? imageAssets.Logo}
+            src={mainImage}
             alt={propertyDetail?.data?.title}
             maxH={"363px"}
             w={"full"}
@@ -116,19 +114,88 @@ const PropertyPage = () => {
         </Stack>
         {(propertyDetail?.data?.images?.length ?? 0) > 0 && (
           <Container maxW={{ base: "100vw", md: "80vw", xl: "75vw" }}>
-            <Slider {...settings}>
-              {propertyDetail?.data?.images?.map((image, index) => (
-                <div key={index}>
-                  <Image src={image.image} alt="Property Image" />
-                </div>
+            <HStack
+              css={{
+                "&::-webkit-scrollbar": {
+                  display: "none",
+                },
+              }}
+              ref={imageContainerRef}
+              maxW={"100%"}
+              overflowX={"scroll"}
+            >
+              <IconButton
+                position="absolute"
+                left={-4}
+                top="50%"
+                transform="translateY(-50%)"
+                zIndex={10}
+                size={"xs"}
+                variant={"surface"}
+                rounded={"full"}
+                onClick={scrollLeft}
+              >
+                <Icon boxSize={6} asChild>
+                  <CaretLeft />
+                </Icon>
+              </IconButton>
+              <IconButton
+                position="absolute"
+                right={-4}
+                top="50%"
+                transform="translateY(-50%)"
+                zIndex={10}
+                size={"xs"}
+                variant={"surface"}
+                rounded={"full"}
+                aria-label="Scroll Right"
+                onClick={scrollRight}
+              >
+                <Icon boxSize={6} asChild>
+                  <CaretRight />
+                </Icon>
+              </IconButton>
+              {propertyDetail?.data?.image ? (
+                <LazyLoadImage
+                  w={"100px"}
+                  minW={"100px"}
+                  aspectRatio={1}
+                  src={propertyDetail?.data?.image ?? ""}
+                  alt={"Property Image"}
+                  onClick={() =>
+                    setMainImage(propertyDetail?.data?.image ?? "")
+                  }
+                  border={
+                    mainImage === propertyDetail?.data?.image
+                      ? "2px solid #3182CE"
+                      : "1px solid transparent"
+                  }
+                />
+              ) : null}
+              {propertyDetail?.data?.images.map((image, index) => (
+                <LazyLoadImage
+                  w={"100px"}
+                  minW={"100px"}
+                  aspectRatio={1}
+                  src={image.image}
+                  alt="Property Image"
+                  key={index}
+                  onClick={() => setMainImage(image.image ?? "")}
+                  border={
+                    mainImage === image.image
+                      ? "1px solid #3182CE"
+                      : "1px solid transparent"
+                  }
+                />
               ))}
-              {/* <div>
+            </HStack>
+
+            {/* <div>
                 <Image
                   src="https://via.placeholder.com/200"
                   alt="Property Image"
                 />
               </div> */}
-            </Slider>
           </Container>
         )}
         {/* <Stack color="#141B2D" background={"#F3F3FA"} padding={"22px"} w={"70%"}>

@@ -1,9 +1,8 @@
 import { Container, HStack, Stack, Text } from "@chakra-ui/react";
+import { t } from "i18next";
 import OurTeam from "./OurTeam";
 
 const About = () => {
-  const currentLanguage = localStorage.getItem("language");
-
   return (
     <Container maxW={"container.xl"} gap={4}>
       <Stack
@@ -21,7 +20,7 @@ const About = () => {
           color={"primary.400"}
           fontWeight={700}
         >
-          {currentLanguage === "np" ? "हाम्रो बारेमा" : "About Us"}
+          {t("about:heading")}
         </Text>
       </Stack>
       <HStack w={"full"} justifyContent={"space-evenly"} gap={8}>
@@ -35,7 +34,7 @@ const About = () => {
         </Text>
       </HStack>
       <HStack gap={6} w={"full"} justifyContent={"space-evenly"}>
-        {[1, 2, 3, 4, 5]?.map((item, index, array) => (
+        {[1, 2, 3, 4, 5]?.map((_, index, array) => (
           <Stack
             p={4}
             pr={8}

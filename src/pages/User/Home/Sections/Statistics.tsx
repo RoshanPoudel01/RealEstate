@@ -1,13 +1,34 @@
 import { Card, SimpleGrid } from "@chakra-ui/react";
+import LazyLoadImage from "@realState/components/Image";
 import { useFetchStatistics } from "@realState/services/service-setting";
 
-const StatisticCard = ({ title, value }: { title: string; value: number }) => {
+const StatisticCard = ({
+  image,
+  title,
+  value,
+}: {
+  image?: string;
+  title: string;
+  value: number | string;
+}) => {
   return (
-    <Card.Root textAlign={"center"} alignItems={"center"}>
-      <Card.Header>
-        <Card.Description color={"primary.500"}>{title}</Card.Description>
+    <Card.Root
+      textAlign={"center"}
+      flexDir={{ base: "column", sm: "row" }}
+      alignItems={"center"}
+      w={"100%"}
+    >
+      <Card.Header py={2}>
+        <LazyLoadImage
+          src={image ?? ""}
+          alt={title}
+          w={"50px"}
+          aspectRatio={1}
+          rounded={"full"}
+        />
       </Card.Header>
-      <Card.Body py={4} color={"red.400"}>
+      <Card.Body color={"red.400"}>
+        <Card.Description color={"primary.500"}>{title}</Card.Description>
         <Card.Title>{value}</Card.Title>
       </Card.Body>
     </Card.Root>
@@ -18,9 +39,10 @@ const Statistics = () => {
   const { data: statistics } = useFetchStatistics();
   console.log({ statistics });
   return (
-    <SimpleGrid columns={{ base: 2, md: 4, xl: 6 }} gap={4}>
-      {statistics?.data?.map((statistic, index) => (
+    <SimpleGrid columns={{ base: 2, lg: 4 }} gap={4}>
+      {statistics?.data?.rows.map((statistic, index) => (
         <StatisticCard
+          image={statistic.image}
           title={statistic.title_en}
           value={statistic.value}
           key={index}

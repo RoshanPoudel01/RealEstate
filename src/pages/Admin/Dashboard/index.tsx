@@ -3,7 +3,7 @@ import { DataTable } from "@realState/components/DataTable";
 import LazyLoadImage from "@realState/components/Image";
 import { IRow } from "@realState/services/service-interface";
 import {
-  PropertyFrontResponse,
+  PropertyBackResponse,
   useFetchProperties,
 } from "@realState/services/service-properties";
 import PageHeader from "@realState/utils/PageHeader";
@@ -13,35 +13,35 @@ const Dashboard = () => {
     {
       header: "S.N",
       accessorKey: "sn",
-      cell: ({ row }: IRow<PropertyFrontResponse>) => (
+      cell: ({ row }: IRow<PropertyBackResponse>) => (
         <Text>{row.index + 1}</Text>
       ),
     },
     {
       header: "Title (EN)",
       accessorKey: "title_en",
-      cell: ({ row }: IRow<PropertyFrontResponse>) => (
+      cell: ({ row }: IRow<PropertyBackResponse>) => (
         <Text>{row.original.title_en}</Text>
       ),
     },
     {
       header: "Title (NP)",
       accessorKey: "title_np",
-      cell: ({ row }: IRow<PropertyFrontResponse>) => (
+      cell: ({ row }: IRow<PropertyBackResponse>) => (
         <Text>{row.original.title_np}</Text>
       ),
     },
     {
       header: "Price",
       accessorKey: "price",
-      cell: ({ row }: IRow<PropertyFrontResponse>) => (
+      cell: ({ row }: IRow<PropertyBackResponse>) => (
         <Text>Rs. {row.original.price}</Text>
       ),
     },
     {
       header: "Image",
       accessorKey: "image",
-      cell: ({ row }: IRow<PropertyFrontResponse>) => {
+      cell: ({ row }: IRow<PropertyBackResponse>) => {
         const { image } = row.original;
         return image ? (
           <LazyLoadImage w="100px" h="100px" src={image ?? ""} alt="property" />
