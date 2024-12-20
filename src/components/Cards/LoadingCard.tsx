@@ -1,6 +1,6 @@
-import { Card, Stack, VStack } from "@chakra-ui/react";
+import { Card } from "@chakra-ui/react";
 import { useColorModeValue } from "../ui/color-mode";
-import { Skeleton } from "../ui/skeleton";
+import { Skeleton, SkeletonText } from "../ui/skeleton";
 
 const LoadingCard = () => {
   const cardBg = useColorModeValue("white", "gray.700");
@@ -18,18 +18,13 @@ const LoadingCard = () => {
       marginRight="25px"
       p={4}
     >
-      <Stack w={"full"} gap={2}>
-        <Skeleton height="200px" />
-      </Stack>
+      <Card.Header p={0}>
+        <Skeleton aspectRatio={4 / 3} w={"full"} />
+      </Card.Header>
 
-      <VStack align="stretch" gap={3} py={3} bg={cardBg}>
-        <Skeleton height="5" width="100%" />
-        <Skeleton height="5" width="100%" />
-
-        <VStack gap={2} align="stretch">
-          <Skeleton height="5" width="100%" />
-        </VStack>
-      </VStack>
+      <Card.Body px={0}>
+        <SkeletonText noOfLines={3} />
+      </Card.Body>
     </Card.Root>
   );
 };

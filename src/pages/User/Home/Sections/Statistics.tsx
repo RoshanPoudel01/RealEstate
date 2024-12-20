@@ -1,60 +1,126 @@
-import { Card, SimpleGrid } from "@chakra-ui/react";
+import {
+  Card,
+  CardRootProps,
+  GridItem,
+  HStack,
+  SimpleGrid,
+  Stack,
+  Text,
+} from "@chakra-ui/react";
+import { imageAssets } from "@realState/assets/images";
 import LazyLoadImage from "@realState/components/Image";
-import { useFetchStatistics } from "@realState/services/service-setting";
+import { SkeletonText } from "@realState/components/ui/skeleton";
+import { useFetchFrontSection } from "@realState/services/service-sections";
+import {
+  StatisticsFrontResponse,
+  useFetchFrontStatistics,
+} from "@realState/services/service-statistics";
+import Counter from "@realState/utils/Counter";
+import { FC, useEffect, useState } from "react";
 
-const StatisticCard = ({
-  image,
-  title,
-  value,
-}: {
-  image?: string;
+interface StatisticProps {
   title: string;
   value: number | string;
+}
+
+const StatisticCard: FC<StatisticProps & CardRootProps> = ({
+  title,
+  value,
+  ...rest
 }) => {
   return (
     <Card.Root
+      bg={"transparent"}
       textAlign={"center"}
-      flexDir={{ base: "column", sm: "row" }}
       alignItems={"center"}
-      w={"100%"}
+      h={"full"}
+      w={"full"}
+      flexShrink={0}
+      {...rest}
     >
-      <Card.Header py={2}>
-        <LazyLoadImage
-          src={image ?? ""}
-          alt={title}
-          w={"50px"}
-          aspectRatio={1}
-          rounded={"full"}
-        />
-      </Card.Header>
-      <Card.Body color={"red.400"}>
-        <Card.Description color={"primary.500"}>{title}</Card.Description>
-        <Card.Title>{value}</Card.Title>
+      <Card.Body px={0} py={2} color={"red.400"}>
+        <Counter initialValue={value} />
       </Card.Body>
+      <Card.Header px={0} py={2} alignContent={"center"}>
+        <Card.Description color={"primary.500"}>{title}</Card.Description>
+      </Card.Header>
     </Card.Root>
   );
 };
 
 const Statistics = () => {
-  const { data: statistics } = useFetchStatistics();
-  console.log({ statistics });
+  const currentLang = localStorage.getItem("language") || "en";
+
+  const { data: statSection, isLoading } = useFetchFrontSection(
+    "statistics-section",
+    currentLang
+  );
+  const { data: statistics } = useFetchFrontStatistics(currentLang);
+
+  const [data, setData] = useState<StatisticsFrontResponse[]>([]);
+
+  useEffect(() => {
+    if (statistics) {
+      const filterData = statistics?.data?.rows.filter(
+        (stat) =>
+          stat.slug !== "sold-monthly" && stat.slug !== "satisfied-customers"
+      );
+      console.log({ filterData });
+      setData(filterData ?? []);
+    }
+  }, [statistics]);
+
   return (
     <SimpleGrid
-      px={{
-        base: "10px",
-        md: "80px",
-      }}
-      columns={{ base: 2, lg: 4 }}
-      gap={4}
+      columns={{ base: 1, lg: 2 }}
+      gap={12}
+      maxW={"90dvw"}
+      mx="auto"
+      alignItems={"center"}
     >
-      {statistics?.data?.rows.map((statistic, index) => (
-        <StatisticCard
-          image={statistic.image}
-          title={statistic.title_en}
-          value={statistic.value}
-          key={index}
+      <GridItem colSpan={1}>
+        <LazyLoadImage
+          src={statSection?.data?.image ?? imageAssets.Logo}
+          w={"full"}
+          aspectRatio={4 / 3}
+          maxH={"500px"}
         />
-      ))}
+      </GridItem>
+      <GridItem colSpan={1}>
+        {isLoading ? (
+          <SkeletonText noOfLines={4} />
+        ) : (
+          <Stack gap={4}>
+            <Text
+              fontSize={{
+                base: "24px",
+                lg: "32px",
+              }}
+              fontWeight={600}
+            >
+              {statSection?.data?.title}
+            </Text>
+            <Text
+              fontSize={{
+                base: "16px",
+                lg: "20px",
+              }}
+            >
+              {statSection?.data?.description}
+            </Text>
+            <HStack justify={"space-between"} flexWrap={"wrap"}>
+              {data?.map((statistic) => (
+                <StatisticCard
+                  flexBasis={{ sm: "32%" }}
+                  key={statistic.id}
+                  title={statistic.title}
+                  value={statistic.value}
+                />
+              ))}
+            </HStack>
+          </Stack>
+        )}
+      </GridItem>
     </SimpleGrid>
   );
 };

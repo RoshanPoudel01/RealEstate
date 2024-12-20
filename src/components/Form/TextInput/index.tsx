@@ -55,6 +55,7 @@ const TextInput: FC<
           helperText={helperText}
           readOnly={rest.readOnly}
           required={rest.required}
+          hidden={rest.hidden}
         >
           <InputGroup
             flex={"1"}
@@ -65,13 +66,7 @@ const TextInput: FC<
                 </Icon>
               )
             }
-            endElement={
-              endElement && (
-                <Icon boxSize={5} asChild>
-                  {endElement}
-                </Icon>
-              )
-            }
+            endElement={endElement && endElement}
             w={"full"}
           >
             {type === "textarea" ? (

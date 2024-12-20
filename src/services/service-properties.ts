@@ -47,7 +47,7 @@ export interface PropertyFrontResponse {
   city: string;
   image?: string;
   images: Images[];
-  faqs: FaqResponse[];
+  faqs: FaqFrontResponse[];
 }
 
 interface Images {
@@ -71,13 +71,22 @@ export interface FaqResponse {
   answer_np?: string;
 }
 
+export interface FaqFrontResponse {
+  id: number;
+  display_order: number;
+  question?: string;
+  answer?: string;
+}
+
 export interface ImagesResponse {
   id: number;
   image: string;
 }
 export interface PropertyParams {
+  id?: string;
   propertyType: string;
   language?: string;
+  keyword?: string;
 }
 
 const useFetchProperties = ({ page = 1, perPage = 10, keyword = "" }) => {
@@ -87,19 +96,27 @@ const useFetchProperties = ({ page = 1, perPage = 10, keyword = "" }) => {
   });
 };
 
-const useFetchAllProperties = ({ propertyType, language }: PropertyParams) => {
+const useFetchAllProperties = ({
+  propertyType,
+  language,
+  keyword,
+}: PropertyParams) => {
   return useFetch<RootResponse<PropertyFrontResponse>>({
     url: api.properties.properties({
-      propertyType: propertyType,
-      language: language,
+      propertyType,
+      language,
+      keyword,
     }),
-    queryKey: [propertyType],
+    queryKey: [propertyType, keyword ?? ""],
   });
 };
 
-const useGetPropertyDetails = (id: string | undefined) => {
+const useGetPropertyDetails = (id: string | undefined, language: string) => {
   return useFetch<SingleResponse<PropertyFrontResponse>>({
-    url: api.properties.propertyById.replace("{id}", id + ""),
+    url: api.properties.propertyById({
+      id: id!,
+      language,
+    }),
     queryKey: [`property-${id}`],
     enabled: !!id,
   });
@@ -256,6 +273,14 @@ const useAddNewProperties = () => {
   });
 };
 
+const useFetchRelatedProperties = (id: string, language = "en") => {
+  return useFetch<RootResponse<PropertyFrontResponse>>({
+    url: api.properties.relatedProperties({ id, language }),
+    queryKey: [`related-properties`, id],
+    enabled: !!id,
+  });
+};
+
 export {
   useAddFeaturedProperties,
   useAddNewProperties,
@@ -271,6 +296,7 @@ export {
   useFetchProperties,
   useFetchPropertyById,
   useFetchPropertyList,
+  useFetchRelatedProperties,
   useFetchTrendingProperties,
   useGetPropertyDetails,
   useUpdateAmenities,

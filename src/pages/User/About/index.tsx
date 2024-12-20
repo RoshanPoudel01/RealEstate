@@ -1,8 +1,24 @@
-import { Container, HStack, Stack, Text } from "@chakra-ui/react";
+import {
+  Card,
+  Container,
+  HStack,
+  SimpleGrid,
+  Skeleton,
+  Stack,
+  Text,
+} from "@chakra-ui/react";
+
+import { useFetchFrontStatistics } from "@realState/services/service-statistics";
+import Counter from "@realState/utils/Counter";
 import { t } from "i18next";
 import OurTeam from "./OurTeam";
 
 const About = () => {
+  const currentLanguage = localStorage.getItem("language");
+  const { data: statistics, isLoading } = useFetchFrontStatistics(
+    currentLanguage ?? "en"
+  );
+
   return (
     <Container maxW={"container.xl"} gap={4}>
       <Stack
@@ -12,7 +28,7 @@ const About = () => {
           base: "10px",
           md: "50px",
         }}
-        gap={0}
+        gap={8}
       >
         <Text
           fontSize={"50px"}
@@ -23,32 +39,38 @@ const About = () => {
           {t("about:heading")}
         </Text>
       </Stack>
-      <HStack w={"full"} justifyContent={"space-evenly"} gap={8}>
+      <HStack w={"full"} gap={8}>
         <Text>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure qui
           autem nulla commodi corrupti a.
         </Text>
-        <Text>
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Pariatur
-          iure id et sed. Aliquid odio nobis fuga.
-        </Text>
       </HStack>
-      <HStack gap={6} w={"full"} justifyContent={"space-evenly"}>
-        {[1, 2, 3, 4, 5]?.map((_, index, array) => (
-          <Stack
-            p={4}
-            pr={8}
-            borderRight={
-              index !== array.length - 1 ? "1px solid #cdcdcd" : "none"
-            }
-          >
-            <Text textAlign={"center"} fontSize={"20px"}>
-              500+
-            </Text>
-            <Text fontWeight={500}>Houses Sold</Text>
-          </Stack>
-        ))}
-      </HStack>
+      <SimpleGrid
+        alignItems={"start"}
+        columns={{ base: 1, sm: 2, lg: 4 }}
+        gap={6}
+        w={"full"}
+        my={10}
+      >
+        {isLoading
+          ? [...Array(4)].map((_, index) => (
+              <Card.Root key={index}>
+                <Skeleton height={"100px"} />
+              </Card.Root>
+            ))
+          : statistics?.data?.rows.map((item, index) => (
+              <Stack p={4} pr={8} textAlign={"center"} key={index}>
+                <Counter initialValue={item.value} />
+
+                <Text
+                  fontSize={{ base: "18px", sm: "20px", md: "22px" }}
+                  fontWeight={500}
+                >
+                  {item.title}
+                </Text>
+              </Stack>
+            ))}
+      </SimpleGrid>
 
       <OurTeam />
     </Container>

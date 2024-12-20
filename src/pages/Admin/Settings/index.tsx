@@ -64,6 +64,8 @@ const Settings = () => {
       resolver: yupResolver(schema),
     });
 
+  const [removeImage, setRemoveImage] = useState(false);
+
   const { data: setting, isPending, isFetching } = useFetchSetting();
 
   const {
@@ -92,6 +94,9 @@ const Settings = () => {
   const onSubmit = async (data: SettingFormValues) => {
     const dirtyData = useGetDirtyData(formState, data);
     const formData = toFormData(dirtyData);
+    if (removeImage) {
+      formData.append("remove_image", "true");
+    }
     const response = await updateSetting({ data: formData });
     if (response.data) {
       setEdit(false);
@@ -214,6 +219,7 @@ const Settings = () => {
             maxSize: 5,
           }}
           file={setting?.data.logo ?? ""}
+          setRemoveImage={setRemoveImage}
         />
       ) : (
         <Stack>

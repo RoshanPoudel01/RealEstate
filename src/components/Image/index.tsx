@@ -25,7 +25,12 @@ const LazyLoadImage: FC<LazyLoadImageProps & SkeletonProps & ImageProps> = ({
   const [isLoaded, setIsLoaded] = useState(false);
 
   return (
-    <Skeleton loading={!isLoaded} borderRadius={borderRadius ?? 5} {...rest}>
+    <Skeleton
+      loading={!isLoaded}
+      borderRadius={borderRadius ?? 5}
+      w={"100px"}
+      {...rest}
+    >
       <Image
         src={src}
         alt={alt}

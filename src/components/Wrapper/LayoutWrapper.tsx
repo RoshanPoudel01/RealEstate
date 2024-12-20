@@ -54,7 +54,6 @@ const LayoutWrapper: React.FC = () => {
           flexGrow={1}
           gap={0}
           transition={sidebarAnimate}
-          backgroundColor={"#FFFFFF"}
           zIndex={0}
           overflowX="hidden"
         >

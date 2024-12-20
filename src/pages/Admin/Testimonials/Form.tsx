@@ -2,7 +2,6 @@ import { Stack } from "@chakra-ui/react";
 import { ReactDropzone, TextInput } from "@realState/components/Form";
 import { ModalForm } from "@realState/components/Form/Modal";
 import StatusRadio from "@realState/components/Form/StatusRadio";
-import useGetDirtyData from "@realState/hooks/useGetDirtyData";
 import useGetErrors from "@realState/hooks/useGetErrors";
 import { toFormData } from "@realState/services/service-axios";
 import {
@@ -26,7 +25,7 @@ const TestimonialForm: FC<TestimonialFormProps> = ({ id }) => {
     is_active: "1",
   };
 
-  const { control, handleSubmit, reset, formState } = useForm({
+  const { control, handleSubmit, reset } = useForm({
     defaultValues,
   });
 
@@ -77,8 +76,7 @@ const TestimonialForm: FC<TestimonialFormProps> = ({ id }) => {
   }, [isAddError, isUpdateError]);
 
   const onSubmit = async (data: any) => {
-    const dirtyData = useGetDirtyData(formState, data);
-    const formData = toFormData(dirtyData);
+    const formData = toFormData(data);
     if (id) {
       const response = await updateTestimonial({ id, data: formData });
       if (response.data?.status) {

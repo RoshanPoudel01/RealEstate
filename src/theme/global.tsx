@@ -18,7 +18,7 @@ const globalStyles = () => {
           min-height: 100%;
           font-family: "Lexend";
           scroll-behavior: smooth;
-          background: #fff;
+          background-color: #f7f7f7;
         }
         body {
           -moz-osx-font-smoothing: grayscale;

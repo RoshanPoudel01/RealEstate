@@ -33,6 +33,7 @@ const STATISTICS = lazy(() => import("@realState/pages/Admin/Statistics"));
 const STATISTICS_FORM = lazy(
   () => import("@realState/pages/Admin/Statistics/Form")
 );
+const SECTIONS = lazy(() => import("@realState/pages/Admin/Sections"));
 export const NAVIGATION_PAGES = {
   SLIDERS,
   SLIDER_FORM,
@@ -55,4 +56,5 @@ export const NAVIGATION_PAGES = {
   MESSAGES,
   STATISTICS,
   STATISTICS_FORM,
+  SECTIONS,
 };

@@ -5,12 +5,17 @@ import {
   AccordionItemTrigger,
   AccordionRoot,
 } from "@realState/components/ui/accordion";
-import { FaqResponse } from "@realState/services/service-properties";
 import { t } from "i18next";
 import { FC } from "react";
 
 interface IFaqs {
-  faqs: FaqResponse[];
+  id: number;
+  question: string;
+  answer: string;
+}
+
+interface IFaqs {
+  faqs: IFaqs[];
   currentLanguage: string | null;
 }
 
@@ -34,30 +39,19 @@ const FAQs: FC<IFaqs> = ({ faqs, currentLanguage }) => {
         {t("faq:heading")}
       </Heading>
       <Text>{t("faq:description")}</Text>
-      <AccordionRoot
-        size={"lg"}
-        multiple
-        defaultValue={[""]}
-        variant={"enclosed"}
-      >
-        {faqs?.map((item, index) => (
-          <AccordionItem
-            key={index}
-            value={
-              currentLanguage === "en"
-                ? (item.question_en ?? "")
-                : (item.question_np ?? "")
-            }
-          >
-            <AccordionItemTrigger>
-              {currentLanguage === "en" ? item.question_en : item.question_np}
-            </AccordionItemTrigger>
-            <AccordionItemContent>
-              {currentLanguage === "en" ? item.answer_en : item.answer_np}
-            </AccordionItemContent>
+      {faqs?.map((item, index) => (
+        <AccordionRoot
+          size={"lg"}
+          multiple
+          defaultValue={[""]}
+          variant={"enclosed"}
+        >
+          <AccordionItem key={index} value={item.question ?? ""}>
+            <AccordionItemTrigger>{item.question}</AccordionItemTrigger>
+            <AccordionItemContent>{item.answer}</AccordionItemContent>
           </AccordionItem>
-        ))}
-      </AccordionRoot>
+        </AccordionRoot>
+      ))}
     </Stack>
   );
 };

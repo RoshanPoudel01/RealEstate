@@ -6,12 +6,13 @@ import { useFetchFrontServices } from "@realState/services/service-services";
 import Masonry from "react-layout-masonry";
 
 const Service = () => {
+  const currentLanguage = localStorage.getItem("language") ?? "en";
+
   const { data: services, isLoading } = useFetchFrontServices({
     page: 1,
     perPage: 4,
+    language: currentLanguage,
   });
-
-  const currentLanguage = localStorage.getItem("language");
 
   return (
     <SectionWrapper
@@ -27,27 +28,19 @@ const Service = () => {
             <>{...Array(4).map((_, index) => <LoadingCard key={index} />)}</>
           ) : (
             services?.data?.rows.map((service) => (
-              <Card.Root key={service.id}>
+              <Card.Root bg={"transparent"} border={"none"} key={service.id}>
                 <Card.Header p={0}>
                   <LazyLoadImage
                     w={"full"}
                     aspectRatio={4 / 3}
                     borderRadius={0}
                     src={service.image}
-                    alt={service.title_en}
+                    alt={service.title}
                   />
                 </Card.Header>
-                <Card.Body>
-                  <Card.Title>
-                    {currentLanguage === "np"
-                      ? service.title_np
-                      : service.title_en}
-                  </Card.Title>
-                  <Card.Description>
-                    {currentLanguage === "np"
-                      ? service.description_np
-                      : service.description_en}
-                  </Card.Description>
+                <Card.Body textAlign={"center"}>
+                  <Card.Title>{service.title}</Card.Title>
+                  <Card.Description>{service.description}</Card.Description>
                 </Card.Body>
               </Card.Root>
             ))

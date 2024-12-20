@@ -40,13 +40,15 @@ const TestimonialSection: React.FC = () => {
           {(testimonials?.data?.rows.length ?? 0 > 0) && !isLoading ? (
             <Carousel
               responsive={responsive}
-              showDots
               autoPlaySpeed={5000}
               slidesToSlide={1}
-              infinite
+              infinite={true}
+              autoPlay={true}
               arrows={false}
-              autoPlay
+              draggable
+              rewind={false}
               transitionDuration={2000}
+              focusOnSelect={true}
             >
               {testimonials?.data?.rows?.map((testimonial, index) => (
                 <TestimonialCard data={testimonial} key={index} />

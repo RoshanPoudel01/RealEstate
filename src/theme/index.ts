@@ -12,10 +12,6 @@ const config = defineConfig({
 
   theme: {
     tokens: {
-      fonts: {
-        body: { value: "Inter" },
-      },
-
       colors: ColorStyles,
     },
     semanticTokens: {

@@ -121,6 +121,10 @@ export const adminRoutes = [
         element: <NAVIGATION_PAGES.STATISTICS_FORM />,
       },
       {
+        path: NAVIGATION_ROUTES.ADMIN_SECTIONS,
+        element: <NAVIGATION_PAGES.SECTIONS />,
+      },
+      {
         path: "*",
         element: <PageNotFound />,
       },

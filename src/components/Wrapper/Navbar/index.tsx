@@ -69,7 +69,13 @@ export default function NavBar({
   const { settingData } = useStoreSettingData();
 
   return (
-    <Flex position={"sticky"} p={4} align={"center"}>
+    <Flex
+      borderBottom={"1px solid"}
+      borderColor={"gray.200"}
+      position={"sticky"}
+      p={4}
+      align={"center"}
+    >
       <HStack
         as="nav"
         gap={3}

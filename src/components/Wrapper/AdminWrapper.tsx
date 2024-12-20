@@ -52,7 +52,7 @@ const AdminWrapper: React.FC = () => {
   const [open, setOpen] = useState(true);
   return (
     <ErrorBoundary>
-      <Flex>
+      <Flex minH={"100dvh"} bg={"gray.50"}>
         <Sidebar
           // width={isHovered ? largeSidebarWidth : sidebarWidth}
           // isCollapsed={!open}

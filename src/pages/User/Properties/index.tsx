@@ -1,5 +1,4 @@
 import {
-  Box,
   Center,
   Container,
   Flex,
@@ -13,10 +12,11 @@ import { imageAssets } from "@realState/assets/images";
 import LoadingCard from "@realState/components/Cards/LoadingCard";
 import PropertyCard from "@realState/components/Cards/Property";
 import { TextInput } from "@realState/components/Form";
-import RangeSlider from "@realState/components/Form/Slider/RangeSlider";
 import { Button } from "@realState/components/ui/button";
+import { CloseButton } from "@realState/components/ui/close-button";
 import { useFetchAllProperties } from "@realState/services/service-properties";
 import { t } from "i18next";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import Masonry from "react-layout-masonry";
 import { useParams } from "react-router-dom";
@@ -26,16 +26,17 @@ const Properties = () => {
 
   const { propertyType } = useParams();
 
-  console.log({ propertyType });
+  const [keyword, setKeyword] = useState("");
+  const { control, handleSubmit } = useForm();
 
   const { data: properties, isLoading } = useFetchAllProperties({
     propertyType: propertyType ?? "",
     language: currenLanguage ?? "en",
+    keyword,
   });
 
-  const { control, handleSubmit } = useForm();
   const submitFrm = (data: any) => {
-    console.warn(data);
+    setKeyword(data.search);
   };
   return (
     <Flex flexDir={"column"} gap={4}>
@@ -74,7 +75,17 @@ const Properties = () => {
             placeholder={"Search for properties..."}
             name="search"
             control={control}
-            size={"lg"}
+            minW={{ sm: "300px" }}
+            maxW={"300px"}
+            endElement={
+              keyword && (
+                <CloseButton
+                  onClick={() => {
+                    setKeyword("");
+                  }}
+                />
+              )
+            }
           />
           <Button size={"lg"} type="submit">
             Search
@@ -167,24 +178,6 @@ const Properties = () => {
             }
           />
         </Stack>
-        <Box
-          w={{
-            base: "full",
-            md: "40%",
-          }}
-        >
-          <RangeSlider
-            name="price"
-            control={control}
-            label="Price"
-            defaultValue={[0, 100]}
-            steps={10}
-            indicators={[
-              { value: 0, label: "0" },
-              { value: 100, label: "100000" },
-            ]}
-          />
-        </Box>
       </Stack>
       {properties?.data?.count === 0 && (
         <Center>

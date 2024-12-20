@@ -10,7 +10,6 @@ export const api = {
   },
   settings: {
     front: `setting`,
-    statistics: `statistics`,
 
     fetch: `admin/setting`,
     update: `admin/setting`,
@@ -52,10 +51,13 @@ export const api = {
     },
     byId: `admin/service/:id`,
     create: `admin/service`,
-    front: ({ page = 1, perPage = 10, keyword = "" }) => {
+    front: ({ page = 1, perPage = 10, keyword = "", language = "en" }) => {
       let url = `/service?page=${page}&per_page=${perPage}`;
       if (keyword) {
         url += `&keyword=${keyword}`;
+      }
+      if (language) {
+        url += `&lang=${language}`;
       }
       return url;
     },
@@ -101,13 +103,32 @@ export const api = {
     },
     update: `admin/property/:id`,
     delete: `admin/property/:id`,
-    properties: ({ propertyType, language = "en" }: PropertyParams) => {
-      return `/property${propertyType ? "/" + propertyType : ""}?lang=${language}`;
+    properties: ({
+      propertyType,
+      language = "en",
+      keyword = "",
+    }: PropertyParams) => {
+      let url = `/property${propertyType ? "/" + propertyType : ""}?lang=${language}`;
+      if (keyword) {
+        url += `&keyword=${keyword}`;
+      }
+      return url;
     },
-    propertyById: `/property/{id}`,
+    propertyById: ({
+      id,
+      language = "en",
+    }: {
+      id: string;
+      language: string;
+    }) => {
+      return `/property/${id}?lang=${language}`;
+    },
     featured: `admin/property/featured`,
     trending: `admin/property/trending`,
     new: `admin/property/new`,
+    relatedProperties: ({ id, language }: { id: string; language: string }) => {
+      return `/related-properties/${id}?lang=${language}`;
+    },
   },
 
   testimonials: {
@@ -144,5 +165,16 @@ export const api = {
   statistics: {
     index: `admin/statistics`,
     byId: `admin/statistics/:id`,
+    front: (lang: string) => {
+      return `statistics?lang=${lang}`;
+    },
+  },
+  sections: {
+    index: `admin/section`,
+    bySlug: `admin/section/:slug`,
+    byId: `admin/section/:id`,
+    front: ({ slug = "", lang = "en" }) => {
+      return `/section/${slug}?lang=${lang}`;
+    },
   },
 };

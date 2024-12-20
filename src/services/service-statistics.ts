@@ -10,6 +10,13 @@ export interface StatisticsBackResponse {
   image: string;
 }
 
+export interface StatisticsFrontResponse {
+  id: number;
+  value: string;
+  slug: string;
+  title: string;
+}
+
 const useFetchStatistics = () => {
   return useFetch<RootResponse<StatisticsBackResponse>>({
     url: api.statistics.index,
@@ -33,4 +40,16 @@ const useUpdateStatistics = () => {
   });
 };
 
-export { useFetchStatistics, useFetchStatisticsById, useUpdateStatistics };
+const useFetchFrontStatistics = (lang = "en") => {
+  return useFetch<RootResponse<StatisticsFrontResponse>>({
+    url: api.statistics.front(lang),
+    queryKey: ["statistics"],
+  });
+};
+
+export {
+  useFetchFrontStatistics,
+  useFetchStatistics,
+  useFetchStatisticsById,
+  useUpdateStatistics,
+};

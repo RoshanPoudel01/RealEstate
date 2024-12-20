@@ -1,7 +1,14 @@
-import { Box, Flex, HStack, Image, Stack, Text } from "@chakra-ui/react";
+import { Box, Flex, Stack, Text } from "@chakra-ui/react";
 import { imageAssets } from "@realState/assets/images";
 import InfoCard from "@realState/components/Cards/InfoCard";
 import { Button } from "@realState/components/ui/button";
+import { Skeleton } from "@realState/components/ui/skeleton";
+import { useFetchFrontSection } from "@realState/services/service-sections";
+import {
+  StatisticsFrontResponse,
+  useFetchFrontStatistics,
+} from "@realState/services/service-statistics";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Contact from "./Sections/Contact";
 import Featured from "./Sections/Featured";
@@ -11,90 +18,115 @@ import Statistics from "./Sections/Statistics";
 import TestimonialSection from "./Sections/Testimonials";
 
 const Home = () => {
+  const currentLang = localStorage.getItem("language") ?? "en";
+
+  const { data: heroSection, isLoading } = useFetchFrontSection(
+    "hero-section",
+    currentLang
+  );
+
+  const { data: statistics } = useFetchFrontStatistics(currentLang);
+  const [data, setData] = useState<StatisticsFrontResponse[]>([]);
+
+  useEffect(() => {
+    if (statistics) {
+      const filterData = statistics?.data?.rows.filter(
+        (stat) =>
+          stat.slug === "sold-monthly" || stat.slug === "satisfied-customers"
+      );
+      setData(filterData ?? []);
+    }
+  }, [statistics]);
+
+  console.log({ heroSection });
   return (
     <Stack p={0} gap={9}>
-      <Box position={"relative"} zIndex={2}>
-        <HStack gap={0}>
-          <Box bg="#E4E3E8" height={"700px"} w={"900px"} />
-          <Image
-            height={"700px"}
-            w={"full"}
-            src={imageAssets.BackgroundImage}
-            alt="background"
-          />
-        </HStack>
-        <Stack
-          position={"absolute"}
-          top={{
-            base: "17%",
-            md: "20%",
-          }}
-          left={"13%"}
+      {isLoading ? (
+        <Skeleton h={"700px"} />
+      ) : (
+        <Box
+          bg={`url(${heroSection?.data?.image ?? imageAssets.BackgroundImage})`}
+          position={"relative"}
+          zIndex={2}
+          bgRepeat={"no-repeat"}
+          bgSize={"cover"}
+          h={"700px"}
         >
-          <Text
-            fontSize={{
-              base: "35px",
-              md: "50px",
+          <Stack
+            position={"absolute"}
+            top={{
+              base: "14%",
+              md: "18%",
             }}
-            fontWeight={"bold"}
-            textAlign={"start"}
-            maxW={"550px"}
-            lineHeight={{
-              base: "1.2",
-              md: "1.5",
+            left={"10%"}
+          >
+            <Text
+              fontSize={{
+                base: "35px",
+                md: "50px",
+              }}
+              fontWeight={"bold"}
+              textAlign={"start"}
+              maxW={"550px"}
+              lineHeight={{
+                base: "1.2",
+                md: "1.5",
+              }}
+              color={"primary.500"}
+            >
+              {heroSection?.data?.title}
+            </Text>
+            <Text
+              maxW={"550px"}
+              lineHeight={"28px"}
+              color={"#7591A3"}
+              fontSize={"18px"}
+            >
+              {heroSection?.data?.description}
+            </Text>
+            <Button
+              colorPalette={"primary"}
+              size={"lg"}
+              fontSize={"20px"}
+              display={{
+                base: "none",
+                md: "flex",
+              }}
+              asChild
+            >
+              <Link to="/all-properties">
+                {currentLang === "en"
+                  ? "View All Properties"
+                  : "सबै वस्तुहरू हेर्नुहोस्"}
+              </Link>
+            </Button>
+          </Stack>
+          <Flex
+            flexDir={{
+              base: "column",
+              md: "row",
             }}
-            color={"primary.500"}
-          >
-            Find the place to live your dreams easily here
-          </Text>
-          <Text
-            maxW={"550px"}
-            lineHeight={"28px"}
-            color={"#7591A3"}
-            fontSize={"18px"}
-          >
-            Everything you need about finding your place to live will be here,
-            where it will be easier for you. Everything you need about finding
-            your place to live will be here, where it will be easier for you
-          </Text>
-          <Button
-            colorPalette={"primary"}
-            size={"lg"}
-            fontSize={"20px"}
-            display={{
-              base: "none",
-              md: "flex",
+            position={"absolute"}
+            bottom={{
+              base: "4%",
+              md: "12%",
             }}
-            asChild
+            right={"18%"}
+            gap={10}
           >
-            <Link to="/all-properties">View Properties</Link>
-          </Button>
-        </Stack>
-        <Flex
-          flexDir={{
-            base: "column",
-            md: "row",
-          }}
-          position={"absolute"}
-          bottom={{
-            base: "4%",
-            md: "12%",
-          }}
-          right={"18%"}
-          gap={10}
-        >
-          <InfoCard
-            img={imageAssets.Logo}
-            title="56 Houses"
-            description="Sold Monthly"
-          />
-          <InfoCard
-            img={imageAssets.Logo}
-            title="200"
-            description="Satisfied Customer"
-          />
-        </Flex>
-      </Box>
+            <InfoCard
+              img={imageAssets.Logo}
+              title={data[0]?.value}
+              description={data[0]?.title}
+            />
+            <InfoCard
+              img={imageAssets.Logo}
+              title={data[1]?.value}
+              description={data[1]?.title}
+            />
+          </Flex>
+        </Box>
+      )}
       <Stack gap={12}>
         <Statistics />
         <Featured />

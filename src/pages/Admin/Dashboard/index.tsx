@@ -44,7 +44,13 @@ const Dashboard = () => {
       cell: ({ row }: IRow<PropertyBackResponse>) => {
         const { image } = row.original;
         return image ? (
-          <LazyLoadImage w="100px" h="100px" src={image ?? ""} alt="property" />
+          <LazyLoadImage
+            w="100px"
+            h="100px"
+            mx={"auto"}
+            src={image ?? ""}
+            alt="property"
+          />
         ) : (
           <Flex
             mx={"auto"}

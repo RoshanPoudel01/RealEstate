@@ -22,4 +22,5 @@ export const NAVIGATION_ROUTES = {
   ADMIN_ENQUIRIES: "enquiries",
   ADMIN_MESSAGES: "messages",
   ADMIN_STATISTICS: "statistics",
+  ADMIN_SECTIONS: "sections",
 };

@@ -47,7 +47,7 @@ const Queries = () => {
       display={"flex"}
       flexDir={"column"}
       alignItems={"center"}
-      bg={"gray.100"}
+      bg={"white"}
       gap={{
         base: 5,
         md: 10,

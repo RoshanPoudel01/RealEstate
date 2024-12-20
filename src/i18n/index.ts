@@ -32,6 +32,10 @@ const resources = {
       description:
         "Our Team will try to address your query regarding this particular product as soon as you enquire about product",
     },
+    related: {
+      heading: "Related Properties",
+      description: "You may also like these properties",
+    },
   },
   np: {
     navbar: {
@@ -63,6 +67,10 @@ const resources = {
       heading: "कुनै प्रश्न छ?",
       description:
         "तपाईंले उत्पादनको बारेमा सोधपुछ गर्ने बित्तिकै हाम्रो टोलीले यस विशेष उत्पादनको बारेमा तपाईंको प्रश्नलाई सम्बोधन गर्ने प्रयास गर्नेछ",
+    },
+    related: {
+      heading: "सम्बन्धित संपत्तिहरू",
+      description: "तपाईंलाई यी संपत्तिहरू पनि मन पर्न सक्छन्",
     },
   },
 };

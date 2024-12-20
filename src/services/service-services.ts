@@ -9,6 +9,15 @@ export interface ServiceResponse {
   image: string;
 }
 
+export interface ServiceFrontResponse {
+  id: number;
+  display_order: number;
+  is_active: number;
+  title: string;
+  description: string;
+  image: string;
+}
+
 import { api } from "./service-api";
 import { useFetch, useMutate } from "./service-form-methods";
 import { RootResponse, SingleResponse } from "./service-interface";
@@ -57,9 +66,14 @@ const useDeleteService = () => {
   });
 };
 
-const useFetchFrontServices = ({ page = 1, perPage = 4, keyword = "" }) => {
-  return useFetch<RootResponse<ServiceResponse>>({
-    url: api.services.front({ page, perPage, keyword }),
+const useFetchFrontServices = ({
+  page = 1,
+  perPage = 4,
+  keyword = "",
+  language = "en",
+}) => {
+  return useFetch<RootResponse<ServiceFrontResponse>>({
+    url: api.services.front({ page, perPage, keyword, language }),
     queryKey: [`front-services`],
   });
 };

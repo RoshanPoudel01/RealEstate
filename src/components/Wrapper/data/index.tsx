@@ -6,6 +6,7 @@ import {
   Images,
   Package,
   QuestionMark,
+  Rectangle,
   SquaresFour,
   Star,
   User,
@@ -18,6 +19,11 @@ export const sidebarItems = [
     title: "Dashboard",
     icon: <House />,
     to: "/admin",
+  },
+  {
+    title: "Sections",
+    icon: <Rectangle />,
+    to: "/admin/sections",
   },
   {
     title: "Statistics",

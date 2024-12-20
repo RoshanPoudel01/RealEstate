@@ -1,6 +1,7 @@
 import { Flex, Image, Link, Stack, Text } from "@chakra-ui/react";
 import { imageAssets } from "@realState/assets/images";
 import { useFetchSettingData } from "@realState/services/service-init";
+import { useFetchFrontServices } from "@realState/services/service-services";
 import { FaFacebook, FaInstagram, FaYoutube } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 export const SocialButton = ({
@@ -17,7 +18,7 @@ export const SocialButton = ({
   );
 };
 const Footer = () => {
-  const currentLanguage = localStorage.getItem("language");
+  const currentLanguage = localStorage.getItem("language") ?? "en";
   const { data: settingData } = useFetchSettingData(currentLanguage ?? "en");
 
   const navigate = useNavigate();
@@ -28,14 +29,20 @@ const Footer = () => {
     { icon: <FaYoutube size="20px" />, href: settingData?.data?.youtube },
   ];
 
+  const { data: services } = useFetchFrontServices({
+    page: 1,
+    perPage: 4,
+    language: currentLanguage,
+  });
+
   const footerSections = [
     {
       title: "Services",
-      links: [
-        { text: "Service 1", href: "#" },
-        { text: "Service 2", href: "#" },
-        { text: "Service 3", href: "#" },
-      ],
+      links:
+        services?.data?.rows.map((service) => ({
+          text: service.title,
+          href: "#",
+        })) ?? [],
     },
     {
       title: "Contact",
@@ -86,7 +93,7 @@ const Footer = () => {
             }}
           >
             {/* Logo and Social Links Section */}
-            <Stack justifyContent={"space-between"}>
+            <Stack align={"center"}>
               <Image
                 p={2}
                 alt={"neo-logo"}
@@ -121,6 +128,7 @@ const Footer = () => {
                       fontSize="14px"
                       color="gray.600"
                       _hover={{ color: "gray.900" }}
+                      outline={"none"}
                     >
                       {link.text}
                     </Link>

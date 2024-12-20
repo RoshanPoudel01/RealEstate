@@ -1,7 +1,6 @@
 import { api } from "./service-api";
 import { useFetch, useMutate } from "./service-form-methods";
-import { RootResponse, SingleResponse } from "./service-interface";
-import { StatisticsBackResponse } from "./service-statistics";
+import { SingleResponse } from "./service-interface";
 
 export interface SettingResponse {
   id: number;
@@ -32,11 +31,4 @@ const useUpdateSetting = () => {
   });
 };
 
-const useFetchStatistics = () => {
-  return useFetch<RootResponse<StatisticsBackResponse>>({
-    url: api.settings.statistics,
-    queryKey: ["statistics"],
-  });
-};
-
-export { useFetchSetting, useFetchStatistics, useUpdateSetting };
+export { useFetchSetting, useUpdateSetting };
