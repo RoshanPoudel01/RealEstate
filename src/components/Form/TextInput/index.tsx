@@ -76,7 +76,9 @@ const TextInput: FC<
                 value={value}
                 onChange={onChange}
                 minH={"150px"}
-                borderColor={"gray.300"}
+                borderColor={
+                  !!error || !!backendError?.length ? "red.500" : "gray.300"
+                }
                 focusRing={"inside"}
                 {...rest}
               />
@@ -86,14 +88,18 @@ const TextInput: FC<
                 colorPalette={"primary"}
                 value={value}
                 onChange={onChange}
-                borderColor={"gray.300"}
+                borderColor={
+                  !!error || !!backendError?.length ? "red.500" : "gray.300"
+                }
                 focusRing={"inside"}
                 {...rest}
               />
             ) : type === "select" ? (
               <NativeSelectRoot size={"lg"} {...rest}>
                 <NativeSelectField
-                  borderColor={"gray.300"}
+                  borderColor={
+                    !!error || !!backendError?.length ? "red.500" : "gray.300"
+                  }
                   focusRing={"inside"}
                   value={value}
                   onChange={onChange}
@@ -108,7 +114,9 @@ const TextInput: FC<
                 value={value}
                 type={type}
                 onChange={onChange}
-                borderColor={"gray.300"}
+                borderColor={
+                  !!error || !!backendError?.length ? "red.500" : "gray.300"
+                }
                 focusRing={"inside"}
                 onWheel={(e) => {
                   const target = e.target as HTMLInputElement;

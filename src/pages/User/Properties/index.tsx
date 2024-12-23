@@ -72,7 +72,7 @@ const Properties = () => {
       >
         <HStack w={"max-content"}>
           <TextInput
-            placeholder={"Search for properties..."}
+            placeholder={t("property:searchText")}
             name="search"
             control={control}
             minW={{ sm: "300px" }}
@@ -88,7 +88,7 @@ const Properties = () => {
             }
           />
           <Button size={"lg"} type="submit">
-            Search
+            {t("property:searchButton")}
           </Button>
         </HStack>
         <HStack w={"full"}>
@@ -101,7 +101,7 @@ const Properties = () => {
             fontWeight={300}
             px={5}
           >
-            Filter settings
+            {t("property:filterText")}
           </Text>
           <Separator />
         </HStack>

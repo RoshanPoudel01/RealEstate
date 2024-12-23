@@ -89,7 +89,7 @@ export default function NavBar({
         w={"full"}
       >
         <Image
-          src={settingData?.logo ?? imageAssets.Logo}
+          src={settingData?.logo ?? imageAssets.Logo1}
           alt="Logo"
           height={"50px"}
           onClick={() => navigate(NAVIGATION_ROUTES.HOME)}

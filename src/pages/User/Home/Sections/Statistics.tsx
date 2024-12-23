@@ -77,7 +77,7 @@ const Statistics = () => {
       mx="auto"
       alignItems={"center"}
     >
-      <GridItem colSpan={1}>
+      <GridItem colSpan={1} w={"full"}>
         <LazyLoadImage
           src={statSection?.data?.image ?? imageAssets.Logo}
           w={"full"}
@@ -87,7 +87,7 @@ const Statistics = () => {
       </GridItem>
       <GridItem colSpan={1}>
         {isLoading ? (
-          <SkeletonText noOfLines={4} />
+          <SkeletonText w={"full"} noOfLines={4} />
         ) : (
           <Stack gap={4}>
             <Text

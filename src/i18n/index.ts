@@ -26,6 +26,9 @@ const resources = {
     property: {
       heading: "Properties",
       description: "Choose from the most advantageous offers",
+      searchText: "Search for properties",
+      searchButton: "Search",
+      filterText: "Filter Settings",
     },
     queries: {
       heading: "Have any questions?",
@@ -62,6 +65,9 @@ const resources = {
     property: {
       heading: "संपत्तिहरू",
       description: "सबैभन्दा लाभदायक प्रस्तावहरूबाट छनौट गर्नुहोस्",
+      searchText: "संपत्तिहरूको लागि खोज्नुहोस्",
+      searchButton: "खोजी गर्नुहोस्",
+      filterText: "फिल्टर सेटिङहरू",
     },
     queries: {
       heading: "कुनै प्रश्न छ?",

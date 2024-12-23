@@ -1,16 +1,19 @@
 import {
   Card,
   Container,
-  HStack,
   SimpleGrid,
   Skeleton,
   Stack,
   Text,
 } from "@chakra-ui/react";
 
-import { useFetchFrontStatistics } from "@realState/services/service-statistics";
+import {
+  StatisticsFrontResponse,
+  useFetchFrontStatistics,
+} from "@realState/services/service-statistics";
 import Counter from "@realState/utils/Counter";
 import { t } from "i18next";
+import { useEffect, useState } from "react";
 import OurTeam from "./OurTeam";
 
 const About = () => {
@@ -19,6 +22,17 @@ const About = () => {
     currentLanguage ?? "en"
   );
 
+  const [data, setData] = useState<StatisticsFrontResponse[]>([]);
+
+  useEffect(() => {
+    if (statistics) {
+      const filterData = statistics?.data?.rows.filter(
+        (stat) =>
+          stat.slug !== "sold-monthly" && stat.slug !== "satisfied-customers"
+      );
+      setData(filterData ?? []);
+    }
+  }, [statistics]);
   return (
     <Container maxW={"container.xl"} gap={4}>
       <Stack
@@ -28,7 +42,7 @@ const About = () => {
           base: "10px",
           md: "50px",
         }}
-        gap={8}
+        gap={4}
       >
         <Text
           fontSize={"50px"}
@@ -38,19 +52,18 @@ const About = () => {
         >
           {t("about:heading")}
         </Text>
-      </Stack>
-      <HStack w={"full"} gap={8}>
-        <Text>
+        <Text textAlign={"center"}>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure qui
           autem nulla commodi corrupti a.
         </Text>
-      </HStack>
+      </Stack>
+
       <SimpleGrid
         alignItems={"start"}
-        columns={{ base: 1, sm: 2, lg: 4 }}
+        columns={{ base: 1, sm: 2, lg: 3 }}
         gap={6}
         w={"full"}
-        my={10}
+        mb={10}
       >
         {isLoading
           ? [...Array(4)].map((_, index) => (
@@ -58,7 +71,7 @@ const About = () => {
                 <Skeleton height={"100px"} />
               </Card.Root>
             ))
-          : statistics?.data?.rows.map((item, index) => (
+          : data?.map((item, index) => (
               <Stack p={4} pr={8} textAlign={"center"} key={index}>
                 <Counter initialValue={item.value} />
 

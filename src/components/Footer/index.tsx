@@ -37,7 +37,7 @@ const Footer = () => {
 
   const footerSections = [
     {
-      title: "Services",
+      title: currentLanguage === "en" ? "Services" : "सेवाहरू",
       links:
         services?.data?.rows.map((service) => ({
           text: service.title,
@@ -45,7 +45,7 @@ const Footer = () => {
         })) ?? [],
     },
     {
-      title: "Contact",
+      title: currentLanguage === "en" ? "Contact" : "सम्पर्क",
       links: [
         {
           text: settingData?.data?.phone,
@@ -62,10 +62,13 @@ const Footer = () => {
       ],
     },
     {
-      title: "Legal",
+      title: currentLanguage === "en" ? "Legal" : "कानूनी",
       links: [
-        { text: "Privacy Policy", href: "#" },
-        { text: "Terms of service", href: "#" },
+        {
+          text: currentLanguage === "en" ? "Privacy Policy" : "गोपनीयता नीति",
+          href: "#",
+        },
+        { text: currentLanguage === "en" ? "Terms" : "शर्तहरू", href: "#" },
       ],
     },
   ];
@@ -99,7 +102,7 @@ const Footer = () => {
                 alt={"neo-logo"}
                 height={"90px"}
                 w={"full"}
-                src={settingData?.data?.logo ?? imageAssets.Logo}
+                src={settingData?.data?.logo ?? imageAssets.Logo1}
                 objectFit="contain"
                 cursor={"pointer"}
                 onClick={() => navigate("/")}

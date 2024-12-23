@@ -25,19 +25,36 @@ const defaultValues = {
   question: "",
 };
 const Contact = () => {
+  const currentLanguage = localStorage.getItem("language");
+
   const { settingData } = useStoreSettingData();
   const schema = yup.object().shape({
-    name: yup.string().required("Full name is required"),
-    email: yup.string().email().required("Email is required"),
-    phone: yup.string().required("Phone number is required"),
-    question: yup.string().required("Message is required"),
+    name: yup
+      .string()
+      .required(
+        currentLanguage === "en" ? "Full name is required" : "पुरा नाम आवश्यक छ"
+      ),
+    email: yup
+      .string()
+      .email()
+      .required(
+        currentLanguage === "en" ? "Email is required" : "ईमेल आवश्यक छ"
+      ),
+    phone: yup
+      .string()
+      .required(
+        currentLanguage === "en" ? "Phone is required" : "फोन नम्बर आवश्यक छ"
+      ),
+    question: yup
+      .string()
+      .required(
+        currentLanguage === "en" ? "Message is required" : "सन्देश आवश्यक छ"
+      ),
   });
   const { control, handleSubmit, reset } = useForm({
     defaultValues,
     resolver: yupResolver(schema),
   });
-
-  const currentLanguage = localStorage.getItem("language");
 
   const { mutateAsync: send, isPending: isSending } = useSendMessage();
 
@@ -115,20 +132,23 @@ const Contact = () => {
                 _hover={{
                   textDecoration: "underline",
                 }}
+                asChild
               >
-                {settingData?.phone}
+                <Link to={`tel:${settingData?.phone}`}>
+                  {settingData?.phone}
+                </Link>
               </Text>
             </HStack>
-            <HStack align={"center"}>
+            <HStack
+              _hover={{
+                textDecoration: "underline",
+              }}
+              align={"center"}
+            >
               <Icon asChild boxSize={8} color={"primary.500"}>
                 <Envelope />
               </Icon>
-              <Text
-                _hover={{
-                  textDecoration: "underline",
-                }}
-                asChild
-              >
+              <Text asChild>
                 <Link to={`mailto:${settingData?.email}`}>
                   {settingData?.email}
                 </Link>
@@ -139,7 +159,8 @@ const Contact = () => {
         <GridItem colSpan={1}>
           <Stack
             maxW={{
-              md: "50%",
+              lg: "50%",
+              xl: "70%",
             }}
             mx={"auto"}
             w={"full"}
@@ -150,33 +171,37 @@ const Contact = () => {
               <TextInput
                 name="name"
                 type="text"
-                placeholder="Full Name"
+                placeholder={
+                  currentLanguage === "en" ? "Full Name" : "पुरा नाम"
+                }
                 control={control}
                 required
               />
               <TextInput
                 name="email"
                 type="text"
-                placeholder="Email"
+                placeholder={currentLanguage === "en" ? "Email" : "ईमेल"}
                 control={control}
                 required
               />
               <TextInput
                 name="phone"
                 type="number"
-                placeholder="Phone Number"
+                placeholder={
+                  currentLanguage === "en" ? "Phone Number" : "फोन नम्बर"
+                }
                 control={control}
                 required
               />
               <TextInput
                 name="question"
                 type="textarea"
-                placeholder="Message"
+                placeholder={currentLanguage === "en" ? "Message" : "सन्देश"}
                 control={control}
                 required
               />
               <Button loading={isSending} type="submit" w={"full"}>
-                Send
+                {currentLanguage === "en" ? "Send" : "पठाउनुहोस्"}
               </Button>
             </form>
           </Stack>
