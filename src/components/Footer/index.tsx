@@ -93,7 +93,7 @@ const Footer = () => {
       >
         <Flex direction={"column"} gap={"60px"}>
           <Flex
-            direction={{ base: "column", md: "row" }}
+            flexWrap={"wrap"}
             justify="space-between"
             alignItems={"flex-start"}
             gap={{
