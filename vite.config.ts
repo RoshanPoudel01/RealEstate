@@ -16,6 +16,15 @@ export default defineConfig(() => {
       }),
     ],
     publicDir: "public",
+    optimizeDeps: {
+      include: [
+        "@phosphor-icons/react",
+        "@chakra-ui/react",
+        "@emotion/react",
+        "@ckeditor/ckeditor5-react",
+        "ckeditor5",
+      ],
+    },
     resolve: {
       alias: {
         "@realState": path.resolve(__dirname, "src"),

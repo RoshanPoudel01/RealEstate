@@ -20,6 +20,7 @@ import { useEffect } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 import * as yup from "yup";
+import NotFound from "./NotFound";
 
 interface IFaq {
   question_en: string;
@@ -79,11 +80,7 @@ const FAQs = () => {
     remove(index);
   };
 
-  const {
-    data: faqs,
-    isPending: isFaqsPending,
-    isFetching: isFaqsFetching,
-  } = useFetchFaqs(id!);
+  const { data: faqs, isLoading } = useFetchFaqs(id!);
 
   useEffect(() => {
     if (faqs?.data) {
@@ -104,12 +101,14 @@ const FAQs = () => {
   const onSubmit = async (data: FAQFormValues) => {
     const response = await createFaqs({ id: id!, data });
     if (response.data.status) {
-      navigate("/product");
+      navigate("/admin/properties");
     }
   };
 
-  return isFaqsFetching || isFaqsPending ? (
+  return isLoading ? (
     <Loader />
+  ) : !!id && !isLoading && !faqs ? (
+    <NotFound />
   ) : (
     <Flex
       flexDir={"column"}

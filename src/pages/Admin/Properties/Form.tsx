@@ -1,4 +1,6 @@
-import { Tabs } from "@chakra-ui/react";
+import { Icon, Tabs } from "@chakra-ui/react";
+import { Article, HouseLine, ImagesSquare, Info } from "@phosphor-icons/react";
+import { Question } from "@phosphor-icons/react/dist/ssr";
 import PageHeader from "@realState/utils/PageHeader";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
@@ -10,22 +12,27 @@ const triggers = [
   {
     label: "General",
     value: "general",
+    icon: <Info />,
   },
   {
     label: "Descriptions",
     value: "descriptions",
+    icon: <Article />,
   },
   {
     label: "Amenities",
     value: "amenities",
+    icon: <HouseLine />,
   },
   {
     label: "Images",
     value: "images",
+    icon: <ImagesSquare />,
   },
   {
     label: "Faqs",
     value: "faqs",
+    icon: <Question />,
   },
 ];
 
@@ -46,7 +53,7 @@ const PropertyForm = () => {
         value={tabValue}
         onValueChange={(e) => setTabValue(e.value)}
       >
-        <Tabs.List>
+        <Tabs.List overflowX={"auto"}>
           {triggers.map((trigger, index) => (
             <Tabs.Trigger
               borderBottom={"6px solid"}
@@ -60,6 +67,11 @@ const PropertyForm = () => {
               value={trigger.value}
               disabled={trigger.value !== "general" && !id}
             >
+              {trigger.icon && (
+                <Icon asChild boxSize={5}>
+                  {trigger.icon}
+                </Icon>
+              )}
               {trigger.label}
             </Tabs.Trigger>
           ))}

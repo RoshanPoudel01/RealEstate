@@ -205,8 +205,8 @@ const ReactDropzone: FC<DropzoneProps & FieldProps> = ({
                   maxSize
                     ? convert(maxSize, "MB").to("bytes")
                     : noMaxSize
-                    ? undefined
-                    : convert(3, "MB").to("bytes")
+                      ? undefined
+                      : convert(10, "MB").to("bytes")
                 }
                 accept={accept ?? { "*/*": [".*"] }}
                 multiple={!!isMultiple}

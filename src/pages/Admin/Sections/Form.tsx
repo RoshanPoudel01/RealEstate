@@ -49,7 +49,6 @@ const SectionFrom: FC<FormProps> = ({ slug }) => {
   }, [section, reset]);
 
   const onSubmit = async (data: any) => {
-    console.log({ data });
     const { id, ...rest } = data;
     const formData = toFormData(rest);
 

@@ -1,6 +1,7 @@
 import { HStack, Stack } from "@chakra-ui/react";
 import { ReactDropzone } from "@realState/components/Form";
 import { Button } from "@realState/components/ui/button";
+import { EmptyState } from "@realState/components/ui/empty-state";
 import { toFormData } from "@realState/services/service-axios";
 import {
   useFetchImages,
@@ -34,11 +35,7 @@ const Images: FC<ImagesProps> = ({ setTabValue }) => {
   const [deleteImages, setDeleteImages] = useState<string[]>([]);
   const [removeImage, setRemoveImage] = useState<boolean>(false);
 
-  const {
-    data: images,
-    isPending: isImagesPending,
-    isFetching: isImagesFetching,
-  } = useFetchImages(id!);
+  const { data: images, isLoading } = useFetchImages(id!);
   useEffect(() => {
     if (images?.data) {
       setPrevFiles(
@@ -67,8 +64,14 @@ const Images: FC<ImagesProps> = ({ setTabValue }) => {
     }
   };
 
-  return !!id && (isImagesPending || isImagesFetching) ? (
+  return !!id && isLoading ? (
     <Loader />
+  ) : !!id && !isLoading && !property ? (
+    <EmptyState
+      title="Property not found"
+      description="The property you are looking for does not exist."
+      maxW={"md"}
+    />
   ) : (
     <Stack gap={4} asChild>
       <form onSubmit={handleSubmit(onSubmit)} noValidate>

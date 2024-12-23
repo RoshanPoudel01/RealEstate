@@ -145,7 +145,7 @@ const useFetchPropertyList = ({
   categoryId: string;
   keyword: string;
 }) => {
-  return useFetch<RootResponse<PropertyFrontResponse>>({
+  return useFetch<RootResponse<PropertyBackResponse>>({
     url: api.properties.getList({ categoryId, keyword }),
     queryKey: [`property-list`],
   });
@@ -226,7 +226,7 @@ const useUpdateFaqs = () => {
 };
 
 const useFetchTrendingProperties = () => {
-  return useFetch<RootResponse<PropertyFrontResponse>>({
+  return useFetch<RootResponse<PropertyBackResponse>>({
     url: api.properties.trending,
     queryKey: [`trending-properties`],
   });

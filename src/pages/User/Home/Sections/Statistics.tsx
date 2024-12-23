@@ -65,7 +65,6 @@ const Statistics = () => {
         (stat) =>
           stat.slug !== "sold-monthly" && stat.slug !== "satisfied-customers"
       );
-      console.log({ filterData });
       setData(filterData ?? []);
     }
   }, [statistics]);

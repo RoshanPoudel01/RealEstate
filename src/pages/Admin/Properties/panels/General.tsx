@@ -17,6 +17,7 @@ import { FC, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 import * as yup from "yup";
+import NotFound from "./NotFound";
 
 const schema = yup.object().shape({
   title_en: yup.string().required("Title is required"),
@@ -60,11 +61,7 @@ const General: FC<GeneralProps> = ({ setTabValue }) => {
 
   const { id } = useParams();
 
-  const {
-    data: property,
-    isPending: isPropertyPending,
-    isFetching: isPropertyFetching,
-  } = useFetchPropertyById(id!);
+  const { data: property, isLoading } = useFetchPropertyById(id!);
 
   useEffect(() => {
     if (property?.data) {
@@ -143,8 +140,10 @@ const General: FC<GeneralProps> = ({ setTabValue }) => {
 
   return (
     <>
-      {!!id && (isPropertyPending || isPropertyFetching) ? (
+      {!!id && isLoading ? (
         <Loader />
+      ) : !!id && !isLoading && !property ? (
+        <NotFound />
       ) : (
         <Flex flexDir={"column"} gap={8}>
           <SimpleGrid

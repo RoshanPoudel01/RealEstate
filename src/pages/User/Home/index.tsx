@@ -38,7 +38,6 @@ const Home = () => {
     }
   }, [statistics]);
 
-  console.log({ heroSection });
   return (
     <Stack p={0} gap={9}>
       {isLoading ? (

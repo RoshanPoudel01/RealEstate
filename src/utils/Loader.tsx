@@ -13,7 +13,7 @@ interface LoaderProps {
 
 const Loader: FC<LoaderProps & SpinnerProps> = ({ height, width, ...rest }) => {
   return (
-    <Center h={height ?? "80dvh"} w={width ?? "full"}>
+    <Center h={height ?? "70dvh"} w={width ?? "full"}>
       <Spinner
         borderWidth="4px"
         animationDuration="0.65s"
