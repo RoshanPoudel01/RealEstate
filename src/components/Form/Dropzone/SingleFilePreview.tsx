@@ -1,6 +1,6 @@
 // SingleFilePreview.tsx
 
-import { Flex, Icon, IconButton, Text } from "@chakra-ui/react";
+import { Flex, Icon, IconButton } from "@chakra-ui/react";
 import { Trash } from "@phosphor-icons/react";
 import LazyLoadImage from "@realState/components/Image";
 import React from "react";
@@ -13,12 +13,12 @@ interface SingleFilePreviewProps {
 
 const SingleFilePreview: React.FC<SingleFilePreviewProps> = ({
   url,
-  fileName,
+  // fileName,
   onDelete,
 }) => {
   return (
     <Flex
-      p={2}
+      p={1}
       gap={2}
       flexDir="column"
       position="relative"
@@ -34,7 +34,7 @@ const SingleFilePreview: React.FC<SingleFilePreviewProps> = ({
         borderRadius={"5px"}
         src={url}
       />
-      <Text
+      {/* <Text
         pos={"absolute"}
         bottom={0}
         left={0}
@@ -49,7 +49,7 @@ const SingleFilePreview: React.FC<SingleFilePreviewProps> = ({
         textOverflow={"ellipsis"} // Truncate text with ellipsis
       >
         {fileName}
-      </Text>
+      </Text> */}
 
       <IconButton
         alignSelf={"center"}

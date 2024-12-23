@@ -1,5 +1,4 @@
 import { Box, Heading, Stack, Text } from "@chakra-ui/react";
-import { imageAssets } from "@realState/assets/images";
 import LoadingCard from "@realState/components/Cards/LoadingCard";
 import PropertyCard from "@realState/components/Cards/Property";
 import { useFetchRelatedProperties } from "@realState/services/service-properties";
@@ -8,12 +7,16 @@ import Carousel from "react-multi-carousel";
 import { useParams } from "react-router-dom";
 
 const responsive = {
-  desktop: {
+  wide: {
     breakpoint: { max: 3000, min: 1280 },
     items: 3,
   },
+  desktop: {
+    breakpoint: { max: 1280, min: 720 },
+    items: 3,
+  },
   tablet: {
-    breakpoint: { max: 1280, min: 480 },
+    breakpoint: { max: 720, min: 480 },
     items: 2,
   },
   mobile: {
@@ -57,9 +60,7 @@ const Related = () => {
           autoPlaySpeed={5000}
           slidesToSlide={1}
           infinite
-          rewind
-          rewindWithAnimation
-          arrows
+          removeArrowOnDeviceType={["tablet", "mobile"]}
           autoPlay
           transitionDuration={2000}
         >
@@ -68,17 +69,9 @@ const Related = () => {
                 .fill(0)
                 .map((_, index) => <LoadingCard key={index} />)
             : relatedProperties?.data.rows.map((item, index) => (
-                <PropertyCard
-                  key={index}
-                  id={item?.id}
-                  title={item?.title}
-                  price={item?.price}
-                  img={item?.image ?? imageAssets.Logo}
-                  objectFit={item?.image ? "cover" : "contain"}
-                  address={item?.address}
-                  city={item?.city}
-                  status={item.status}
-                />
+                <Box mx={"auto"} maxW={"90dvw"} mr={{ sm: 4 }} key={index}>
+                  <PropertyCard key={index} property={item} />
+                </Box>
               ))}
         </Carousel>
       </Box>

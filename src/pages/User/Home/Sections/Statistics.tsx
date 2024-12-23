@@ -107,7 +107,7 @@ const Statistics = () => {
             >
               {statSection?.data?.description}
             </Text>
-            <HStack justify={"space-between"} flexWrap={"wrap"}>
+            <HStack mt={6} justify={"space-between"} flexWrap={"wrap"}>
               {data?.map((statistic) => (
                 <StatisticCard
                   flexBasis={{ sm: "32%" }}

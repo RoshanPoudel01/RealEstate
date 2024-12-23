@@ -35,7 +35,6 @@ export { RealStateHttpClient };
 export function toFormData(data: Record<string, any>) {
   const formData = new FormData();
   buildFormData(formData, data);
-
   return formData;
 }
 

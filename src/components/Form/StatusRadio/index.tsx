@@ -55,15 +55,14 @@ const StatusRadio: FC<IStatusRadioProps & RadioCardRootProps> = ({
             orientation="horizontal"
             align="center"
             justify="center"
-            maxW="lg"
+            maxW="100%"
             value={value}
             borderColor={"gray.300"}
             colorPalette={"primary"}
             onValueChange={(option) => onChange(option.value)}
-            defaultValue="paypal"
           >
             <RadioCardLabel>{label ?? "Status"}</RadioCardLabel>
-            <HStack align="stretch">
+            <HStack align="stretch" flexWrap={"wrap"}>
               {options
                 ? options.map((item) => (
                     <RadioCardItem
@@ -78,6 +77,7 @@ const StatusRadio: FC<IStatusRadioProps & RadioCardRootProps> = ({
                       indicator={false}
                       key={item.value}
                       value={item.value}
+                      cursor={"pointer"}
                     />
                   ))
                 : items.map((item) => (

@@ -8,7 +8,6 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-import { imageAssets } from "@realState/assets/images";
 import LoadingCard from "@realState/components/Cards/LoadingCard";
 import PropertyCard from "@realState/components/Cards/Property";
 import { TextInput } from "@realState/components/Form";
@@ -195,17 +194,7 @@ const Properties = () => {
           {isLoading
             ? [1, 2, 3, 4].map((_, index) => <LoadingCard key={index} />)
             : properties?.data?.rows.map((item, index) => (
-                <PropertyCard
-                  id={item?.id}
-                  key={index}
-                  title={item?.title}
-                  price={item?.price}
-                  img={item?.image ?? imageAssets.Logo}
-                  objectFit={item?.image ? "cover" : "contain"}
-                  address={item?.address}
-                  city={item?.city}
-                  status={item.status}
-                />
+                <PropertyCard key={index} property={item} />
               ))}
         </Masonry>
       </Container>

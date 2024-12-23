@@ -52,12 +52,7 @@ const Images: FC<ImagesProps> = ({ setTabValue }) => {
 
   const onSubmit = async (data: any) => {
     const formData = toFormData(data);
-    if (deleteImages.length > 0) {
-      formData.append("deleted_images", JSON.stringify(deleteImages));
-    }
-    if (removeImage) {
-      formData.append("remove_image", "1");
-    }
+
     const response = await createImages({ id, data: formData });
     if (response.data.status) {
       setTabValue("faqs");
@@ -95,7 +90,6 @@ const Images: FC<ImagesProps> = ({ setTabValue }) => {
           prevFiles={prevFiles}
           setPrevFiles={setPrevFiles}
           setDeleteImages={setDeleteImages}
-          w={"full"}
           message="Upload multiple images"
         />
         <HStack mt={4} align={"center"} gap={4}>

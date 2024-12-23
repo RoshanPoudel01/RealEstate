@@ -21,36 +21,26 @@ export const sidebarItems = [
     to: "/admin",
   },
   {
-    title: "Sections",
+    title: "Master",
     icon: <Rectangle />,
-    to: "/admin/sections",
-  },
-  {
-    title: "Statistics",
-    icon: <ChartLine />,
-    to: "/admin/statistics",
-  },
-  {
-    title: "Sliders",
-    icon: <Images />,
-    to: "/admin/sliders",
-  },
-
-  {
-    title: "Category",
-    icon: <SquaresFour />,
-    to: "/admin/category",
-  },
-  {
-    title: "Services",
-    icon: <Package />,
-    to: "/admin/services",
-  },
-
-  {
-    title: "Teams",
-    icon: <Users />,
-    to: "/admin/teams",
+    to: "/admin/master",
+    subItems: [
+      {
+        title: "Category",
+        icon: <SquaresFour />,
+        to: "/admin/category",
+      },
+      {
+        title: "Statistics",
+        icon: <ChartLine />,
+        to: "/admin/statistics",
+      },
+      {
+        title: "Services",
+        icon: <Package />,
+        to: "/admin/services",
+      },
+    ],
   },
   {
     title: "Properties",
@@ -78,18 +68,37 @@ export const sidebarItems = [
         to: "/admin/properties/trending",
         icon: <FireSimple />,
       },
+      {
+        title: "Enquiries",
+        icon: <QuestionMark />,
+        to: "/admin/properties/enquiries",
+      },
     ],
   },
+  {
+    title: "Sections",
+    icon: <Rectangle />,
+    to: "/admin/sections",
+  },
+
+  {
+    title: "Sliders",
+    icon: <Images />,
+    to: "/admin/sliders",
+  },
+
+  {
+    title: "Teams",
+    icon: <Users />,
+    to: "/admin/teams",
+  },
+
   {
     title: "Testimonials",
     icon: <User />,
     to: "/admin/testimonials",
   },
-  {
-    title: "Enquiries",
-    icon: <QuestionMark />,
-    to: "/admin/enquiries",
-  },
+
   {
     title: "Messages",
     icon: <Chat />,

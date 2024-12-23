@@ -56,7 +56,7 @@ const PropertyForm = () => {
         <Tabs.List overflowX={"auto"}>
           {triggers.map((trigger, index) => (
             <Tabs.Trigger
-              borderBottom={"6px solid"}
+              borderBottom={"4px solid"}
               borderColor={"primary.200"}
               _selected={{
                 color: "primary.400",

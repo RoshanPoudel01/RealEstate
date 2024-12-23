@@ -1,12 +1,6 @@
 // MultipleFilePreviews.tsx
 
-import {
-  ConditionalValue,
-  Flex,
-  Icon,
-  IconButton,
-  Text,
-} from "@chakra-ui/react";
+import { ConditionalValue, Flex, Icon, IconButton } from "@chakra-ui/react";
 import { Trash } from "@phosphor-icons/react";
 import LazyLoadImage from "@realState/components/Image";
 import React, { Dispatch, SetStateAction } from "react";
@@ -48,23 +42,23 @@ const flexProps = {
   textAlign: "center" as const,
 };
 
-const textProps = {
-  pos: "absolute",
-  bottom: 0,
-  left: 0,
-  right: 0,
-  bg: "white",
-  opacity: 0.9,
-  textColor: "black",
-  fontSize: {
-    base: "xs",
-    sm: "sm",
-  },
-  p: 2,
-  overflow: "hidden",
-  whiteSpace: "nowrap",
-  textOverflow: "ellipsis",
-};
+// const textProps = {
+//   pos: "absolute",
+//   bottom: 0,
+//   left: 0,
+//   right: 0,
+//   bg: "white",
+//   opacity: 0.9,
+//   textColor: "black",
+//   fontSize: {
+//     base: "xs",
+//     sm: "sm",
+//   },
+//   p: 2,
+//   overflow: "hidden",
+//   whiteSpace: "nowrap",
+//   textOverflow: "ellipsis",
+// };
 
 const buttonProps = {
   alignSelf: "center",
@@ -101,7 +95,7 @@ const MultipleFilePreviews: React.FC<MultipleFilePreviewsProps> = ({
               aspectRatio={1}
               src={file.url}
             />
-            <Text {...textProps}>{file.url.split("/").pop()!}</Text>
+            {/* <Text {...textProps}>{file.url.split("/").pop()!}</Text> */}
 
             <IconButton
               {...buttonProps}
@@ -132,7 +126,7 @@ const MultipleFilePreviews: React.FC<MultipleFilePreviewsProps> = ({
             src={file.url}
           />
 
-          <Text {...textProps}>{file.fileName}</Text>
+          {/* <Text {...textProps}>{file.fileName}</Text> */}
           <IconButton
             {...buttonProps}
             onClick={(e) => {

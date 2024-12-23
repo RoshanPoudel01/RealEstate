@@ -19,7 +19,7 @@ const Messages = () => {
       header: "S.No.",
       accessorKey: "s.no",
       cell: ({ row }: IRow<EnquiryResponse>) => {
-        return <Text>{pageIndex - 1 * 10 + row.index + 1}</Text>;
+        return <Text>{(pageIndex - 1) * 10 + row.index + 1}</Text>;
       },
     },
     {

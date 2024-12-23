@@ -19,7 +19,7 @@ const Enquiries = () => {
       header: "S.No.",
       accessorKey: "s.no",
       cell: ({ row }: IRow<EnquiryResponse>) => {
-        return <Text>{pageIndex - 1 * 10 + row.index + 1}</Text>;
+        return <Text>{(pageIndex - 1) * 10 + row.index + 1}</Text>;
       },
     },
     {
@@ -110,6 +110,7 @@ const Enquiries = () => {
       isLoading={isLoading}
       columns={columns}
       data={enquiries?.data?.rows ?? []}
+      count={enquiries?.data?.count ?? 0}
       pagination={{
         manual: true,
         pageCount: enquiries?.data?.pagination?.last_page ?? 1,

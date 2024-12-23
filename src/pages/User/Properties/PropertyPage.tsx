@@ -241,7 +241,7 @@ const PropertyPage = () => {
             <Text fontWeight={500} fontSize={"20px"}>
               {currenLanguage === "en" ? "Description" : "विवरण"}
             </Text>
-            <Text textAlign={"start"} fontSize={"16px"}>
+            <Text textAlign={"start"} fontSize={"16px"} as={"div"}>
               {parse(propertyDetail?.data?.description ?? "")}
             </Text>
           </GridItem>
@@ -267,7 +267,7 @@ const PropertyPage = () => {
                   />
 
                   <PropertyFeature
-                    label={currenLanguage === "en" ? "Floors" : "तल"}
+                    label={currenLanguage === "en" ? "Floors" : "तला"}
                     value={propertyDetail?.data?.floor}
                   />
 

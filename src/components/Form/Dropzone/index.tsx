@@ -3,7 +3,6 @@
 import { ConditionalValue, Flex, Icon, Text } from "@chakra-ui/react";
 import { CloudArrowUp } from "@phosphor-icons/react";
 import { Field, FieldProps } from "@realState/components/ui/field";
-import Compressor from "compressorjs";
 import convert from "convert";
 import { Dispatch, FC, SetStateAction, useEffect, useState } from "react";
 import Dropzone, { Accept, FileRejection } from "react-dropzone";
@@ -45,8 +44,6 @@ type DropzoneProps = {
   boxWidth?: ConditionalValue<string | number>;
   boxHeight?: ConditionalValue<string | number>;
   boxAspectRatio?: ConditionalValue<string | number>;
-  imageWidth?: ConditionalValue<string | number>;
-  imageHeight?: ConditionalValue<string | number>;
   marginX?: ConditionalValue<string | number>;
   noMaxSize?: boolean;
   options: {
@@ -73,8 +70,7 @@ const ReactDropzone: FC<DropzoneProps & FieldProps> = ({
   boxWidth,
   boxHeight,
   options,
-  imageWidth,
-  imageHeight,
+
   boxAspectRatio,
   ...rest
 }) => {
@@ -127,40 +123,25 @@ const ReactDropzone: FC<DropzoneProps & FieldProps> = ({
             setFileError(undefined);
           }
 
-          // Compress and handle accepted files
           acceptedFiles.forEach((file) => {
-            new Compressor(file, {
-              quality: 0.8, // Adjust quality as needed (0.1 - 1)
-              maxWidth: 1920, // Optional: Resize width
-              maxHeight: 1080, // Optional: Resize height
-              success: (compressedFile: File) => {
-                const filePreview = {
-                  url: URL.createObjectURL(compressedFile),
-                  fileName: compressedFile.name,
-                  fileType: compressedFile.type,
-                };
-                if (isMultiple) {
-                  setAcceptedFileList((prev) => {
-                    const updatedFiles = [...prev, compressedFile];
-                    setPreview((prev) => [...prev, filePreview]);
-                    onChange(updatedFiles); // Pass the updated list to `onChange`
-                    return updatedFiles;
-                  });
-                } else {
-                  const updatedFiles = [compressedFile];
-                  setAcceptedFileList(updatedFiles);
-                  setPreview([filePreview]);
-                  onChange(compressedFile);
-                }
-              },
-              error: (err) => {
-                console.error("Compression failed:", err);
-                setFileError({
-                  type: "compression-error",
-                  message: err.message,
-                });
-              },
-            });
+            const filePreview = {
+              url: URL.createObjectURL(file),
+              fileName: file.name,
+              fileType: file.type,
+            };
+
+            if (isMultiple) {
+              setAcceptedFileList((prev) => [...prev, file]);
+              setPreview((prev) => [...prev, filePreview]);
+            } else {
+              setAcceptedFileList([file]);
+              setPreview([filePreview]);
+            }
+            onChange(
+              isMultiple
+                ? [...acceptedFileList, ...acceptedFiles]
+                : acceptedFiles[0]
+            );
           });
         };
         return (
@@ -187,8 +168,8 @@ const ReactDropzone: FC<DropzoneProps & FieldProps> = ({
                     prevFiles={prevFiles || []}
                     setDeleteImages={setDeleteImages}
                     setPrevFiles={setPrevFiles}
-                    width={imageWidth ?? { base: "150px", md: "200px" }}
-                    height={imageHeight ?? { base: "150px", md: "200px" }}
+                    width={boxWidth ?? "150px"}
+                    height={boxHeight ?? "150px"}
                     onDelete={(index) => {
                       setPreview(preview.filter((_, i) => i !== index));
                       setAcceptedFileList(
@@ -215,8 +196,8 @@ const ReactDropzone: FC<DropzoneProps & FieldProps> = ({
                   <Flex
                     flexDir="column"
                     {...getRootProps()}
-                    w={boxWidth ?? { base: "150px", md: "200px" }}
-                    h={boxHeight ?? { base: "150px", md: "200px" }}
+                    w={boxWidth ?? "150px"}
+                    h={boxHeight ?? "150px"}
                     aspectRatio={boxAspectRatio ?? 1}
                     border={"2px dashed rgba(200, 204, 209, 0.70)"}
                     bg={"gray.50"}

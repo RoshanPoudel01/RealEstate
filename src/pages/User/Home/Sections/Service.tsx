@@ -29,13 +29,14 @@ const Service = () => {
           ) : (
             services?.data?.rows.map((service) => (
               <Card.Root bg={"transparent"} border={"none"} key={service.id}>
-                <Card.Header p={0}>
+                <Card.Header>
                   <LazyLoadImage
-                    w={"full"}
+                    w={"150px"}
                     aspectRatio={4 / 3}
                     borderRadius={0}
                     src={service.image}
                     alt={service.title}
+                    alignSelf={"center"}
                   />
                 </Card.Header>
                 <Card.Body textAlign={"center"}>

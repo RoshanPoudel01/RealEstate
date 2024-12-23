@@ -83,7 +83,7 @@ const Home = () => {
             >
               {heroSection?.data?.description}
             </Text>
-            <Button colorPalette={"primary"} asChild>
+            <Button mt={4} colorPalette={"primary"} asChild>
               <Link to="/all-properties">
                 {currentLang === "en"
                   ? "View All Properties"

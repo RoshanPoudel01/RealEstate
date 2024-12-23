@@ -149,7 +149,7 @@ const General: FC<GeneralProps> = ({ setTabValue }) => {
           <SimpleGrid
             alignItems={"start"}
             justifyContent={"end"}
-            columns={{ base: 1, md: 2 }}
+            columns={{ base: 1, sm: 2 }}
             gap={4}
             asChild
           >
@@ -180,6 +180,26 @@ const General: FC<GeneralProps> = ({ setTabValue }) => {
               <TextInput
                 control={control}
                 required
+                backendError={backendError.category_id}
+                name="category_id"
+                label="Category"
+                type="select"
+                options={
+                  <>
+                    <option value="">Select Category</option>
+                    {categoryOptions}
+                  </>
+                }
+              />
+              <TextInput
+                control={control}
+                required
+                name="price"
+                label="Price"
+              />
+              <TextInput
+                control={control}
+                required
                 backendError={backendError.address_en}
                 name="address_en"
                 label="Address (EN)"
@@ -194,62 +214,32 @@ const General: FC<GeneralProps> = ({ setTabValue }) => {
 
               <TextInput
                 control={control}
-                required
                 backendError={backendError.city_en}
                 name="city_en"
                 label="City (EN)"
               />
               <TextInput
                 control={control}
-                required
                 backendError={backendError.city_np}
                 name="city_np"
                 label="City (NP)"
               />
               <TextInput
                 control={control}
-                required
                 backendError={backendError.map}
                 name="map"
                 label="Map"
               />
+              <TextInput control={control} name="land_area" label="Land Area" />
               <TextInput
+                helperText="Enter the year in YYYY format (e.g. 2021)"
                 control={control}
-                required
-                name="land_area"
-                label="Land Area"
-              />
-              <TextInput
-                helperText="Enter the year in YYYY format"
-                control={control}
-                required
                 name="built_year"
                 label="Built Year"
               />
-              <TextInput
-                control={control}
-                required
-                name="price"
-                label="Price"
-              />
 
-              <TextInput
+              {/* <StatusRadio
                 control={control}
-                required
-                backendError={backendError.category_id}
-                name="category_id"
-                label="Category"
-                type="select"
-                options={
-                  <>
-                    <option value="">Select Category</option>
-                    {categoryOptions}
-                  </>
-                }
-              />
-              <StatusRadio
-                control={control}
-                required
                 name="status"
                 label="Status"
                 options={[
@@ -257,7 +247,7 @@ const General: FC<GeneralProps> = ({ setTabValue }) => {
                   { label: "Rented", value: "rented" },
                   { label: "Sold", value: "sold" },
                 ]}
-              />
+              /> */}
               <StatusRadio
                 control={control}
                 required

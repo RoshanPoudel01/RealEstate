@@ -149,7 +149,6 @@ const Trending = () => {
   }, [selectedProperties, setValue]);
 
   const onSubmit = async (data: typeof defaultValues) => {
-    console.log({ data });
     const response = await addTrending({
       data: { properties: JSON.stringify(data.properties) },
     });

@@ -220,7 +220,7 @@ const useUpdateFaqs = () => {
     url: api.properties.faqs,
     queryKey: [`update-faqs`],
     method: `POST`,
-    invalidates: [`faqs`],
+    invalidates: [`faqs`, `properties`],
     message: `FAQs updated successfully`,
   });
 };

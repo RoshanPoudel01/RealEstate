@@ -10,6 +10,7 @@ import {
   useDeleteTestimonial,
   useFetchTestimonials,
 } from "@realState/services/service-testimonial";
+import PageHeader from "@realState/utils/PageHeader";
 import { useEffect, useState } from "react";
 import TestimonialForm from "./Form";
 
@@ -125,6 +126,10 @@ const Testimonials = () => {
       }}
       isLoading={isPending || isFetching}
     >
+      <PageHeader
+        heading="Testimonials"
+        description="List of all the testimonials."
+      />
       <HStack justify={"space-between"} w={"full"}>
         <SearchInput
           maxW={"300px"}

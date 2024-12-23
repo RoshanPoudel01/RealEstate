@@ -105,7 +105,7 @@ export const adminRoutes = [
         element: <NAVIGATION_PAGES.TESTIMONIALS />,
       },
       {
-        path: NAVIGATION_ROUTES.ADMIN_ENQUIRIES,
+        path: NAVIGATION_ROUTES.ADMIN_PROPERTIES + "/enquiries",
         element: <NAVIGATION_PAGES.ENQUIRIES />,
       },
       {

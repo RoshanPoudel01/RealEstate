@@ -66,7 +66,7 @@ const About = () => {
         mb={10}
       >
         {isLoading
-          ? [...Array(4)].map((_, index) => (
+          ? [...Array(3)].map((_, index) => (
               <Card.Root key={index}>
                 <Skeleton height={"100px"} />
               </Card.Root>

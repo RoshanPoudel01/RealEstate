@@ -1,30 +1,53 @@
 import { Card, Text, VStack } from "@chakra-ui/react";
+import { imageAssets } from "@realState/assets/images";
 import { NAVIGATION_ROUTES } from "@realState/pages/App/navigationRoutes";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import LazyLoadImage from "../Image";
 import { useColorModeValue } from "../ui/color-mode";
 
-interface PropertyCardProps {
-  img: string;
+interface PropertyProps {
   title: string;
   price: string;
   address: string;
   city: string;
   status: string;
   id: number;
-  objectFit?: string;
+  image?: string;
+  is_new?: boolean;
+  is_featured?: boolean;
+  is_trending?: boolean;
 }
 
+interface PropertyCardProps {
+  property: PropertyProps;
+}
+
+const statusAttrs = {
+  position: "absolute",
+  bottom: "12px",
+  left: "16px",
+  bg: "red.500",
+  color: "white",
+  px: "2",
+  py: "1",
+  borderRadius: "12px",
+  fontSize: "xs",
+  fontWeight: "bold",
+};
+
 const PropertyCard: React.FC<PropertyCardProps> = ({
-  img,
-  title,
-  price,
-  city,
-  address,
-  status,
-  id,
-  objectFit,
+  property: {
+    image,
+    title,
+    price,
+    city,
+    address,
+    is_new,
+    is_featured,
+    is_trending,
+    id,
+  },
 }) => {
   const cardBg = useColorModeValue("white", "gray.700");
   const navigate = useNavigate();
@@ -39,7 +62,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
       border={0}
       cursor="pointer"
       transition="all 0.4s cubic-bezier(0.175, 0.885, 0, 1)"
-      marginRight="25px"
+      mr={2}
       onClick={() =>
         navigate(NAVIGATION_ROUTES.PROPERTY_DETAILS?.replace(":id", id + ""))
       }
@@ -59,28 +82,20 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
         borderBottom={"1ps solid"}
       >
         <LazyLoadImage
-          src={img}
+          src={image ?? imageAssets.Logo}
           alt={title}
-          objectFit={objectFit}
+          objectFit={image ? "cover" : "contain"}
           aspectRatio={4 / 3}
           h={"100%"}
           w={"100%"}
         />
-
-        <Text
-          position="absolute"
-          bottom="12px"
-          left="16px"
-          bg="red.500"
-          color="white"
-          px="2"
-          py="1"
-          borderRadius="12px"
-          fontSize="xs"
-          fontWeight="bold"
-        >
-          {status.toUpperCase()}
-        </Text>
+        {is_new ? (
+          <Text {...statusAttrs}>New</Text>
+        ) : is_featured ? (
+          <Text {...statusAttrs}>Featured</Text>
+        ) : is_trending ? (
+          <Text {...statusAttrs}>Trending</Text>
+        ) : null}
       </Card.Header>
 
       <Card.Body

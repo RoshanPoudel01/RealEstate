@@ -12,7 +12,7 @@ const defaultValue = {
   name: "",
   email: "",
   phone: "",
-  message: "",
+  question: "",
 };
 
 const Queries = () => {
@@ -23,7 +23,7 @@ const Queries = () => {
       .string()
       .required("Phone is required")
       .matches(/^\d{10}$/, "Please enter a 10 digit valid phone number"),
-    message: yup.string().required("Message is required"),
+    question: yup.string().required("question is required"),
   });
 
   type ContactFormValues = yup.InferType<typeof contactSchema>;
@@ -32,12 +32,17 @@ const Queries = () => {
     defaultValues: defaultValue,
     resolver: yupResolver(contactSchema),
   });
-
+  const currentLanguage = localStorage.getItem("language") ?? "en";
   const { mutateAsync: sendEnquiry, isPending } = useSendMessage();
 
   const submitContactForm = async (data: ContactFormValues) => {
-    const response = await sendEnquiry({ id: id!, data });
-    if (response.data.status === "success") {
+    const response = await sendEnquiry({
+      data: {
+        ...data,
+        property_id: id,
+      },
+    });
+    if (response.data.status) {
       reset(defaultValue);
     }
   };
@@ -86,37 +91,44 @@ const Queries = () => {
           gap={4}
           mt={4}
         >
-          <form onSubmit={handleSubmit(submitContactForm)}>
+          <form id="contact-form" onSubmit={handleSubmit(submitContactForm)}>
             <TextInput
-              placeholder={"Name"}
-              type="text"
               name="name"
-              control={control}
-              size={"lg"}
-            />
-            <TextInput
               type="text"
-              placeholder={"Email"}
+              placeholder={currentLanguage === "en" ? "Full Name" : "पुरा नाम"}
+              control={control}
+              required
+            />
+            <TextInput
               name="email"
+              type="text"
+              placeholder={currentLanguage === "en" ? "Email" : "ईमेल"}
               control={control}
-              size={"lg"}
+              required
             />
             <TextInput
-              type="number"
-              placeholder={"Phone"}
               name="phone"
+              type="number"
+              placeholder={
+                currentLanguage === "en" ? "Phone Number" : "फोन नम्बर"
+              }
               control={control}
-              size={"lg"}
+              required
             />
             <TextInput
+              name="question"
               type="textarea"
-              placeholder={"Message"}
-              name="message"
+              placeholder={currentLanguage === "en" ? "Message" : "सन्देश"}
               control={control}
-              size={"lg"}
+              required
             />
-            <Button loading={isPending} type="submit" size={"lg"} w={"full"}>
-              Submit
+            <Button
+              form="contact-form"
+              loading={isPending}
+              type="submit"
+              w={"full"}
+            >
+              {currentLanguage === "en" ? "Send" : "पठाउनुहोस्"}
             </Button>
           </form>
         </Stack>

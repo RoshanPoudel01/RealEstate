@@ -96,10 +96,10 @@ const FAQs = () => {
     }
   }, [faqs]);
 
-  const { mutateAsync: createFaqs, isPending } = useUpdateFaqs();
+  const { mutateAsync: update, isPending } = useUpdateFaqs();
 
   const onSubmit = async (data: FAQFormValues) => {
-    const response = await createFaqs({ id: id!, data });
+    const response = await update({ id: id!, data });
     if (response.data.status) {
       navigate("/admin/properties");
     }

@@ -27,7 +27,9 @@ const ADD_TRENDING = lazy(
 );
 const ADD_NEW = lazy(() => import("@realState/pages/Admin/Properties/New"));
 const CONTACT = lazy(() => import("@realState/pages/User/Contact"));
-const ENQUIRIES = lazy(() => import("@realState/pages/Admin/Enquiries"));
+const ENQUIRIES = lazy(
+  () => import("@realState/pages/Admin/Properties/Enquiries")
+);
 const MESSAGES = lazy(() => import("@realState/pages/Admin/Messages"));
 const STATISTICS = lazy(() => import("@realState/pages/Admin/Statistics"));
 const STATISTICS_FORM = lazy(

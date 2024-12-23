@@ -5,21 +5,15 @@ import {
   AccordionItemTrigger,
   AccordionRoot,
 } from "@realState/components/ui/accordion";
+import { FaqFrontResponse } from "@realState/services/service-properties";
 import { t } from "i18next";
 import { FC } from "react";
 
 interface IFaqs {
-  id: number;
-  question: string;
-  answer: string;
+  faqs: FaqFrontResponse[];
 }
 
-interface IFaqs {
-  faqs: IFaqs[];
-  currentLanguage: string | null;
-}
-
-const FAQs: FC<IFaqs> = ({ faqs, currentLanguage }) => {
+const FAQs: FC<IFaqs> = ({ faqs }) => {
   return (
     <Stack
       w={"full"}
@@ -42,6 +36,7 @@ const FAQs: FC<IFaqs> = ({ faqs, currentLanguage }) => {
       {faqs?.map((item, index) => (
         <AccordionRoot
           size={"lg"}
+          key={index}
           multiple
           defaultValue={[""]}
           variant={"enclosed"}
