@@ -21,8 +21,6 @@ const SectionFrom: FC<FormProps> = ({ slug }) => {
     description_en: "",
     description_np: "",
     image: "",
-    caption_en: "",
-    caption_np: "",
   };
 
   const { control, handleSubmit, reset } = useForm({ defaultValues });
@@ -40,8 +38,6 @@ const SectionFrom: FC<FormProps> = ({ slug }) => {
         description_en: section.data.description_en,
         description_np: section.data.description_np,
         image: section.data.image,
-        caption_en: section.data.caption_en,
-        caption_np: section.data.caption_np,
       });
     } else {
       reset(defaultValues);
@@ -77,8 +73,7 @@ const SectionFrom: FC<FormProps> = ({ slug }) => {
             control={control}
             type="textarea"
           />
-          <TextInput name="caption_en" label="Caption (En)" control={control} />
-          <TextInput name="caption_np" label="Caption (Np)" control={control} />
+
           {(slug === "hero-section" ||
             slug === "statistics-section" ||
             slug === "contact-section") && (

@@ -229,6 +229,7 @@ const General: FC<GeneralProps> = ({ setTabValue }) => {
                 backendError={backendError.map}
                 name="map"
                 label="Map"
+                helperText="Copy the src link from google maps iframe"
               />
               <TextInput control={control} name="land_area" label="Land Area" />
               <TextInput

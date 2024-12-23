@@ -66,9 +66,15 @@ const Footer = () => {
       links: [
         {
           text: currentLanguage === "en" ? "Privacy Policy" : "गोपनीयता नीति",
-          href: "#",
+          href: "/privacy-policy",
         },
-        { text: currentLanguage === "en" ? "Terms" : "शर्तहरू", href: "#" },
+        {
+          text:
+            currentLanguage === "en"
+              ? "Terms and Conditions"
+              : "नियम तथा शर्तहरू",
+          href: "/terms-and-conditions",
+        },
       ],
     },
   ];

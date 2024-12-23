@@ -50,8 +50,8 @@ const Properties = () => {
       >
         <Text
           color={"primary.400"}
-          fontSize={"50px"}
-          lineHeight={"69px"}
+          fontSize={{ base: "32px", sm: "36px", md: "42px", xl: "50px" }}
+          lineHeight={{ base: "50px", md: "69px" }}
           fontWeight={700}
         >
           {t("property:heading")}

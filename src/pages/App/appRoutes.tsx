@@ -125,6 +125,15 @@ export const adminRoutes = [
         element: <NAVIGATION_PAGES.SECTIONS />,
       },
       {
+        path: NAVIGATION_ROUTES.ADMIN_TERMS_CONDITIONS,
+        element: <NAVIGATION_PAGES.TERMS_CONDITIONS />,
+      },
+      {
+        path: NAVIGATION_ROUTES.ADMIN_PRIVACY_POLICY,
+        element: <NAVIGATION_PAGES.PRIVACY_POLICY />,
+      },
+
+      {
         path: "*",
         element: <PageNotFound />,
       },
@@ -164,6 +173,14 @@ export const userRoutes = [
       {
         path: NAVIGATION_ROUTES.CONTACT,
         element: <NAVIGATION_PAGES.CONTACT />,
+      },
+      {
+        path: NAVIGATION_ROUTES.TERMS_CONDITIONS,
+        element: <NAVIGATION_PAGES.TERMS_CONDITIONS_FRONT />,
+      },
+      {
+        path: NAVIGATION_ROUTES.PRIVACY_POLICY,
+        element: <NAVIGATION_PAGES.PRIVACY_POLICY_FRONT />,
       },
       {
         path: "*",

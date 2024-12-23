@@ -11,6 +11,7 @@ import {
   useUpdateSetting,
 } from "@realState/services/service-setting";
 import Loader from "@realState/utils/Loader";
+import PageHeader from "@realState/utils/PageHeader";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
@@ -107,6 +108,10 @@ const Settings = () => {
     <Loader />
   ) : (
     <Flex flexDir={"column"} gap={4}>
+      <PageHeader
+        heading="Settings"
+        description="Manage your website settings here"
+      />
       <SimpleGrid
         alignItems={"start"}
         columns={{ base: 1, md: 2 }}
@@ -227,6 +232,7 @@ const Settings = () => {
           <LazyLoadImage
             src={setting?.data.logo ?? ""}
             alt={setting?.data.name}
+            w={"150px"}
           />
         </Stack>
       )}

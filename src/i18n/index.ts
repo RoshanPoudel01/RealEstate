@@ -39,6 +39,12 @@ const resources = {
       heading: "Related Properties",
       description: "You may also like these properties",
     },
+    terms: {
+      heading: "Terms and Conditions",
+    },
+    location: {
+      heading: "Property Location",
+    },
   },
   np: {
     navbar: {
@@ -63,9 +69,9 @@ const resources = {
       heading: "हाम्रो संघ",
     },
     property: {
-      heading: "संपत्तिहरू",
+      heading: "सम्पतिहरू",
       description: "सबैभन्दा लाभदायक प्रस्तावहरूबाट छनौट गर्नुहोस्",
-      searchText: "संपत्तिहरूको लागि खोज्नुहोस्",
+      searchText: "सम्पतिहरूको लागि खोज्नुहोस्",
       searchButton: "खोजी गर्नुहोस्",
       filterText: "फिल्टर सेटिङहरू",
     },
@@ -75,8 +81,14 @@ const resources = {
         "तपाईंले उत्पादनको बारेमा सोधपुछ गर्ने बित्तिकै हाम्रो टोलीले यस विशेष उत्पादनको बारेमा तपाईंको प्रश्नलाई सम्बोधन गर्ने प्रयास गर्नेछ",
     },
     related: {
-      heading: "सम्बन्धित संपत्तिहरू",
-      description: "तपाईंलाई यी संपत्तिहरू पनि मन पर्न सक्छन्",
+      heading: "सम्बन्धित सम्पतिहरू",
+      description: "तपाईंलाई यी सम्पतिहरू पनि मन पर्न सक्छन्",
+    },
+    terms: {
+      heading: "नियम र शर्तहरू",
+    },
+    location: {
+      heading: "सम्पतिको स्थान",
     },
   },
 };

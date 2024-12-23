@@ -36,6 +36,16 @@ const STATISTICS_FORM = lazy(
   () => import("@realState/pages/Admin/Statistics/Form")
 );
 const SECTIONS = lazy(() => import("@realState/pages/Admin/Sections"));
+const TERMS_CONDITIONS = lazy(() => import("@realState/pages/Admin/T&C"));
+const PRIVACY_POLICY = lazy(
+  () => import("@realState/pages/Admin/PrivacyPolicy")
+);
+const PRIVACY_POLICY_FRONT = lazy(
+  () => import("@realState/pages/User/PrivacyPolicy")
+);
+const TERMS_CONDITIONS_FRONT = lazy(
+  () => import("@realState/pages/User/TermsConditions")
+);
 export const NAVIGATION_PAGES = {
   SLIDERS,
   SLIDER_FORM,
@@ -58,5 +68,9 @@ export const NAVIGATION_PAGES = {
   MESSAGES,
   STATISTICS,
   STATISTICS_FORM,
+  TERMS_CONDITIONS,
+  PRIVACY_POLICY,
+  PRIVACY_POLICY_FRONT,
+  TERMS_CONDITIONS_FRONT,
   SECTIONS,
 };

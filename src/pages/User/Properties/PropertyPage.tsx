@@ -1,7 +1,9 @@
 import {
   Card,
   Container,
+  Flex,
   GridItem,
+  Heading,
   HStack,
   Icon,
   IconButton,
@@ -14,6 +16,7 @@ import {
   CaretLeft,
   CaretRight,
   CheckCircle,
+  Link,
   MapPin,
   XCircle,
 } from "@phosphor-icons/react";
@@ -22,6 +25,7 @@ import LazyLoadImage from "@realState/components/Image";
 import { useGetPropertyDetails } from "@realState/services/service-properties";
 import Loader from "@realState/utils/Loader";
 import parse from "html-react-parser";
+import { t } from "i18next";
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import "slick-carousel/slick/slick-theme.css";
@@ -65,13 +69,13 @@ const PropertyFeature = ({
 const PropertyPage = () => {
   const { id } = useParams();
 
-  const currenLanguage = localStorage.getItem("language") ?? "en";
+  const currentLanguage = localStorage.getItem("language") ?? "en";
 
   const {
     data: propertyDetail,
     isPending,
     isFetching,
-  } = useGetPropertyDetails(id, currenLanguage);
+  } = useGetPropertyDetails(id, currentLanguage);
 
   const [mainImage, setMainImage] = useState<string>("");
 
@@ -217,6 +221,7 @@ const PropertyPage = () => {
           )}
         </Stack>
 
+        {/* Property Title  */}
         <HStack
           justify={"space-between"}
           flexWrap={"wrap"}
@@ -230,7 +235,29 @@ const PropertyPage = () => {
               <Icon asChild boxSize={6}>
                 <MapPin />
               </Icon>
+              {propertyDetail?.data?.city && (
+                <Text>{propertyDetail?.data?.city + ", "}</Text>
+              )}
               <Text>{propertyDetail?.data?.address}</Text>
+              {propertyDetail?.data?.map && (
+                <HStack ml={4} gap={1}>
+                  <Icon asChild boxSize={5}>
+                    <Link />
+                  </Icon>
+                  <Text
+                    _hover={{
+                      textDecoration: "underline",
+                    }}
+                    asChild
+                  >
+                    <a href="#location">
+                      {currentLanguage === "en"
+                        ? "View on Map"
+                        : "नक्सा हेर्नुहोस्"}
+                    </a>
+                  </Text>
+                </HStack>
+              )}
             </HStack>
           </Stack>
           <Text textStyle={"heading"}>Rs. {propertyDetail?.data?.price}</Text>
@@ -239,7 +266,7 @@ const PropertyPage = () => {
         <SimpleGrid columns={{ base: 1, md: 3 }} gap={5}>
           <GridItem colSpan={2} order={{ base: 2, md: 1 }}>
             <Text fontWeight={500} fontSize={"20px"}>
-              {currenLanguage === "en" ? "Description" : "विवरण"}
+              {currentLanguage === "en" ? "Description" : "विवरण"}
             </Text>
             <Text textAlign={"start"} fontSize={"16px"} as={"div"}>
               {parse(propertyDetail?.data?.description ?? "")}
@@ -255,25 +282,25 @@ const PropertyPage = () => {
                 >
                   <PropertyFeature
                     label={
-                      currenLanguage === "en" ? "Built Year" : "निर्माण वर्ष"
+                      currentLanguage === "en" ? "Built Year" : "निर्माण वर्ष"
                     }
                     value={propertyDetail?.data?.built_year}
                   />
                   <PropertyFeature
                     label={
-                      currenLanguage === "en" ? "Land Area" : "जग्गा क्षेत्रफल"
+                      currentLanguage === "en" ? "Land Area" : "जग्गा क्षेत्रफल"
                     }
                     value={propertyDetail?.data?.land_area}
                   />
 
                   <PropertyFeature
-                    label={currenLanguage === "en" ? "Floors" : "तला"}
+                    label={currentLanguage === "en" ? "Floors" : "तला"}
                     value={propertyDetail?.data?.floor}
                   />
 
                   <PropertyFeature
                     label={
-                      currenLanguage === "en" ? "Road Access" : "सडक पहुँच"
+                      currentLanguage === "en" ? "Road Access" : "सडक पहुँच"
                     }
                     isAvailable={
                       propertyDetail?.data?.is_road_access ? true : false
@@ -281,18 +308,18 @@ const PropertyPage = () => {
                   />
                   <PropertyFeature
                     label={
-                      currenLanguage === "en" ? "Parking Space" : "पार्किंग"
+                      currentLanguage === "en" ? "Parking Space" : "पार्किंग"
                     }
                     isAvailable={
                       propertyDetail?.data?.is_parking ? true : false
                     }
                   />
                   <PropertyFeature
-                    label={currenLanguage === "en" ? "Garden" : "बगैंचा"}
+                    label={currentLanguage === "en" ? "Garden" : "बगैंचा"}
                     isAvailable={propertyDetail?.data?.is_garden ? true : false}
                   />
                   <PropertyFeature
-                    label={currenLanguage === "en" ? "Furnished" : "सुसज्जित"}
+                    label={currentLanguage === "en" ? "Furnished" : "सुसज्जित"}
                     isAvailable={
                       propertyDetail?.data?.is_furnished ? true : false
                     }
@@ -306,6 +333,35 @@ const PropertyPage = () => {
       <FAQs faqs={propertyDetail?.data?.faqs ?? []} />
       <Related />
       <Queries />
+      {propertyDetail?.data?.map && (
+        <Stack
+          my={10}
+          align={"center"}
+          justify={"center"}
+          w={"full"}
+          maxW={"95vw"}
+          mx={"auto"}
+          gap={4}
+          id="location"
+        >
+          <Heading color={"primary.500"} fontSize={{ base: "xl", md: "3xl" }}>
+            {t("location:heading")}
+          </Heading>
+          <Flex
+            h={{ base: "250px", md: "400px" }}
+            border={"2px solid #7884B6"}
+            flexDir={"column"}
+            w={"full"}
+          >
+            <iframe
+              src={propertyDetail?.data?.map ?? ""}
+              width="100%"
+              height="100%"
+              loading="lazy"
+            ></iframe>
+          </Flex>
+        </Stack>
+      )}
     </Stack>
   );
 };

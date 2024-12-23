@@ -12,6 +12,8 @@ export const NAVIGATION_ROUTES = {
   CONTACT: "/contact",
   SETTINGS: "settings",
   PROPERTY_DETAILS: "/property-details/:id",
+  TERMS_CONDITIONS: "/terms-and-conditions",
+  PRIVACY_POLICY: "/privacy-policy",
   ADMIN_SLIDERS: "sliders",
   ADMIN_CATEGORY: "category",
   ADMIN_SERVICES: "services",
@@ -21,5 +23,7 @@ export const NAVIGATION_ROUTES = {
   ADMIN_TESTIMONIALS: "testimonials",
   ADMIN_MESSAGES: "messages",
   ADMIN_STATISTICS: "statistics",
+  ADMIN_TERMS_CONDITIONS: "terms-and-conditions",
+  ADMIN_PRIVACY_POLICY: "privacy-policy",
   ADMIN_SECTIONS: "sections",
 };

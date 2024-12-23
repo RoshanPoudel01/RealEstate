@@ -36,6 +36,7 @@ const useUpdateSection = () => {
     method: "POST",
     url: api.sections.byId,
     invalidates: ["section-back"],
+    message: "Section updated successfully",
   });
 };
 
