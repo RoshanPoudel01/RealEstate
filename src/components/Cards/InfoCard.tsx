@@ -8,7 +8,7 @@ interface InfoCardProps {
 const InfoCard = ({ img, title, description }: InfoCardProps) => {
   return (
     <Card.Root
-      bg={"FFF"}
+      bg={"#FFF"}
       boxShadow="0px 11px 48px 0px rgba(51, 51, 51, 0.06)"
       border={"none"}
       borderRadius={"32px"}
@@ -26,8 +26,6 @@ const InfoCard = ({ img, title, description }: InfoCardProps) => {
           name={description}
           size="lg"
           borderRadius={"24px"}
-          height={"56px"}
-          w={"56px"}
           flexShrink={0}
           //   border="3px solid #FFF"
           //   boxShadow="0px 9px 32px 0px rgba(89, 92, 219, 0.10)"

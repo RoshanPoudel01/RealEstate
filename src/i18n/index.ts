@@ -12,6 +12,8 @@ const resources = {
       heading: "Frequently Asked Questions",
       description:
         "Have any questions? We have answers to some of the most common queries.",
+      notFound: "Faq Not Found",
+      notFoundDescription: "Faqs not found for this property",
     },
     contact: {
       heading: "Contact Us",
@@ -57,6 +59,8 @@ const resources = {
       heading: "सामान्य प्रश्नहरू",
       description:
         "कुनै प्रश्न छ? हामीले सबैभन्दा सामान्य प्रश्नहरूको उत्तर छ।",
+      notFound: "प्रश्नहरू फेला परेन",
+      notFoundDescription: "यस सम्पतिका लागि प्रश्नहरू फेला परेन",
     },
     contact: {
       heading: "हामीलाई सम्पर्क गर्नुहोस्",

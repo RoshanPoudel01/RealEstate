@@ -3,7 +3,12 @@ import { defineTextStyles } from "@chakra-ui/react";
 export const textStyles = defineTextStyles({
   heading: {
     value: {
-      fontSize: "35px",
+      fontSize: {
+        base: "20px",
+        sm: "24px",
+        md: "30px",
+        lg: "36px",
+      },
       fontWeight: 400,
       fontFamily: "Poppins",
       lineHeight: "normal",

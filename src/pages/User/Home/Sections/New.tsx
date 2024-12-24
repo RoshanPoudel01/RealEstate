@@ -32,7 +32,15 @@ const New = () => {
             <Masonry columns={{ 0: 1, 480: 2, 1060: 4 }} gap={12}>
               {newProperties?.data?.rows
                 ?.map((item, index) => (
-                  <PropertyCard key={index} property={item} />
+                  <PropertyCard
+                    key={index}
+                    property={{
+                      ...item,
+                      is_new: true,
+                      is_featured: false,
+                      is_trending: false,
+                    }}
+                  />
                 ))
                 .slice(0, 4)}
             </Masonry>

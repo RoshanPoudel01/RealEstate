@@ -5,6 +5,7 @@ import {
   Heading,
   HStack,
   Separator,
+  SimpleGrid,
   Stack,
   Text,
 } from "@chakra-ui/react";
@@ -104,16 +105,15 @@ const Properties = () => {
           </Text>
           <Separator />
         </HStack>
-        <Stack
-          flexDir={{
-            base: "column",
-            md: "row",
-          }}
+        <SimpleGrid
           gap={{
             base: 3,
             md: 5,
           }}
-          w={"70%"}
+          minChildWidth={{ base: "150px", md: "200px" }}
+          w={"full"}
+          maxW={{ md: "70%" }}
+          mx={"auto"}
         >
           {/* <Select
             control={control}
@@ -129,54 +129,39 @@ const Properties = () => {
             })}
           /> */}
           <TextInput
-            name="select"
+            name="location"
             control={control}
             type="select"
+            onChange={(e) => console.log((e.target as HTMLSelectElement).value)}
             options={
               <>
-                <option value="react">React.js</option>
-                <option value="js">js</option>
-                <option value="er">ess</option>
+                <option value={""} selected>
+                  Select Category
+                </option>
+                <option value="react">Cat1</option>
+                <option value="js">Cat2</option>
+                <option value="er">Cat3</option>
               </>
             }
           />
+
           <TextInput
-            name="select"
+            name="category"
             control={control}
             type="select"
+            onChange={(e) => console.log((e.target as HTMLSelectElement).value)}
             options={
               <>
-                <option value="react">React.js</option>
-                <option value="js">js</option>
-                <option value="er">ess</option>
+                <option value={""} selected>
+                  Select Location
+                </option>
+                <option value="react">Loc1</option>
+                <option value="js">Loc2</option>
+                <option value="er">Loc3</option>
               </>
             }
           />
-          <TextInput
-            name="select"
-            control={control}
-            type="select"
-            options={
-              <>
-                <option value="react">React.js</option>
-                <option value="js">js</option>
-                <option value="er">ess</option>
-              </>
-            }
-          />
-          <TextInput
-            name="select"
-            control={control}
-            type="select"
-            options={
-              <>
-                <option value="react">React.js</option>
-                <option value="js">js</option>
-                <option value="er">ess</option>
-              </>
-            }
-          />
-        </Stack>
+        </SimpleGrid>
       </Stack>
       {properties?.data?.count === 0 && (
         <Center>

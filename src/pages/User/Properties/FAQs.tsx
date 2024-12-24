@@ -5,6 +5,7 @@ import {
   AccordionItemTrigger,
   AccordionRoot,
 } from "@realState/components/ui/accordion";
+import { EmptyState } from "@realState/components/ui/empty-state";
 import { FaqFrontResponse } from "@realState/services/service-properties";
 import { t } from "i18next";
 import { FC } from "react";
@@ -33,20 +34,29 @@ const FAQs: FC<IFaqs> = ({ faqs }) => {
         {t("faq:heading")}
       </Heading>
       <Text>{t("faq:description")}</Text>
-      {faqs?.map((item, index) => (
-        <AccordionRoot
-          size={"lg"}
-          key={index}
-          multiple
-          defaultValue={[""]}
-          variant={"enclosed"}
-        >
-          <AccordionItem key={index} value={item.question ?? ""}>
-            <AccordionItemTrigger>{item.question}</AccordionItemTrigger>
-            <AccordionItemContent>{item.answer}</AccordionItemContent>
-          </AccordionItem>
-        </AccordionRoot>
-      ))}
+      {faqs?.length === 0 ? (
+        <EmptyState
+          py={2}
+          color={"primary.500"}
+          title={t("faq:notFound")}
+          description={t("faq:notFoundDescription")}
+        />
+      ) : (
+        faqs?.map((item, index) => (
+          <AccordionRoot
+            size={"lg"}
+            key={index}
+            multiple
+            defaultValue={[""]}
+            variant={"enclosed"}
+          >
+            <AccordionItem key={index} value={item.question ?? ""}>
+              <AccordionItemTrigger>{item.question}</AccordionItemTrigger>
+              <AccordionItemContent>{item.answer}</AccordionItemContent>
+            </AccordionItem>
+          </AccordionRoot>
+        ))
+      )}
     </Stack>
   );
 };

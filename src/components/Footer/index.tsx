@@ -1,4 +1,4 @@
-import { Flex, Image, Link, Stack, Text } from "@chakra-ui/react";
+import { Flex, Image, Link, Separator, Stack, Text } from "@chakra-ui/react";
 import { imageAssets } from "@realState/assets/images";
 import { useFetchSettingData } from "@realState/services/service-init";
 import { useFetchFrontServices } from "@realState/services/service-services";
@@ -79,7 +79,7 @@ const Footer = () => {
     },
   ];
   return (
-    <Stack as="footer" bg={"primary.50"}>
+    <Stack gap={4} as="footer" bg={"primary.50"} py={4}>
       <Flex
         direction={"column"}
         w={"100%"}
@@ -88,7 +88,6 @@ const Footer = () => {
           sm: "40px",
           lg: "60px",
         }}
-        py={"40px"}
         gap={"32px"}
       >
         <Flex direction={"column"} gap={"60px"}>
@@ -113,6 +112,9 @@ const Footer = () => {
                 cursor={"pointer"}
                 onClick={() => navigate("/")}
               />
+              <Text textAlign={"center"} fontSize="sm" color={"gray.600"}>
+                {settingData?.data?.name}
+              </Text>
               <Flex gap={4}>
                 {socialLinks.map((social, index) => (
                   <SocialButton
@@ -148,6 +150,10 @@ const Footer = () => {
           </Flex>
         </Flex>
       </Flex>
+      <Separator borderColor={"gray.300"} />
+      <Text textAlign={"center"}>
+        © {new Date().getFullYear()} {settingData?.data?.name}
+      </Text>
     </Stack>
   );
 };

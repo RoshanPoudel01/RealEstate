@@ -56,7 +56,6 @@ const Related = () => {
         <Carousel
           responsive={responsive}
           showDots
-          renderDotsOutside
           autoPlaySpeed={5000}
           slidesToSlide={1}
           infinite
@@ -65,9 +64,11 @@ const Related = () => {
           transitionDuration={2000}
         >
           {isLoading
-            ? [...Array(3)]
-                .fill(0)
-                .map((_, index) => <LoadingCard key={index} />)
+            ? [...Array(3)].fill(0).map((_, index) => (
+                <Box key={index} mr={4}>
+                  <LoadingCard key={index} />
+                </Box>
+              ))
             : relatedProperties?.data.rows.map((item, index) => (
                 <Box mx={"auto"} maxW={"90dvw"} mr={{ sm: 4 }} key={index}>
                   <PropertyCard key={index} property={item} />

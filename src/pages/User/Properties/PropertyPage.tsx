@@ -231,7 +231,7 @@ const PropertyPage = () => {
         >
           <Stack>
             <Text textStyle={"heading"}>{propertyDetail?.data?.title}</Text>
-            <HStack>
+            <HStack flexShrink={0} flexWrap={"wrap"} gap={4}>
               <Icon asChild boxSize={6}>
                 <MapPin />
               </Icon>
@@ -240,7 +240,7 @@ const PropertyPage = () => {
               )}
               <Text>{propertyDetail?.data?.address}</Text>
               {propertyDetail?.data?.map && (
-                <HStack ml={4} gap={1}>
+                <HStack gap={1}>
                   <Icon asChild boxSize={5}>
                     <Link />
                   </Icon>

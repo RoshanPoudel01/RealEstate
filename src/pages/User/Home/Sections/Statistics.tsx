@@ -42,7 +42,9 @@ const StatisticCard: FC<StatisticProps & CardRootProps> = ({
         <Counter initialValue={value} />
       </Card.Body>
       <Card.Header px={0} py={2} alignContent={"center"}>
-        <Card.Description color={"primary.500"}>{title}</Card.Description>
+        <Card.Description lineClamp={1} color={"primary.500"}>
+          {title}
+        </Card.Description>
       </Card.Header>
     </Card.Root>
   );
@@ -71,18 +73,17 @@ const Statistics = () => {
 
   return (
     <SimpleGrid
-      columns={{ base: 1, lg: 2 }}
+      columns={{ base: 1, md: 2 }}
       gap={12}
       maxW={"90dvw"}
       mx="auto"
       alignItems={"center"}
     >
-      <GridItem colSpan={1} w={"full"}>
+      <GridItem colSpan={1} w={"full"} display={{ base: "none", md: "flex" }}>
         <LazyLoadImage
           src={statSection?.data?.image ?? imageAssets.Logo}
           w={"full"}
           aspectRatio={4 / 3}
-          maxH={"500px"}
         />
       </GridItem>
       <GridItem colSpan={1}>
@@ -107,10 +108,15 @@ const Statistics = () => {
             >
               {statSection?.data?.description}
             </Text>
-            <HStack mt={6} justify={"space-between"} flexWrap={"wrap"}>
+            <HStack
+              align={"center"}
+              justify={"center"}
+              gap={2}
+              flexWrap={"wrap"}
+            >
               {data?.map((statistic) => (
                 <StatisticCard
-                  flexBasis={{ sm: "32%" }}
+                  flexBasis={{ sm: "32%", md: "45%", lg: "32%" }}
                   key={statistic.id}
                   title={statistic.title}
                   value={statistic.value}

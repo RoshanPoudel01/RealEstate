@@ -54,10 +54,12 @@ const Home = () => {
           <Stack
             position={"absolute"}
             top={{
-              base: "14%",
-              md: "18%",
+              base: "6%",
+              sm: "12%",
+              lg: "18%",
             }}
-            left={"10%"}
+            left={{ base: "5%", sm: "10%" }}
+            maxW={"90dvw"}
           >
             <Text
               fontSize={{
@@ -98,11 +100,11 @@ const Home = () => {
             }}
             position={"absolute"}
             bottom={{
-              base: "4%",
+              base: "6%",
               md: "12%",
             }}
             right={"18%"}
-            gap={10}
+            gap={4}
           >
             <InfoCard
               img={imageAssets.Logo}
