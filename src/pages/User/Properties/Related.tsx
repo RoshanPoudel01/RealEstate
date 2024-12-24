@@ -52,10 +52,11 @@ const Related = () => {
         </Heading>
         <Text>{t("related:description")}</Text>
       </Stack>
-      <Box>
+      <Box pos={"relative"}>
         <Carousel
           responsive={responsive}
           showDots
+          renderDotsOutside
           autoPlaySpeed={5000}
           slidesToSlide={1}
           infinite

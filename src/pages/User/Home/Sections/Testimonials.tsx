@@ -40,15 +40,17 @@ const TestimonialSection: React.FC = () => {
           : "हाम्रा प्रयोगकर्ताहरूले हाम्रो बारेमा के भन्छन्"
       }
       content={
-        <Box mt={10} w={"full"} maxW={"95dvw"}>
+        <Box pos={"relative"} my={10} w={"full"} maxW={"95dvw"}>
           {(testimonials?.data?.rows.length ?? 0 > 0) && !isLoading ? (
             <Carousel
               responsive={responsive}
-              autoPlaySpeed={3000}
+              autoPlaySpeed={4000}
               slidesToSlide={1}
               infinite={true}
               autoPlay={true}
-              arrows={false}
+              showDots
+              renderDotsOutside
+              removeArrowOnDeviceType={["tablet", "mobile"]}
               transitionDuration={2000}
             >
               {testimonials?.data?.rows?.map((testimonial, index) => (

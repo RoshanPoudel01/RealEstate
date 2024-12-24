@@ -51,7 +51,12 @@ const FAQs: FC<IFaqs> = ({ faqs }) => {
             variant={"enclosed"}
           >
             <AccordionItem key={index} value={item.question ?? ""}>
-              <AccordionItemTrigger>{item.question}</AccordionItemTrigger>
+              <AccordionItemTrigger
+                lineHeight={1.2}
+                fontSize={{ base: "sm", sm: "lg", lg: "xl" }}
+              >
+                {item.question}
+              </AccordionItemTrigger>
               <AccordionItemContent>{item.answer}</AccordionItemContent>
             </AccordionItem>
           </AccordionRoot>

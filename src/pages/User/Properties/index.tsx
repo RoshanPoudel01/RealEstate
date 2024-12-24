@@ -66,11 +66,12 @@ const Properties = () => {
         onSubmit={handleSubmit(submitFrm)}
         align={"center"}
         gap={5}
-        p={10}
+        maxW={"95dvw"}
+        mx={"auto"}
         bg={"gray.50"}
         w={"full"}
       >
-        <HStack w={"max-content"}>
+        <HStack>
           <TextInput
             placeholder={t("property:searchText")}
             name="search"
