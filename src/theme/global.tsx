@@ -18,7 +18,7 @@ const globalStyles = () => {
           min-height: 100%;
           font-family: "Lexend";
           scroll-behavior: smooth;
-          background-color: #f7f7f7;
+          background-color: #f9f9f9;
         }
         body {
           -moz-osx-font-smoothing: grayscale;
@@ -86,6 +86,19 @@ const globalStyles = () => {
           & .slick-slide > div {
             padding: 0 12px;
           }
+        }
+
+        .react-multi-carousel-list container {
+          position: static;
+          height: max-content;
+        }
+
+        .react-multiple-carousel__arrow--left {
+          left: 0;
+        }
+
+        .react-multiple-carousel__arrow--right {
+          right: 0;
         }
       `}
     />

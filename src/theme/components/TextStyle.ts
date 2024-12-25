@@ -30,7 +30,7 @@ export const textStyles = defineTextStyles({
       fontSize: { base: "14px", sm: "16px", md: "18px" },
       fontFamily: "poppins",
       lineHeight: "normal",
-      fontWeight: 700,
+      fontWeight: 500,
     },
   },
 });

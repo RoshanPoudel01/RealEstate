@@ -132,7 +132,10 @@ export const adminRoutes = [
         path: NAVIGATION_ROUTES.ADMIN_PRIVACY_POLICY,
         element: <NAVIGATION_PAGES.PRIVACY_POLICY />,
       },
-
+      {
+        path: NAVIGATION_ROUTES.ADMIN_ABOUT_US,
+        element: <NAVIGATION_PAGES.ABOUT_US />,
+      },
       {
         path: "*",
         element: <PageNotFound />,

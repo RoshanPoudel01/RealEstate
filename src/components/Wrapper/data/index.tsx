@@ -53,6 +53,11 @@ export const sidebarItems = [
         icon: <ShieldCheck />,
         to: "/admin/privacy-policy",
       },
+      {
+        title: "About Us",
+        icon: <User />,
+        to: "/admin/about-us",
+      },
     ],
   },
   {

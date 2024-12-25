@@ -1,18 +1,21 @@
 import {
-  Card,
   Container,
-  SimpleGrid,
-  Skeleton,
+  Flex,
+  HStack,
+  Separator,
   Stack,
   Text,
 } from "@chakra-ui/react";
 
+import LazyLoadImage from "@realState/components/Image";
+import { SkeletonText } from "@realState/components/ui/skeleton";
+import { useFetchFrontSection } from "@realState/services/service-sections";
 import {
   StatisticsFrontResponse,
   useFetchFrontStatistics,
 } from "@realState/services/service-statistics";
 import Counter from "@realState/utils/Counter";
-import { t } from "i18next";
+import parse from "html-react-parser";
 import { useEffect, useState } from "react";
 import OurTeam from "./OurTeam";
 
@@ -21,6 +24,25 @@ const About = () => {
   const { data: statistics, isLoading } = useFetchFrontStatistics(
     currentLanguage ?? "en"
   );
+
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  const { data: aboutSection, isLoading: isLoadingSection } =
+    useFetchFrontSection("about-section", currentLanguage ?? "en");
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  useEffect(() => {
+    console.log({ windowWidth });
+  }, [windowWidth]);
 
   const [data, setData] = useState<StatisticsFrontResponse[]>([]);
 
@@ -34,59 +56,87 @@ const About = () => {
     }
   }, [statistics]);
   return (
-    <Container maxW={"container.xl"} gap={4}>
-      <Stack
-        textAlign={"center"}
-        color={"#141B2D"}
-        py={{
-          base: "10px",
-          md: "50px",
-        }}
-        gap={4}
+    <Stack>
+      <Flex pos={"relative"} bg={"blackAlpha.300"}>
+        <LazyLoadImage
+          aspectRatio={{ base: "16/9", md: 21 / 9 }}
+          src={aboutSection?.data?.image ?? ""}
+          alt={"About Us"}
+          minH={"300px"}
+          maxH={"700px"}
+        />
+      </Flex>
+      <Flex
+        align={"center"}
+        justify={"center"}
+        maxW={"90dvw"}
+        mx={"auto"}
+        flexDir={windowWidth < 860 ? "column" : "row"}
+        bg={"whiteAlpha.900"}
+        borderRadius={12}
+        p={{ base: 4, md: 10 }}
+        gap={12}
+        flexWrap={"wrap"}
+        boxShadow={"xl"}
+        transform={windowWidth < 860 ? "translateY(-10%)" : "translateY(-60%)"}
       >
-        <Text
-          fontSize={"50px"}
-          lineHeight={"69px"}
-          color={"primary.400"}
-          fontWeight={700}
-        >
-          {t("about:heading")}
-        </Text>
-        <Text textAlign={"center"}>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure qui
-          autem nulla commodi corrupti a.
-        </Text>
-      </Stack>
-
-      <SimpleGrid
-        alignItems={"start"}
-        columns={{ base: 1, sm: 2, lg: 3 }}
-        gap={6}
-        w={"full"}
-        mb={10}
-      >
-        {isLoading
-          ? [...Array(3)].map((_, index) => (
-              <Card.Root key={index}>
-                <Skeleton height={"100px"} />
-              </Card.Root>
+        {isLoadingSection || isLoading
+          ? [...Array(3)].fill(2).map((_, index) => (
+              <HStack key={index} gap={12}>
+                <SkeletonText w={"200px"} noOfLines={3} />
+                <Separator
+                  display={index === 2 || windowWidth < 860 ? "none" : "block"}
+                  orientation={"vertical"}
+                  h={"100px"}
+                  borderColor={"blackAlpha.300"}
+                />
+              </HStack>
             ))
           : data?.map((item, index) => (
-              <Stack p={4} pr={8} textAlign={"center"} key={index}>
-                <Counter initialValue={item.value} />
+              <HStack gap={12} key={index}>
+                <Stack align={"center"}>
+                  <Counter initialValue={item.value} />
 
-                <Text
-                  fontSize={{ base: "18px", sm: "20px", md: "22px" }}
-                  fontWeight={500}
-                >
-                  {item.title}
-                </Text>
-              </Stack>
+                  <Text
+                    fontSize={{ base: "18px", sm: "20px", md: "22px" }}
+                    fontWeight={500}
+                    textAlign={"center"}
+                  >
+                    {item.title}
+                  </Text>
+                </Stack>
+                <Separator
+                  display={
+                    data?.length - 1 === index || windowWidth < 860
+                      ? "none"
+                      : "block"
+                  }
+                  orientation={"vertical"}
+                  h={"100px"}
+                  borderColor={"blackAlpha.300"}
+                />
+              </HStack>
             ))}
-      </SimpleGrid>
-
-      <OurTeam />
-    </Container>
+      </Flex>
+      <Container
+        transform={windowWidth < 860 ? "translateY(0%)" : "translateY(-2%)"}
+        maxW={"container.xl"}
+        gap={4}
+      >
+        <Stack>
+          <Text textAlign={"center"} textStyle={"heading"} fontWeight={700}>
+            {aboutSection?.data?.title}
+          </Text>
+          <Text textAlign={"center"} textStyle={"caption"}>
+            {aboutSection?.data?.caption}
+          </Text>
+        </Stack>
+        <Text textStyle={"body"} py={10} as={"div"}>
+          {parse(aboutSection?.data?.description ?? "")}
+        </Text>
+        <OurTeam />
+      </Container>
+    </Stack>
   );
 };
 

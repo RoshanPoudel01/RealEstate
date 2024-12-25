@@ -20,8 +20,7 @@ import * as yup from "yup";
 const schema = yup.object().shape({
   title_en: yup.string().required("Title is required"),
   title_np: yup.string().required("Title is required"),
-  caption_en: yup.string().required("Caption is required"),
-  caption_np: yup.string().required("Caption is required"),
+
   image: yup.mixed().required("Image is required"),
   is_active: yup.string().required("Status is required"),
 });
@@ -32,8 +31,7 @@ const SliderForm = () => {
   const defaultValues: SliderFormValues = {
     title_en: "",
     title_np: "",
-    caption_en: "",
-    caption_np: "",
+
     image: "",
     is_active: "1",
   };
@@ -138,20 +136,6 @@ const SliderForm = () => {
                 name="title_np"
                 label="Title (NP)"
               />
-              <TextInput
-                control={control}
-                required
-                backendError={backendError.caption_en}
-                name="caption_en"
-                label="Caption (EN)"
-              />
-              <TextInput
-                control={control}
-                required
-                backendError={backendError.caption_np}
-                name="caption_np"
-                label="Caption (NP)"
-              />
               <ReactDropzone
                 control={control}
                 required
@@ -160,10 +144,13 @@ const SliderForm = () => {
                 label="Image"
                 options={{
                   accept: { "image/*": [] },
-                  maxSize: 5,
                 }}
+                boxWidth={"full"}
+                boxHeight={"full"}
+                boxAspectRatio={21 / 9}
                 file={slider?.data?.image ?? ""}
                 setRemoveImage={setRemoveImage}
+                helperText={"Image should be 21:9 aspect ratio."}
               />
               <StatusRadio
                 control={control}

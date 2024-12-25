@@ -46,6 +46,7 @@ const PRIVACY_POLICY_FRONT = lazy(
 const TERMS_CONDITIONS_FRONT = lazy(
   () => import("@realState/pages/User/TermsConditions")
 );
+const ABOUT_US = lazy(() => import("@realState/pages/Admin/AboutUs"));
 export const NAVIGATION_PAGES = {
   SLIDERS,
   SLIDER_FORM,
@@ -73,4 +74,5 @@ export const NAVIGATION_PAGES = {
   PRIVACY_POLICY_FRONT,
   TERMS_CONDITIONS_FRONT,
   SECTIONS,
+  ABOUT_US,
 };

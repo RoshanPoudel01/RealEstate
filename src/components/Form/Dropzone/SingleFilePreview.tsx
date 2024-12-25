@@ -1,6 +1,6 @@
 // SingleFilePreview.tsx
 
-import { Flex, Icon, IconButton } from "@chakra-ui/react";
+import { ConditionalValue, Flex, Icon, IconButton } from "@chakra-ui/react";
 import { Trash } from "@phosphor-icons/react";
 import LazyLoadImage from "@realState/components/Image";
 import React from "react";
@@ -9,30 +9,27 @@ interface SingleFilePreviewProps {
   url: string;
   fileName: string;
   onDelete: () => void;
+  aspectRatio?: ConditionalValue<string | number>;
 }
 
 const SingleFilePreview: React.FC<SingleFilePreviewProps> = ({
   url,
   // fileName,
   onDelete,
+  aspectRatio,
 }) => {
   return (
-    <Flex
-      p={1}
-      gap={2}
-      flexDir="column"
-      position="relative"
-      overflow={"hidden"}
-    >
+    <Flex gap={2} flexDir="column" position="relative" overflow={"hidden"}>
       <LazyLoadImage
         w={"full"}
-        aspectRatio={1}
         objectFit="cover"
         objectPosition={"center"}
         border={"1px solid"}
         borderColor={"gray.500"}
         borderRadius={"5px"}
+        overflow={"hidden"}
         src={url}
+        aspectRatio={aspectRatio ?? 1}
       />
       {/* <Text
         pos={"absolute"}

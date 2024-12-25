@@ -52,24 +52,6 @@ const Sliders = () => {
     },
 
     {
-      header: "Caption (EN)",
-      accessorKey: "caption_en",
-      cell: ({ row }: IRow<SliderResponse>) => {
-        const { caption_en } = row.original;
-        return <Text>{caption_en}</Text>;
-      },
-      enableSorting: false,
-    },
-    {
-      header: "Caption (NP)",
-      accessorKey: "caption_np",
-      cell: ({ row }: IRow<SliderResponse>) => {
-        const { caption_np } = row.original;
-        return <Text>{caption_np}</Text>;
-      },
-      enableSorting: false,
-    },
-    {
       header: "Image",
       accessorKey: "image",
       cell: ({ row }: IRow<SliderResponse>) => {

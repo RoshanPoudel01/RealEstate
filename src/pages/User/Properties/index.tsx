@@ -14,6 +14,7 @@ import PropertyCard from "@realState/components/Cards/Property";
 import { TextInput } from "@realState/components/Form";
 import { Button } from "@realState/components/ui/button";
 import { CloseButton } from "@realState/components/ui/close-button";
+import { useFetchCategoryFrontList } from "@realState/services/service-category";
 import { useFetchAllProperties } from "@realState/services/service-properties";
 import { t } from "i18next";
 import { useState } from "react";
@@ -22,19 +23,33 @@ import Masonry from "react-layout-masonry";
 import { useParams } from "react-router-dom";
 
 const Properties = () => {
-  const currenLanguage = localStorage.getItem("language");
+  const currenLanguage = localStorage.getItem("language") ?? "en";
 
   const { propertyType } = useParams();
 
   const [keyword, setKeyword] = useState("");
   const { control, handleSubmit } = useForm();
   const [category, setCategory] = useState("");
-  const { data: properties, isLoading } = useFetchAllProperties({
+  const {
+    data: properties,
+    isLoading,
+    isRefetching,
+  } = useFetchAllProperties({
     propertyType: propertyType ?? "",
-    language: currenLanguage ?? "en",
+    language: currenLanguage,
     keyword,
     category,
   });
+
+  const { data: categoryList } = useFetchCategoryFrontList({
+    lang: currenLanguage,
+  });
+
+  const categoryOptions = categoryList?.data?.rows.map((category) => (
+    <option key={category.id} value={category.id}>
+      {category.name}
+    </option>
+  ));
 
   const submitFrm = (data: any) => {
     setKeyword(data.search);
@@ -137,14 +152,12 @@ const Properties = () => {
             onChange={(e) => setCategory((e.target as HTMLSelectElement).value)}
             options={
               <>
-                <option value={""} selected>
+                <option value={""}>
                   {currenLanguage === "en"
                     ? "Select Category"
                     : "श्रेणी छान्नुहोस्"}
                 </option>
-                <option value="react">Cat1</option>
-                <option value="js">Cat2</option>
-                <option value="er">Cat3</option>
+                {categoryOptions}
               </>
             }
           />
@@ -156,7 +169,7 @@ const Properties = () => {
             onChange={(e) => console.log((e.target as HTMLSelectElement).value)}
             options={
               <>
-                <option value={""} selected>
+                <option value={""}>
                   {currenLanguage === "en"
                     ? "Select Location"
                     : "स्थान छान्नुहोस्"}
@@ -182,8 +195,8 @@ const Properties = () => {
         }}
       >
         <Masonry columns={{ 0: 1, 480: 2, 900: 3, 1280: 4 }} gap={10}>
-          {isLoading
-            ? [1, 2, 3, 4].map((_, index) => <LoadingCard key={index} />)
+          {isLoading || isRefetching
+            ? [1, 2].map((_, index) => <LoadingCard key={index} />)
             : properties?.data?.rows.map((item, index) => (
                 <PropertyCard
                   key={index}

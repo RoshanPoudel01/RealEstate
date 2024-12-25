@@ -1,7 +1,12 @@
 export interface CateGoryListResponse {
-  id:number;
+  id: number;
   name_en: string;
   name_np: string;
+}
+
+export interface CategoryFrontResponse {
+  id: number;
+  name: string;
 }
 
 export interface CategoryResponse {
@@ -14,7 +19,6 @@ export interface CategoryResponse {
   description_np: string;
   image: string;
 }
-
 
 import { api } from "./service-api";
 import { useFetch, useMutate } from "./service-form-methods";
@@ -40,7 +44,14 @@ const useFetchCategoryList = () => {
     url: api.categories.list,
     queryKey: [`category-list`],
   });
-}
+};
+
+const useFetchCategoryFrontList = ({ lang }: { lang: string }) => {
+  return useFetch<RootResponse<CategoryFrontResponse>>({
+    url: api.categories.frontList({ lang }),
+    queryKey: [`category-list`],
+  });
+};
 
 const useCreateCategory = () => {
   return useMutate({
@@ -75,6 +86,8 @@ export {
   useCreateCategory,
   useDeleteCategory,
   useFetchCategories,
-  useFetchCategoryById, useFetchCategoryList, useUpdateCategory
+  useFetchCategoryById,
+  useFetchCategoryFrontList,
+  useFetchCategoryList,
+  useUpdateCategory,
 };
-

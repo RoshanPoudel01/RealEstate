@@ -23,6 +23,7 @@ export const api = {
       return url;
     },
     fetchById: `admin/slider/:id`,
+    front: `slider`,
     create: `admin/slider`,
     update: `admin/slider/:id`,
     delete: `admin/slider/:id`,
@@ -36,6 +37,7 @@ export const api = {
       return url;
     },
     list: "admin/category/get-list",
+    frontList: ({ lang }: { lang: string }) => `category-list?lang=${lang}`,
     fetchById: `admin/category/:id`,
     create: `admin/category`,
     update: `admin/category/:id`,

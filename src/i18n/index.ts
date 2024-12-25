@@ -21,6 +21,8 @@ const resources = {
     },
     about: {
       heading: "About Us",
+      description:
+        "We are a team of professionals who are dedicated to providing the best services to our clients.",
     },
     team: {
       heading: "Meet Our Team",
@@ -68,6 +70,8 @@ const resources = {
     },
     about: {
       heading: "हाम्रो बारेमा",
+      description:
+        "हामी ग्राहकहरूलाई सर्वश्रेष्ठ सेवा प्रदान गर्न समर्पित एक व्यावसायिकहरूको टोली हौं",
     },
     team: {
       heading: "हाम्रो संघ",

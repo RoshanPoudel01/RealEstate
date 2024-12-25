@@ -70,7 +70,6 @@ const ReactDropzone: FC<DropzoneProps & FieldProps> = ({
   boxWidth,
   boxHeight,
   options,
-
   boxAspectRatio,
   ...rest
 }) => {
@@ -116,7 +115,7 @@ const ReactDropzone: FC<DropzoneProps & FieldProps> = ({
             const errorCode = rejectedFiles[0].errors[0].code;
             const errorMessage =
               errorCode === "file-too-large"
-                ? `File size should be less than ${maxSize ?? 3} MB`
+                ? `File size should be less than ${maxSize ?? 10} MB`
                 : rejectedFiles[0].errors[0].message;
             setFileError({ type: errorCode, message: errorMessage });
           } else {
@@ -158,6 +157,8 @@ const ReactDropzone: FC<DropzoneProps & FieldProps> = ({
             <Flex
               flexDir={isMultiple ? "row" : "column"}
               gap={4}
+              w={boxWidth ?? "150px"}
+              aspectRatio={boxAspectRatio ?? 1}
               flexWrap={"wrap"}
             >
               {isMultiple &&
@@ -209,6 +210,7 @@ const ReactDropzone: FC<DropzoneProps & FieldProps> = ({
                     textAlign={"center"}
                     justify={"center"}
                     borderRadius={"sm"}
+                    p={1}
                   >
                     <input {...getInputProps()} />
                     <Flex
@@ -236,6 +238,7 @@ const ReactDropzone: FC<DropzoneProps & FieldProps> = ({
                       <SingleFilePreview
                         url={preview[0].url}
                         fileName={preview[0].fileName ?? ""}
+                        aspectRatio={boxAspectRatio ?? 1}
                         onDelete={() => {
                           setPreview([]); // Clear the preview
                           setAcceptedFileList([]); // Clear the accepted files list

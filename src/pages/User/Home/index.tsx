@@ -14,6 +14,7 @@ import Contact from "./Sections/Contact";
 import Featured from "./Sections/Featured";
 import New from "./Sections/New";
 import Service from "./Sections/Service";
+import SliderSection from "./Sections/Slider";
 import Statistics from "./Sections/Statistics";
 import TestimonialSection from "./Sections/Testimonials";
 import Trending from "./Sections/Trending";
@@ -122,6 +123,7 @@ const Home = () => {
       )}
       <Stack gap={12}>
         <Statistics />
+        <SliderSection />
         <Featured />
         <TestimonialSection />
         <Trending />

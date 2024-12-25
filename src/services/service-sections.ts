@@ -21,6 +21,7 @@ interface SectionFrontResponse {
   slug: string;
   title: string;
   description: string;
+  caption: string;
   image: string;
 }
 

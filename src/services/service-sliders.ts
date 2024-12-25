@@ -57,9 +57,17 @@ const useDeleteSlider = () => {
   });
 };
 
+const useFetchFrontSliders = () => {
+  return useFetch<RootResponse<SliderResponse>>({
+    url: api.sliders.front,
+    queryKey: [`front-sliders`],
+  });
+};
+
 export {
   useCreateSlider,
   useDeleteSlider,
+  useFetchFrontSliders,
   useFetchSliderById,
   useFetchSliders,
   useUpdateSlider,
