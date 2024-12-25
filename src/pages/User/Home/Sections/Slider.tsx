@@ -37,7 +37,7 @@ const SliderSection = () => {
               slidesToSlide={1}
               infinite
               autoPlay
-              arrows={false}
+              arrows
               // removeArrowOnDeviceType={["tablet", "mobile"]}
               containerClass="container"
               transitionDuration={4000}

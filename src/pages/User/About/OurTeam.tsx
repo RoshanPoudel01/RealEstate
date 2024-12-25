@@ -73,54 +73,52 @@ const OurTeam = () => {
                     {team.description}
                   </Card.Description>
                 </Card.Body>
-                {team?.facebook && team?.instagram && team?.twitter && (
-                  <Card.Footer>
-                    <HStack>
-                      {team?.facebook && (
-                        <IconButton
-                          rounded={"full"}
-                          variant={"subtle"}
-                          colorPalette={"gray"}
-                          asChild
-                        >
-                          <Link to={team.facebook} target="_blank">
-                            <Icon asChild boxSize={6}>
-                              <FacebookLogo />
-                            </Icon>
-                          </Link>
-                        </IconButton>
-                      )}
-                      {team?.instagram && (
-                        <IconButton
-                          rounded={"full"}
-                          variant={"subtle"}
-                          colorPalette={"gray"}
-                          asChild
-                        >
-                          <Link to={team.instagram} target="_blank">
-                            <Icon asChild boxSize={6}>
-                              <InstagramLogo />
-                            </Icon>
-                          </Link>
-                        </IconButton>
-                      )}
-                      {team?.twitter && (
-                        <IconButton
-                          rounded={"full"}
-                          variant={"subtle"}
-                          colorPalette={"gray"}
-                          asChild
-                        >
-                          <Link to={team.twitter} target="_blank">
-                            <Icon asChild boxSize={6}>
-                              <TwitterLogo />
-                            </Icon>
-                          </Link>
-                        </IconButton>
-                      )}
-                    </HStack>
-                  </Card.Footer>
-                )}
+                <Card.Footer>
+                  <HStack>
+                    {team?.facebook && (
+                      <IconButton
+                        rounded={"full"}
+                        variant={"subtle"}
+                        colorPalette={"gray"}
+                        asChild
+                      >
+                        <Link to={team.facebook} target="_blank">
+                          <Icon asChild boxSize={6}>
+                            <FacebookLogo />
+                          </Icon>
+                        </Link>
+                      </IconButton>
+                    )}
+                    {team?.instagram && (
+                      <IconButton
+                        rounded={"full"}
+                        variant={"subtle"}
+                        colorPalette={"gray"}
+                        asChild
+                      >
+                        <Link to={team.instagram} target="_blank">
+                          <Icon asChild boxSize={6}>
+                            <InstagramLogo />
+                          </Icon>
+                        </Link>
+                      </IconButton>
+                    )}
+                    {team?.twitter && (
+                      <IconButton
+                        rounded={"full"}
+                        variant={"subtle"}
+                        colorPalette={"gray"}
+                        asChild
+                      >
+                        <Link to={team.twitter} target="_blank">
+                          <Icon asChild boxSize={6}>
+                            <TwitterLogo />
+                          </Icon>
+                        </Link>
+                      </IconButton>
+                    )}
+                  </HStack>
+                </Card.Footer>
               </Card.Root>
             ))}
       </Masonry>

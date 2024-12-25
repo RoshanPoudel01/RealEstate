@@ -121,6 +121,7 @@ const AboutUs = () => {
             backendError={backendError.image}
             boxWidth={"full"}
             boxHeight={"full"}
+            file={about?.data?.image ?? ""}
             boxAspectRatio={21 / 9}
             options={{
               accept: { "image/*": [] },

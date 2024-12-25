@@ -40,10 +40,6 @@ const About = () => {
     };
   }, []);
 
-  useEffect(() => {
-    console.log({ windowWidth });
-  }, [windowWidth]);
-
   const [data, setData] = useState<StatisticsFrontResponse[]>([]);
 
   useEffect(() => {
