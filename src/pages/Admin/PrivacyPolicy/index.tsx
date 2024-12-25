@@ -2,7 +2,6 @@ import { Flex, SimpleGrid } from "@chakra-ui/react";
 import { TextInput } from "@realState/components/Form";
 import CkEditor from "@realState/components/Form/CkEditor";
 import { Button } from "@realState/components/ui/button";
-import useGetDirtyData from "@realState/hooks/useGetDirtyData";
 import useGetErrors from "@realState/hooks/useGetErrors";
 import {
   useFetchSection,
@@ -33,7 +32,7 @@ const PrivacyPolicy = () => {
     description_np: "",
   };
 
-  const { control, handleSubmit, reset, formState } = useForm({
+  const { control, handleSubmit, reset } = useForm({
     defaultValues,
   });
   const { data: policy } = useFetchSection(slug);
@@ -63,8 +62,7 @@ const PrivacyPolicy = () => {
     setBackendError({});
 
     const { id, ...rest } = data;
-    const dirtyData = useGetDirtyData(formState, rest);
-    const response = await updatePolicy({ id, data: dirtyData });
+    const response = await updatePolicy({ id, data: rest });
     if (response.status === 400) {
       setBackendError({});
     }

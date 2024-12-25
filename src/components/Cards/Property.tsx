@@ -49,6 +49,8 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
     id,
   },
 }) => {
+  const currentLanguage = localStorage.getItem("language") ?? "en";
+
   const cardBg = useColorModeValue("white", "gray.700");
   const navigate = useNavigate();
   return (
@@ -90,11 +92,17 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
           w={"100%"}
         />
         {is_new ? (
-          <Text {...statusAttrs}>New</Text>
+          <Text {...statusAttrs}>
+            {currentLanguage === "en" ? "New" : "नयाँ"}
+          </Text>
         ) : is_featured ? (
-          <Text {...statusAttrs}>Featured</Text>
+          <Text {...statusAttrs}>
+            {currentLanguage === "en" ? "Featured" : "विशेष"}
+          </Text>
         ) : is_trending ? (
-          <Text {...statusAttrs}>Trending</Text>
+          <Text {...statusAttrs}>
+            {currentLanguage === "en" ? "Trending" : "ट्रेन्डिंग"}
+          </Text>
         ) : null}
       </Card.Header>
 

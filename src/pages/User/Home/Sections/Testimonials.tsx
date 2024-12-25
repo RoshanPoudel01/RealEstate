@@ -9,19 +9,16 @@ import "slick-carousel/slick/slick.css";
 
 const responsive = {
   wide: {
-    breakpoint: { max: 3000, min: 1280 },
+    breakpoint: { max: 3000, min: 1100 },
     items: 3,
   },
-  desktop: {
-    breakpoint: { max: 1400, min: 900 },
-    items: 3,
-  },
+
   tablet: {
-    breakpoint: { max: 900, min: 520 },
+    breakpoint: { max: 1100, min: 480 },
     items: 2,
   },
   mobile: {
-    breakpoint: { max: 520, min: 0 },
+    breakpoint: { max: 480, min: 0 },
     items: 1,
   },
 };

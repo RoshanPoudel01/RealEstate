@@ -3,7 +3,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { TextInput } from "@realState/components/Form";
 import StatusRadio from "@realState/components/Form/StatusRadio";
 import { Button } from "@realState/components/ui/button";
-import useGetDirtyData from "@realState/hooks/useGetDirtyData";
 import useGetErrors from "@realState/hooks/useGetErrors";
 import { useFetchCategoryList } from "@realState/services/service-category";
 import {
@@ -78,7 +77,7 @@ const General: FC<GeneralProps> = ({ setTabValue }) => {
 
   const navigate = useNavigate();
 
-  const { control, handleSubmit, reset, formState } = useForm<GeneralValues>({
+  const { control, handleSubmit, reset } = useForm<GeneralValues>({
     defaultValues,
     resolver: yupResolver(schema),
   });
@@ -118,10 +117,8 @@ const General: FC<GeneralProps> = ({ setTabValue }) => {
   }, [isAddError, addError, isUpdateError, updateError]);
 
   const onSubmit = async (data: GeneralValues) => {
-    const dirtyData = useGetDirtyData(formState, data);
-
     if (id) {
-      const response = await updateProperty({ data: dirtyData, id });
+      const response = await updateProperty({ data, id });
       if (response.data.status) {
         reset(defaultValues);
         navigate(`/admin/properties/edit/${id}`);

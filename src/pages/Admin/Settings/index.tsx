@@ -3,7 +3,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { ReactDropzone, TextInput } from "@realState/components/Form";
 import LazyLoadImage from "@realState/components/Image";
 import { Button } from "@realState/components/ui/button";
-import useGetDirtyData from "@realState/hooks/useGetDirtyData";
 import useGetErrors from "@realState/hooks/useGetErrors";
 import { toFormData } from "@realState/services/service-axios";
 import {
@@ -59,11 +58,10 @@ const Settings = () => {
 
   const [edit, setEdit] = useState(false);
 
-  const { control, handleSubmit, reset, formState } =
-    useForm<SettingFormValues>({
-      defaultValues,
-      resolver: yupResolver(schema),
-    });
+  const { control, handleSubmit, reset } = useForm<SettingFormValues>({
+    defaultValues,
+    resolver: yupResolver(schema),
+  });
 
   const [removeImage, setRemoveImage] = useState(false);
 
@@ -93,8 +91,7 @@ const Settings = () => {
   }, [setting]);
 
   const onSubmit = async (data: SettingFormValues) => {
-    const dirtyData = useGetDirtyData(formState, data);
-    const formData = toFormData(dirtyData);
+    const formData = toFormData(data);
     if (removeImage) {
       formData.append("remove_image", "true");
     }

@@ -9,6 +9,22 @@ export interface TeamResponse {
   description_np: string;
   description_en: string;
   image: string;
+  facebook?: string;
+  twitter?: string;
+  instagram?: string;
+}
+
+export interface TeamFrontResponse {
+  id: number;
+  display_order: number;
+  is_active: number;
+  name: string;
+  position: string;
+  description: string;
+  image?: string;
+  facebook?: string;
+  twitter?: string;
+  instagram?: string;
 }
 
 import { api } from "./service-api";
@@ -59,9 +75,9 @@ const useDeleteTeam = () => {
   });
 };
 
-const useFetchFrontTeams = () => {
-  return useFetch<RootResponse<TeamResponse>>({
-    url: api.teams.front,
+const useFetchFrontTeams = ({ language = "en" }) => {
+  return useFetch<RootResponse<TeamFrontResponse>>({
+    url: api.teams.front({ language }),
     queryKey: [`front-teams`],
   });
 };

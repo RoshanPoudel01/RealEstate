@@ -73,7 +73,7 @@ export const api = {
 
     byId: `admin/team/:id`,
     index: `admin/team`,
-    front: `team`,
+    front: ({ language }: { language: string }) => `team?lang=${language}`,
   },
   properties: {
     fetch: ({ page = 1, perPage = 10, keyword = "" }) => {
@@ -107,10 +107,14 @@ export const api = {
       propertyType,
       language = "en",
       keyword = "",
+      category = "",
     }: PropertyParams) => {
       let url = `/property${propertyType ? "/" + propertyType : ""}?lang=${language}`;
       if (keyword) {
         url += `&keyword=${keyword}`;
+      }
+      if (category) {
+        url += `&category_id=${category}`;
       }
       return url;
     },

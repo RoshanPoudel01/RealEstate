@@ -3,7 +3,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { ReactDropzone, TextInput } from "@realState/components/Form";
 import StatusRadio from "@realState/components/Form/StatusRadio";
 import { Button } from "@realState/components/ui/button";
-import useGetDirtyData from "@realState/hooks/useGetDirtyData";
 import useGetErrors from "@realState/hooks/useGetErrors";
 import { toFormData } from "@realState/services/service-axios";
 import {
@@ -76,7 +75,7 @@ const TeamsForm = () => {
 
   const navigate = useNavigate();
 
-  const { control, handleSubmit, reset, formState } = useForm<TeamsFormValues>({
+  const { control, handleSubmit, reset } = useForm<TeamsFormValues>({
     defaultValues,
     resolver: yupResolver(schema),
   });
@@ -110,7 +109,7 @@ const TeamsForm = () => {
   }, [isAddError, addError, isUpdateError, updateError]);
 
   const onSubmit = async (data: TeamsFormValues) => {
-    const formData = toFormData(id ? useGetDirtyData(formState, data) : data);
+    const formData = toFormData(data);
     if (removeImage) {
       formData.append("remove_image", "1");
     }

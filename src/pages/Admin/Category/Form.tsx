@@ -3,7 +3,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { ReactDropzone, TextInput } from "@realState/components/Form";
 import StatusRadio from "@realState/components/Form/StatusRadio";
 import { Button } from "@realState/components/ui/button";
-import useGetDirtyData from "@realState/hooks/useGetDirtyData";
 import useGetErrors from "@realState/hooks/useGetErrors";
 import { toFormData } from "@realState/services/service-axios";
 import {
@@ -46,7 +45,7 @@ const CategoryForm = () => {
 
   const navigate = useNavigate();
 
-  const { control, handleSubmit, reset, formState } = useForm({
+  const { control, handleSubmit, reset } = useForm({
     defaultValues,
     resolver: yupResolver(schema),
   });
@@ -78,7 +77,6 @@ const CategoryForm = () => {
     }
   }, [id, category]);
 
-  
   const {
     mutateAsync: addCategory,
     isPending: isAdding,
@@ -86,12 +84,12 @@ const CategoryForm = () => {
     error: addError,
   } = useCreateCategory();
 
-  const {mutateAsync: updateCategory, isPending: isUpdating,
-  isError: isUpdateError,
-  error: updateError,
-
+  const {
+    mutateAsync: updateCategory,
+    isPending: isUpdating,
+    isError: isUpdateError,
+    error: updateError,
   } = useUpdateCategory();
-
 
   const [backendError, setBackendError] = React.useState<
     Record<string, string[]>
@@ -100,35 +98,31 @@ const CategoryForm = () => {
   useEffect(() => {
     if (isAddError) {
       setBackendError(useGetErrors(addError));
-    }else if(isUpdateError){
+    } else if (isUpdateError) {
       setBackendError(useGetErrors(updateError));
     }
   }, [isAddError, addError, isUpdateError, updateError]);
 
   const onSubmit = async (data: CategoryFormValues) => {
-    
-    const dirtyFields = useGetDirtyData (formState, data);
-
-    const formData = toFormData(dirtyFields);
+    const formData = toFormData(data);
 
     if (removeImage) {
       formData.append("remove_image", "1");
     }
 
-    if(id){
+    if (id) {
       const response = await updateCategory({ data: formData, id });
       if (response.data.status) {
         reset(defaultValues);
         navigate("/admin/category");
       }
-    }else{
-
-    const response = await addCategory({ data: formData });
-    if (response.data.status) {
-      reset(defaultValues);
-      navigate("/admin/category");
+    } else {
+      const response = await addCategory({ data: formData });
+      if (response.data.status) {
+        reset(defaultValues);
+        navigate("/admin/category");
+      }
     }
-  }
   };
 
   return !!id && (isCategoryPending || isCategoryFetching) ? (

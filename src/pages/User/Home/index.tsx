@@ -16,6 +16,7 @@ import New from "./Sections/New";
 import Service from "./Sections/Service";
 import Statistics from "./Sections/Statistics";
 import TestimonialSection from "./Sections/Testimonials";
+import Trending from "./Sections/Trending";
 
 const Home = () => {
   const currentLang = localStorage.getItem("language") ?? "en";
@@ -123,6 +124,7 @@ const Home = () => {
         <Statistics />
         <Featured />
         <TestimonialSection />
+        <Trending />
         <Service />
         <Contact />
         <New />

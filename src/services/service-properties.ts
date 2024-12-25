@@ -87,6 +87,7 @@ export interface PropertyParams {
   propertyType: string;
   language?: string;
   keyword?: string;
+  category?: string;
 }
 
 const useFetchProperties = ({ page = 1, perPage = 10, keyword = "" }) => {
@@ -100,14 +101,16 @@ const useFetchAllProperties = ({
   propertyType,
   language,
   keyword,
+  category,
 }: PropertyParams) => {
   return useFetch<RootResponse<PropertyFrontResponse>>({
     url: api.properties.properties({
       propertyType,
       language,
       keyword,
+      category,
     }),
-    queryKey: [propertyType, keyword ?? ""],
+    queryKey: [propertyType, keyword ?? "", category ?? ""],
   });
 };
 
@@ -242,7 +245,7 @@ const useAddTrendingProperties = () => {
 };
 
 const useFetchFeaturedProperties = () => {
-  return useFetch<RootResponse<PropertyFrontResponse>>({
+  return useFetch<RootResponse<PropertyBackResponse>>({
     url: api.properties.featured,
     queryKey: [`featured-properties`],
   });
@@ -258,7 +261,7 @@ const useAddFeaturedProperties = () => {
 };
 
 const useFetchNewProperties = () => {
-  return useFetch<RootResponse<PropertyFrontResponse>>({
+  return useFetch<RootResponse<PropertyBackResponse>>({
     url: api.properties.new,
     queryKey: [`new-properties`],
   });

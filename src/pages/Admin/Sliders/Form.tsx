@@ -3,7 +3,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { ReactDropzone, TextInput } from "@realState/components/Form";
 import StatusRadio from "@realState/components/Form/StatusRadio";
 import { Button } from "@realState/components/ui/button";
-import useGetDirtyData from "@realState/hooks/useGetDirtyData";
 import useGetErrors from "@realState/hooks/useGetErrors";
 import { toFormData } from "@realState/services/service-axios";
 import {
@@ -57,12 +56,10 @@ const SliderForm = () => {
 
   const navigate = useNavigate();
 
-  const { control, handleSubmit, reset, formState } = useForm<SliderFormValues>(
-    {
-      defaultValues,
-      resolver: yupResolver(schema),
-    }
-  );
+  const { control, handleSubmit, reset } = useForm<SliderFormValues>({
+    defaultValues,
+    resolver: yupResolver(schema),
+  });
 
   const {
     mutateAsync: addSlider,
@@ -93,7 +90,7 @@ const SliderForm = () => {
   }, [isAddError, addError, isUpdateError, updateError]);
 
   const onSubmit = async (data: SliderFormValues) => {
-    const formData = toFormData(id ? useGetDirtyData(formState, data) : data);
+    const formData = toFormData(data);
     if (removeImage) {
       formData.append("remove_image", "1");
     }

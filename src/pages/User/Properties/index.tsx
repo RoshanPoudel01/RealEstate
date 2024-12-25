@@ -28,11 +28,12 @@ const Properties = () => {
 
   const [keyword, setKeyword] = useState("");
   const { control, handleSubmit } = useForm();
-
+  const [category, setCategory] = useState("");
   const { data: properties, isLoading } = useFetchAllProperties({
     propertyType: propertyType ?? "",
     language: currenLanguage ?? "en",
     keyword,
+    category,
   });
 
   const submitFrm = (data: any) => {
@@ -130,14 +131,16 @@ const Properties = () => {
             })}
           /> */}
           <TextInput
-            name="location"
+            name="category"
             control={control}
             type="select"
-            onChange={(e) => console.log((e.target as HTMLSelectElement).value)}
+            onChange={(e) => setCategory((e.target as HTMLSelectElement).value)}
             options={
               <>
                 <option value={""} selected>
-                  Select Category
+                  {currenLanguage === "en"
+                    ? "Select Category"
+                    : "श्रेणी छान्नुहोस्"}
                 </option>
                 <option value="react">Cat1</option>
                 <option value="js">Cat2</option>
@@ -147,14 +150,16 @@ const Properties = () => {
           />
 
           <TextInput
-            name="category"
+            name="location"
             control={control}
             type="select"
             onChange={(e) => console.log((e.target as HTMLSelectElement).value)}
             options={
               <>
                 <option value={""} selected>
-                  Select Location
+                  {currenLanguage === "en"
+                    ? "Select Location"
+                    : "स्थान छान्नुहोस्"}
                 </option>
                 <option value="react">Loc1</option>
                 <option value="js">Loc2</option>
@@ -180,7 +185,15 @@ const Properties = () => {
           {isLoading
             ? [1, 2, 3, 4].map((_, index) => <LoadingCard key={index} />)
             : properties?.data?.rows.map((item, index) => (
-                <PropertyCard key={index} property={item} />
+                <PropertyCard
+                  key={index}
+                  property={{
+                    ...item,
+                    is_new: propertyType === "new" ? true : false,
+                    is_trending: propertyType === "trending" ? true : false,
+                    is_featured: propertyType === "featured" ? true : false,
+                  }}
+                />
               ))}
         </Masonry>
       </Container>

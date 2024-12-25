@@ -4,7 +4,6 @@ import {
   HStack,
   Icon,
   IconButton,
-  SimpleGrid,
   Stack,
 } from "@chakra-ui/react";
 import {
@@ -13,14 +12,18 @@ import {
   TwitterLogo,
 } from "@phosphor-icons/react";
 import { imageAssets } from "@realState/assets/images";
+import LoadingCard from "@realState/components/Cards/LoadingCard";
 import LazyLoadImage from "@realState/components/Image";
-import { Skeleton, SkeletonText } from "@realState/components/ui/skeleton";
 import { useFetchFrontTeams } from "@realState/services/service-teams";
 import { t } from "i18next";
+import Masonry from "react-layout-masonry";
+import { Link } from "react-router-dom";
 
 const OurTeam = () => {
-  const { data: teams, isLoading } = useFetchFrontTeams();
   const currentLang = localStorage.getItem("language") || "en";
+  const { data: teams, isLoading } = useFetchFrontTeams({
+    language: currentLang,
+  });
   return (
     <Stack align={"center"} gap={4}>
       <Heading
@@ -32,32 +35,14 @@ const OurTeam = () => {
         {t("team:heading")}
       </Heading>
 
-      <SimpleGrid
-        w={"full"}
-        columns={{ base: 1, sm: 2, md: 3, xl: 4 }}
-        gapX={6}
-        gapY={8}
+      <Masonry
+        style={{ width: "100%" }}
+        gap={12}
+        columns={{ 0: 1, 340: 2, 720: 3, 1280: 4 }}
       >
-        {isLoading ? (
-          <>
-            {...Array(4)
-              .fill(0)
-              .map(() => (
-                <Card.Root h={"full"} w={"full"}>
-                  <Card.Header p={0}>
-                    <Skeleton w={"full"} h={"200px"} />
-                  </Card.Header>
-                  <Card.Body gap={2}>
-                    <SkeletonText noOfLines={1} w={"full"} />
-                    <SkeletonText noOfLines={1} w={"full"} />
-                    <SkeletonText h={"50px"} noOfLines={1} w={"full"} />
-                  </Card.Body>
-                </Card.Root>
-              ))}
-          </>
-        ) : (
-          <>
-            {teams?.data?.rows.map((team, index) => (
+        {isLoading
+          ? [...Array(4)].fill(0).map(() => <LoadingCard key={Math.random()} />)
+          : teams?.data?.rows.map((team, index) => (
               <Card.Root key={index} borderColor={"gray.300"} borderRadius={2}>
                 <Card.Header
                   bg={team?.image ? "transparent" : "gray.100"}
@@ -73,54 +58,72 @@ const OurTeam = () => {
                   />
                 </Card.Header>
                 <Card.Body gap={2}>
-                  <Card.Title>
-                    {currentLang === "en" ? team.name_en : team.name_np}
+                  <Card.Title
+                    fontSize={{ base: "14px", sm: "16px", lg: "18px" }}
+                  >
+                    {team.name}
                   </Card.Title>
-                  <Card.Description color={"gray.900"} fontSize={"15px"}>
-                    {currentLang === "en" ? team.position_en : team.position_np}
+                  <Card.Description
+                    color={"gray.900"}
+                    fontSize={{ base: "12px", md: "14px" }}
+                  >
+                    {team.position}
                   </Card.Description>
-                  <Card.Description>
-                    {currentLang === "en"
-                      ? team.description_en
-                      : team.description_np}
+                  <Card.Description fontSize={{ base: "12px", md: "14px" }}>
+                    {team.description}
                   </Card.Description>
                 </Card.Body>
-                <Card.Footer>
-                  <HStack>
-                    <IconButton
-                      rounded={"full"}
-                      variant={"subtle"}
-                      colorPalette={"gray"}
-                    >
-                      <Icon asChild boxSize={6}>
-                        <FacebookLogo />
-                      </Icon>
-                    </IconButton>
-                    <IconButton
-                      rounded={"full"}
-                      variant={"subtle"}
-                      colorPalette={"gray"}
-                    >
-                      <Icon asChild boxSize={6}>
-                        <InstagramLogo />
-                      </Icon>
-                    </IconButton>
-                    <IconButton
-                      rounded={"full"}
-                      variant={"subtle"}
-                      colorPalette={"gray"}
-                    >
-                      <Icon asChild boxSize={6}>
-                        <TwitterLogo />
-                      </Icon>
-                    </IconButton>
-                  </HStack>
-                </Card.Footer>
+                {team?.facebook && team?.instagram && team?.twitter && (
+                  <Card.Footer>
+                    <HStack>
+                      {team?.facebook && (
+                        <IconButton
+                          rounded={"full"}
+                          variant={"subtle"}
+                          colorPalette={"gray"}
+                          asChild
+                        >
+                          <Link to={team.facebook} target="_blank">
+                            <Icon asChild boxSize={6}>
+                              <FacebookLogo />
+                            </Icon>
+                          </Link>
+                        </IconButton>
+                      )}
+                      {team?.instagram && (
+                        <IconButton
+                          rounded={"full"}
+                          variant={"subtle"}
+                          colorPalette={"gray"}
+                          asChild
+                        >
+                          <Link to={team.instagram} target="_blank">
+                            <Icon asChild boxSize={6}>
+                              <InstagramLogo />
+                            </Icon>
+                          </Link>
+                        </IconButton>
+                      )}
+                      {team?.twitter && (
+                        <IconButton
+                          rounded={"full"}
+                          variant={"subtle"}
+                          colorPalette={"gray"}
+                          asChild
+                        >
+                          <Link to={team.twitter} target="_blank">
+                            <Icon asChild boxSize={6}>
+                              <TwitterLogo />
+                            </Icon>
+                          </Link>
+                        </IconButton>
+                      )}
+                    </HStack>
+                  </Card.Footer>
+                )}
               </Card.Root>
             ))}
-          </>
-        )}
-      </SimpleGrid>
+      </Masonry>
     </Stack>
   );
 };
