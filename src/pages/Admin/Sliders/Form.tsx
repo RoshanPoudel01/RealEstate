@@ -145,8 +145,7 @@ const SliderForm = () => {
                 options={{
                   accept: { "image/*": [] },
                 }}
-                boxWidth={"full"}
-                boxHeight={"full"}
+                boxWidth={{ base: "250px", sm: "350px", md: "500px" }}
                 boxAspectRatio={21 / 9}
                 file={slider?.data?.image ?? ""}
                 setRemoveImage={setRemoveImage}

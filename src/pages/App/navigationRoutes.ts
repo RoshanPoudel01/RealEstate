@@ -27,4 +27,5 @@ export const NAVIGATION_ROUTES = {
   ADMIN_PRIVACY_POLICY: "privacy-policy",
   ADMIN_SECTIONS: "sections",
   ADMIN_ABOUT_US: "about-us",
+  ADMIN_GALLERY: "gallery",
 };

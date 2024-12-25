@@ -30,7 +30,6 @@ const SidebarItem: FC<ISidebarItemProps> = ({
   subItems,
   onClick,
   activeBg,
-  activeColor,
 }: ISidebarItemProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -49,6 +48,8 @@ const SidebarItem: FC<ISidebarItemProps> = ({
     color: "white",
   };
   const { pathname } = useLocation();
+
+  console.log({ pathname, item: item.to });
 
   useEffect(() => {
     setIsOpen(pathname.includes(item.to));

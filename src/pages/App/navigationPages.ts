@@ -47,6 +47,10 @@ const TERMS_CONDITIONS_FRONT = lazy(
   () => import("@realState/pages/User/TermsConditions")
 );
 const ABOUT_US = lazy(() => import("@realState/pages/Admin/AboutUs"));
+const ADMIN_GALLERY = lazy(() => import("@realState/pages/Admin/Gallery"));
+const ADMIN_GALLERY_FORM = lazy(
+  () => import("@realState/pages/Admin/Gallery/Form")
+);
 export const NAVIGATION_PAGES = {
   SLIDERS,
   SLIDER_FORM,
@@ -75,4 +79,6 @@ export const NAVIGATION_PAGES = {
   TERMS_CONDITIONS_FRONT,
   SECTIONS,
   ABOUT_US,
+  ADMIN_GALLERY,
+  ADMIN_GALLERY_FORM,
 };

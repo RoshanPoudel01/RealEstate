@@ -1,6 +1,8 @@
 import { toastFail, toastSuccess } from "@realState/components/Toast";
 import {
   keepPreviousData,
+  MutationKey,
+  QueryKey,
   useMutation,
   useQuery,
   useQueryClient,
@@ -14,7 +16,7 @@ interface IQueryProps {
   defaultMessage?: boolean;
   message?: string;
   enabled?: boolean;
-  queryKey?: (string | number)[];
+  queryKey?: QueryKey | MutationKey;
   method?: "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
 }
 
@@ -51,12 +53,12 @@ const useMutate = <T>({
     return method === "PUT"
       ? RealStateHttpClient.put(url.replace(":id", id as string), data)
       : method === "DELETE"
-      ? RealStateHttpClient.delete(url.replace(":id", id as string))
-      : method === "PATCH"
-      ? RealStateHttpClient.patch(url.replace(":id", id as string), data)
-      : method === "POST" && id
-      ? RealStateHttpClient.post(url.replace(":id", id as string), data)
-      : RealStateHttpClient.post(url, data);
+        ? RealStateHttpClient.delete(url.replace(":id", id as string))
+        : method === "PATCH"
+          ? RealStateHttpClient.patch(url.replace(":id", id as string), data)
+          : method === "POST" && id
+            ? RealStateHttpClient.post(url.replace(":id", id as string), data)
+            : RealStateHttpClient.post(url, data);
   };
 
   return useMutation({

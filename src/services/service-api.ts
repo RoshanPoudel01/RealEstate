@@ -183,4 +183,16 @@ export const api = {
       return `/section/${slug}?lang=${lang}`;
     },
   },
+  gallery: {
+    fetch: ({ page = 1, perPage = 10, keyword = "" }) => {
+      let url = `/admin/gallery?page=${page}&per_page=${perPage}`;
+      if (keyword) {
+        url += `&keyword=${keyword}`;
+      }
+      return url;
+    },
+    byId: `admin/gallery/:id`,
+    index: `admin/gallery`,
+    front: `gallery`,
+  },
 };

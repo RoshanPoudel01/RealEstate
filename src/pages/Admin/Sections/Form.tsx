@@ -20,6 +20,8 @@ const SectionFrom: FC<FormProps> = ({ slug }) => {
     title_np: "",
     description_en: "",
     description_np: "",
+    caption_en: "",
+    caption_np: "",
     image: "",
   };
 
@@ -35,6 +37,8 @@ const SectionFrom: FC<FormProps> = ({ slug }) => {
         id: section.data.id,
         title_en: section.data.title_en,
         title_np: section.data.title_np,
+        caption_en: section.data.caption_en,
+        caption_np: section.data.caption_np,
         description_en: section.data.description_en,
         description_np: section.data.description_np,
         image: section.data.image,
@@ -59,8 +63,18 @@ const SectionFrom: FC<FormProps> = ({ slug }) => {
       <SimpleGrid columns={{ base: 1, md: 2 }} gap={4} asChild>
         <form id={`section-form-${slug}`} onSubmit={handleSubmit(onSubmit)}>
           <TextInput name="id" label="ID" control={control} hidden />
-          <TextInput name="title_en" label="Title (En)" control={control} />
-          <TextInput name="title_np" label="Title (Np)" control={control} />
+          <TextInput name="title_en" label="Company 1 (En)" control={control} />
+          <TextInput name="title_np" label="Company 1 (Np)" control={control} />
+          <TextInput
+            name="caption_en"
+            label="Company 2 (En)"
+            control={control}
+          />
+          <TextInput
+            name="caption_np"
+            label="Company 2 (Np)"
+            control={control}
+          />
           <TextInput
             name="description_en"
             label="Description (En)"

@@ -1,6 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // import { BaseURL } from "@/api/axiosSetup";
-import { ConditionalValue, Flex, Icon, Text } from "@chakra-ui/react";
+import {
+  ConditionalValue,
+  Flex,
+  FlexProps,
+  Icon,
+  Text,
+} from "@chakra-ui/react";
 import { CloudArrowUp } from "@phosphor-icons/react";
 import { Field, FieldProps } from "@realState/components/ui/field";
 import convert from "convert";
@@ -41,6 +47,7 @@ type DropzoneProps = {
   message?: string;
   isMultiple?: boolean;
   padding?: ConditionalValue<string | number>;
+  containerWidth?: ConditionalValue<string | number>;
   boxWidth?: ConditionalValue<string | number>;
   boxHeight?: ConditionalValue<string | number>;
   boxAspectRatio?: ConditionalValue<string | number>;
@@ -52,7 +59,7 @@ type DropzoneProps = {
   };
 };
 
-const ReactDropzone: FC<DropzoneProps & FieldProps> = ({
+const ReactDropzone: FC<DropzoneProps & FieldProps & FlexProps> = ({
   name,
   control,
   isMultiple,
@@ -157,9 +164,10 @@ const ReactDropzone: FC<DropzoneProps & FieldProps> = ({
             <Flex
               flexDir={isMultiple ? "row" : "column"}
               gap={4}
-              w={boxWidth ?? "150px"}
-              aspectRatio={boxAspectRatio ?? 1}
+              w={rest.w ?? "full"}
+              maxW={rest.maxW ?? "full"}
               flexWrap={"wrap"}
+              {...rest}
             >
               {isMultiple &&
                 (preview.length > 0 ||
@@ -169,8 +177,8 @@ const ReactDropzone: FC<DropzoneProps & FieldProps> = ({
                     prevFiles={prevFiles || []}
                     setDeleteImages={setDeleteImages}
                     setPrevFiles={setPrevFiles}
-                    width={boxWidth ?? "150px"}
-                    height={boxHeight ?? "150px"}
+                    width={boxWidth ?? "200px"}
+                    aspectRatio={boxAspectRatio ?? 1}
                     onDelete={(index) => {
                       setPreview(preview.filter((_, i) => i !== index));
                       setAcceptedFileList(
@@ -197,8 +205,8 @@ const ReactDropzone: FC<DropzoneProps & FieldProps> = ({
                   <Flex
                     flexDir="column"
                     {...getRootProps()}
-                    w={boxWidth ?? "150px"}
-                    h={boxHeight ?? "150px"}
+                    w={"full"}
+                    maxW={boxWidth ?? "200px"}
                     aspectRatio={boxAspectRatio ?? 1}
                     border={"2px dashed rgba(200, 204, 209, 0.70)"}
                     bg={"gray.50"}

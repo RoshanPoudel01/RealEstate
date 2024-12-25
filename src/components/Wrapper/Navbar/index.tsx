@@ -91,7 +91,8 @@ export default function NavBar({
         <Image
           src={settingData?.logo ?? imageAssets.Logo1}
           alt="Logo"
-          height={"50px"}
+          w={"100px"}
+          aspectRatio={1}
           onClick={() => navigate(NAVIGATION_ROUTES.HOME)}
           cursor={"pointer"}
         />

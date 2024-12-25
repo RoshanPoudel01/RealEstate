@@ -1,17 +1,30 @@
 import { HStack, Icon, IconButton, IconButtonProps } from "@chakra-ui/react";
-import { Eye, Pencil, Trash } from "@phosphor-icons/react";
+import { Eye, Pencil } from "@phosphor-icons/react";
 import React from "react";
+import { DeleteAlert } from "../Form/Modal";
 
 interface IActionColumn {
   handleEdit?: () => void;
   handleView?: () => void;
   handleDelete?: () => void;
+  deleteHeading?: string;
+  deleteMessage?: string;
+  deleteText?: string;
+  isDeleteLoading?: boolean;
+  deleteCancelText?: string;
+  deleteTrigger?: React.ReactNode;
 }
 
 const ActionColumn: React.FC<IActionColumn & IconButtonProps> = ({
   handleEdit,
   handleDelete,
   handleView,
+  deleteHeading,
+  deleteMessage,
+  deleteText,
+  deleteCancelText,
+  deleteTrigger,
+  isDeleteLoading,
   ...rest
 }) => {
   return (
@@ -45,18 +58,15 @@ const ActionColumn: React.FC<IActionColumn & IconButtonProps> = ({
         </IconButton>
       )}
       {handleDelete && (
-        <IconButton
-          colorPalette={"red"}
-          variant={"subtle"}
-          size={"sm"}
-          aria-label="delete"
-          onClick={handleDelete}
-          {...rest}
-        >
-          <Icon asChild boxSize={5} color={"red.500"}>
-            <Trash />
-          </Icon>
-        </IconButton>
+        <DeleteAlert
+          heading={deleteHeading}
+          description={deleteMessage}
+          deleteText={deleteText}
+          onConfirm={handleDelete}
+          isDeleteLoading={isDeleteLoading}
+          cancelText={deleteCancelText}
+          trigger={deleteTrigger}
+        />
       )}
     </HStack>
   );

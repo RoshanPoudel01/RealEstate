@@ -137,6 +137,18 @@ export const adminRoutes = [
         element: <NAVIGATION_PAGES.ABOUT_US />,
       },
       {
+        path: NAVIGATION_ROUTES.ADMIN_GALLERY,
+        element: <NAVIGATION_PAGES.ADMIN_GALLERY />,
+      },
+      {
+        path: NAVIGATION_ROUTES.ADMIN_GALLERY + "/create",
+        element: <NAVIGATION_PAGES.ADMIN_GALLERY_FORM />,
+      },
+      {
+        path: NAVIGATION_ROUTES.ADMIN_GALLERY + "/edit/:id",
+        element: <NAVIGATION_PAGES.ADMIN_GALLERY_FORM />,
+      },
+      {
         path: "*",
         element: <PageNotFound />,
       },

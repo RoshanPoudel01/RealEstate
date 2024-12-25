@@ -21,6 +21,7 @@ interface MultipleFilePreviewsProps {
   setPrevFiles?: Dispatch<SetStateAction<IPrevFiles[]>>;
   setDeleteImages?: Dispatch<SetStateAction<string[]>>;
   onDelete: (index: number) => void;
+  aspectRatio?: ConditionalValue<string | number>;
   width?: ConditionalValue<string | number>;
   height?: ConditionalValue<string | number>;
 }
@@ -81,6 +82,7 @@ const MultipleFilePreviews: React.FC<MultipleFilePreviewsProps> = ({
   onDelete,
   width,
   height,
+  aspectRatio,
 }) => {
   return (
     <>
@@ -92,7 +94,7 @@ const MultipleFilePreviews: React.FC<MultipleFilePreviewsProps> = ({
               w={width}
               h={height}
               objectFit={"cover"}
-              aspectRatio={1}
+              aspectRatio={aspectRatio ?? 1}
               src={file.url}
             />
             {/* <Text {...textProps}>{file.url.split("/").pop()!}</Text> */}
@@ -122,7 +124,7 @@ const MultipleFilePreviews: React.FC<MultipleFilePreviewsProps> = ({
             w={width}
             h={height}
             objectFit={"cover"}
-            aspectRatio={1}
+            aspectRatio={aspectRatio ?? 1}
             src={file.url}
           />
 

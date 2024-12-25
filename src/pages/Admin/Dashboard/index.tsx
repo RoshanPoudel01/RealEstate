@@ -68,7 +68,7 @@ const Dashboard = () => {
     },
   ];
 
-  const { data: properties } = useFetchProperties({
+  const { data: properties, isLoading } = useFetchProperties({
     perPage: 5,
     page: 1,
   });
@@ -80,6 +80,8 @@ const Dashboard = () => {
         columns={columns}
         data={properties?.data?.rows ?? []}
         showPagination={false}
+        count={properties?.data?.count ?? 0}
+        isLoading={isLoading}
       >
         <Heading size="md">Recent Properties</Heading>
       </DataTable>

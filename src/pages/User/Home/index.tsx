@@ -65,8 +65,8 @@ const Home = () => {
           >
             <Text
               fontSize={{
-                base: "35px",
-                md: "50px",
+                base: "25px",
+                md: "35px",
               }}
               fontWeight={"bold"}
               textAlign={"start"}
@@ -80,10 +80,26 @@ const Home = () => {
               {heroSection?.data?.title}
             </Text>
             <Text
+              fontSize={{
+                base: "25px",
+                md: "35px",
+              }}
+              fontWeight={"bold"}
+              textAlign={"start"}
+              maxW={"550px"}
+              lineHeight={{
+                base: "1.2",
+                md: "1.5",
+              }}
+              color={"red.400"}
+            >
+              {heroSection?.data?.caption}
+            </Text>
+            <Text
               maxW={"550px"}
               lineHeight={"28px"}
               color={"#7591A3"}
-              fontSize={"18px"}
+              fontSize={{ base: "16px", md: "18px" }}
             >
               {heroSection?.data?.description}
             </Text>

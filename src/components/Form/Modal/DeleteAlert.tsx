@@ -23,8 +23,8 @@ interface IDeleteAlertProps {
   isDeleteLoading?: boolean;
   cancelText?: string;
   trigger?: React.ReactNode;
-  open: boolean;
-  setOpen: Dispatch<SetStateAction<boolean>>;
+  open?: boolean;
+  setOpen?: Dispatch<SetStateAction<boolean>>;
 }
 
 const DeleteAlert: React.FC<IDeleteAlertProps> = ({
@@ -42,8 +42,8 @@ const DeleteAlert: React.FC<IDeleteAlertProps> = ({
     <DialogRoot
       role="alertdialog"
       open={open}
-      onOpenChange={(e) => setOpen(e.open)}
-      onInteractOutside={() => setOpen(false)}
+      onOpenChange={(e) => setOpen && setOpen(e.open)}
+      onInteractOutside={() => setOpen && setOpen(false)}
       lazyMount
       unmountOnExit
     >

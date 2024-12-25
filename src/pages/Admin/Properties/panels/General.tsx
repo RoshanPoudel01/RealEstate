@@ -23,14 +23,17 @@ const schema = yup.object().shape({
   title_np: yup.string().required("Title is required"),
   address_en: yup.string().required("Address is required"),
   address_np: yup.string().required("Address is required"),
-  city_en: yup.string().required("City is required"),
-  city_np: yup.string().required("City is required"),
-  map: yup.string().required("Map is required"),
+  city_en: yup.string().optional(),
+  city_np: yup.string().optional(),
+  map: yup.string().optional(),
   category_id: yup.string().required("Select atleast one category."),
   status: yup.string().required("Status is required").default("available"),
-  land_area: yup.string().required("Land Area is required"),
-  built_year: yup.string().required("Built Year is required"),
-  price: yup.number().required("Price is required"),
+  land_area: yup.string().optional(),
+  built_year: yup.string().optional(),
+  price: yup
+    .number()
+    .required("Price is required")
+    .typeError("Price is required"),
   is_active: yup.string().required("Status is required"),
 });
 

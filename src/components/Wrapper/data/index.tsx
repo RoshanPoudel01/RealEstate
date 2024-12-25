@@ -94,6 +94,11 @@ export const sidebarItems = [
     ],
   },
   {
+    title: "Gallery",
+    icon: <Images />,
+    to: "/admin/gallery",
+  },
+  {
     title: "Sections",
     icon: <Rectangle />,
     to: "/admin/sections",
