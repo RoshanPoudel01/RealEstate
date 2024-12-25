@@ -1,0 +1,1 @@
+import{ci as o}from"./index-Dbk5Kekq.js";const{Axios:e,AxiosError:a,CanceledError:s,isCancel:t,CancelToken:i,VERSION:n,all:c,Cancel:l,isAxiosError:x,spread:C,toFormData:d,AxiosHeaders:m,HttpStatusCode:p,formToJSON:A,getAdapter:E,mergeConfig:f}=o;export{d as t};
