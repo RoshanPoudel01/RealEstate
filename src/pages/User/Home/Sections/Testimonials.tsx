@@ -40,13 +40,17 @@ const TestimonialSection = () => {
           {(testimonials?.data?.rows.length ?? 0 > 0) && !isLoading ? (
             <Carousel
               responsive={responsive}
-              autoPlaySpeed={4000}
               slidesToSlide={1}
               infinite
               autoPlay
+              arrows
+              ssr={false}
+              draggable
+              autoPlaySpeed={5000}
+              renderDotsOutside
+              showDots
               // removeArrowOnDeviceType={["tablet", "mobile"]}
               containerClass="container"
-              transitionDuration={4000}
             >
               {testimonials?.data?.rows?.map((testimonial, index) => (
                 <Box key={index} mx={2}>

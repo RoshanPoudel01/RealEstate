@@ -22,6 +22,13 @@ export default function App() {
     }
   }, [isAuthenticated]);
 
+  useEffect(() => {
+    const language = localStorage.getItem("language");
+    if (!language) {
+      localStorage.setItem("language", "en");
+    }
+  }, []);
+
   if (isAuthLoading) {
     return (
       <Flex justifyContent={"center"} alignItems="center" height={"100vh"}>

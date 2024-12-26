@@ -55,14 +55,13 @@ const Related = () => {
       <Box pos={"relative"}>
         <Carousel
           responsive={responsive}
-          showDots
-          renderDotsOutside
-          autoPlaySpeed={5000}
           slidesToSlide={1}
           infinite
           removeArrowOnDeviceType={["tablet", "mobile"]}
           autoPlay
-          transitionDuration={2000}
+          showDots
+          renderDotsOutside
+          autoPlaySpeed={5000}
         >
           {isLoading
             ? [...Array(3)].fill(0).map((_, index) => (

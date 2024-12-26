@@ -15,7 +15,7 @@ const responsive = {
 
 const SliderSection = () => {
   const { data: sliders, isLoading } = useFetchFrontSliders();
-  const currenLanguage = localStorage.getItem("language");
+  const currenLanguage = localStorage.getItem("language") ?? "en";
   return (
     <SectionWrapper
       title={
@@ -33,14 +33,15 @@ const SliderSection = () => {
           {(sliders?.data?.rows.length ?? 0 > 0) && !isLoading ? (
             <Carousel
               responsive={responsive}
-              autoPlaySpeed={4000}
               slidesToSlide={1}
               infinite
               autoPlay
               arrows
+              ssr={false}
+              autoPlaySpeed={5000}
+              draggable
               // removeArrowOnDeviceType={["tablet", "mobile"]}
               containerClass="container"
-              transitionDuration={4000}
             >
               {sliders?.data?.rows?.map((slider, index) => (
                 <Box key={index} mx={2} pos={"relative"}>

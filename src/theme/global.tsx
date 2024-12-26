@@ -93,6 +93,28 @@ const globalStyles = () => {
           height: max-content;
         }
 
+        .react-multiple-carousel__arrow {
+          z-index: 9999 !important;
+        }
+
+        .react-multi-carousel-dot-list {
+          margin-top: 20px;
+          position: static;
+          display: flex;
+          justify-content: center;
+          gap: 5px;
+        }
+
+        .react-multi-carousel-dot button {
+          width: 20px;
+          height: 10px;
+          border-radius: 4px !important;
+        }
+
+        .react-multi-carousel-dot react-multi-carousel-dot--active button {
+          background: #2f4389 !important;
+        }
+
         .react-multiple-carousel__arrow--left {
           left: 0;
         }
