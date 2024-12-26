@@ -7,6 +7,7 @@ import {
   useFetchSection,
   useUpdateSection,
 } from "@realState/services/service-sections";
+import Loader from "@realState/utils/Loader";
 import PageHeader from "@realState/utils/PageHeader";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -35,7 +36,7 @@ const PrivacyPolicy = () => {
   const { control, handleSubmit, reset } = useForm({
     defaultValues,
   });
-  const { data: policy } = useFetchSection(slug);
+  const { data: policy, isLoading } = useFetchSection(slug);
   const [backendError, setBackendError] = useState<Record<string, string[]>>(
     {}
   );
@@ -68,7 +69,9 @@ const PrivacyPolicy = () => {
     }
   };
 
-  return (
+  return isLoading ? (
+    <Loader />
+  ) : (
     <Flex flexDir={"column"} gap={4}>
       <PageHeader
         heading="Policy and Conditions"

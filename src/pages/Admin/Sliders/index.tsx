@@ -5,7 +5,6 @@ import {
   StatusSwitch,
 } from "@realState/components/DataTable";
 import { SearchInput } from "@realState/components/Form";
-import { DeleteAlert } from "@realState/components/Form/Modal";
 import LazyLoadImage from "@realState/components/Image";
 import { Button } from "@realState/components/ui/button";
 import { useSearchParamsState } from "@realState/hooks/useSearchParamState";
@@ -102,18 +101,12 @@ const Sliders = () => {
             <ActionColumn
               handleView={() => {}}
               handleEdit={() => navigate(`edit/${id}`)}
-            />
-            <DeleteAlert
-              open={open}
-              setOpen={setOpen}
-              deleteText="Delete"
-              isDeleteLoading={isDeleting}
-              heading="Delete Slider"
-              description="Are you sure you want to delete this slider?"
-              onConfirm={async () => {
+              handleDelete={async () => {
                 await deleteSlider({ id });
-                setOpen(false);
               }}
+              deleteHeading="Delete Slider"
+              deleteMessage="Are you sure you want to delete this slider?"
+              isDeleteLoading={isDeleting}
             />
           </HStack>
         );

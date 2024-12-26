@@ -3,6 +3,7 @@ export const NAVIGATION_ROUTES = {
   LOGIN: "/",
   LOGIN2: "/login",
   PROPERTIES: "/all-properties",
+  GALLERY: "/galleries",
   ABOUT: "/about-us",
   HOME: "/home",
   SLIDERS: "sliders",

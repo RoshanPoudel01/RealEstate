@@ -7,6 +7,7 @@ import {
   useFetchSection,
   useUpdateSection,
 } from "@realState/services/service-sections";
+import Loader from "@realState/utils/Loader";
 import PageHeader from "@realState/utils/PageHeader";
 import { toFormData } from "axios";
 import { useEffect, useState } from "react";
@@ -37,7 +38,7 @@ const AboutUs = () => {
   const { control, handleSubmit, reset } = useForm({
     defaultValues,
   });
-  const { data: about } = useFetchSection(slug);
+  const { data: about, isLoading } = useFetchSection(slug);
   const [backendError, setBackendError] = useState<Record<string, string[]>>(
     {}
   );
@@ -71,7 +72,9 @@ const AboutUs = () => {
     }
   };
 
-  return (
+  return isLoading ? (
+    <Loader />
+  ) : (
     <Flex flexDir={"column"} gap={4}>
       <PageHeader
         heading="About Us"

@@ -7,6 +7,7 @@ const resources = {
       properties: "Properties",
       about: "About Us",
       contact: "Contact Us",
+      gallery: "Gallery",
     },
     faq: {
       heading: "Frequently Asked Questions",
@@ -34,6 +35,11 @@ const resources = {
       searchButton: "Search",
       filterText: "Filter Settings",
     },
+    gallery: {
+      heading: "Gallery",
+      description: "Snapshots of our properties",
+      viewDetail: "View Detail",
+    },
     queries: {
       heading: "Have any questions?",
       description:
@@ -56,6 +62,7 @@ const resources = {
       properties: "प्रोप्रति ",
       about: "हाम्रो बारेमा",
       contact: "सम्पर्क",
+      gallery: "ग्यालरी",
     },
     faq: {
       heading: "सामान्य प्रश्नहरू",
@@ -82,6 +89,11 @@ const resources = {
       searchText: "सम्पतिहरूको लागि खोज्नुहोस्",
       searchButton: "खोजी गर्नुहोस्",
       filterText: "फिल्टर सेटिङहरू",
+    },
+    gallery: {
+      heading: "ग्यालरी",
+      description: "हाम्रो सम्पतिहरूको छायांकन",
+      viewDetail: "विवरण हेर्नुहोस्",
     },
     queries: {
       heading: "कुनै प्रश्न छ?",

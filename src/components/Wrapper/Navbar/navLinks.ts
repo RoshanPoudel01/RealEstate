@@ -11,6 +11,10 @@ export const navLinks = [
     href: NAVIGATION_ROUTES.PROPERTIES,
   },
   {
+    label: t("navbar:gallery"),
+    href: NAVIGATION_ROUTES.GALLERY,
+  },
+  {
     label: t("navbar:about"),
     href: NAVIGATION_ROUTES.ABOUT,
   },

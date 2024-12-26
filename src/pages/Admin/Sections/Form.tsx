@@ -5,6 +5,7 @@ import {
   useFetchSection,
   useUpdateSection,
 } from "@realState/services/service-sections";
+import Loader from "@realState/utils/Loader";
 import { toFormData } from "axios";
 import { FC, useEffect } from "react";
 import { useForm } from "react-hook-form";
@@ -27,7 +28,7 @@ const SectionFrom: FC<FormProps> = ({ slug }) => {
 
   const { control, handleSubmit, reset } = useForm({ defaultValues });
 
-  const { data: section } = useFetchSection(slug);
+  const { data: section, isLoading } = useFetchSection(slug);
 
   const { mutateAsync: updateSection, isPending } = useUpdateSection();
 
@@ -58,7 +59,9 @@ const SectionFrom: FC<FormProps> = ({ slug }) => {
     });
   };
 
-  return (
+  return isLoading ? (
+    <Loader />
+  ) : (
     <Flex flexDir={"column"} gap={4}>
       <SimpleGrid columns={{ base: 1, md: 2 }} gap={4} asChild>
         <form id={`section-form-${slug}`} onSubmit={handleSubmit(onSubmit)}>

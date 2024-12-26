@@ -7,8 +7,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { CaretRight } from "@phosphor-icons/react";
-import { Tooltip } from "@realState/components/ui/tooltip";
-import { FC, ReactNode, useEffect, useState } from "react";
+import { FC, ReactNode, useEffect, useMemo, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 
 interface IItemProps {
@@ -49,11 +48,15 @@ const SidebarItem: FC<ISidebarItemProps> = ({
   };
   const { pathname } = useLocation();
 
-  console.log({ pathname, item: item.to });
+  // Determine if any subitem matches the current path
+  const isSubItemActive = useMemo(() => {
+    return subItems?.some((subItem) => pathname.includes(subItem.to)) ?? false;
+  }, [pathname, subItems]);
 
+  // Update the `isOpen` state if the parent or subitem is active
   useEffect(() => {
-    setIsOpen(pathname.includes(item.to));
-  }, [pathname, item.to]);
+    setIsOpen(pathname.includes(item.to) || isSubItemActive);
+  }, [pathname, item.to, isSubItemActive]);
 
   return !!subItems && subItems.length > 0 ? (
     <Collapsible.Root
@@ -63,18 +66,14 @@ const SidebarItem: FC<ISidebarItemProps> = ({
     >
       <Collapsible.Trigger asChild>
         <Flex
-          bg={
-            pathname.includes(item.to)
-              ? (activeBg ?? "primary.300")
-              : "transparent"
-          }
+          bg={isSubItemActive ? (activeBg ?? "primary.300") : "transparent"}
           p={3}
           fontWeight={
             pathname.includes(item.to.split("/")[3]) || isOpen ? 500 : "normal"
           }
           justify={item.icon ? "space-between" : "center"}
           cursor={"pointer"}
-          color={pathname.includes(item.to) ? "white" : ""}
+          color={isSubItemActive ? "white" : ""}
           {...attributes}
         >
           <Flex align={"center"} gap={2}>
@@ -98,33 +97,31 @@ const SidebarItem: FC<ISidebarItemProps> = ({
       <Collapsible.Content>
         <Flex flexDir={"column"} gap={2} pt={4} pl={4}>
           {subItems.map((subItem, index) => (
-            <Tooltip openDelay={500} key={index} content={subItem.title}>
-              <Flex
-                p={3}
-                gap={2}
-                key={index}
-                _currentPage={
-                  pathname.split("/")[3] === subItem.to.split("/")[3]
-                    ? active
-                    : {}
-                }
-                asChild
-                onClick={onClick}
-                {...attributes}
-              >
-                <NavLink to={subItem.to} style={{ textDecoration: "none" }}>
-                  <Icon asChild boxSize={5}>
-                    {subItem.icon}
-                  </Icon>
-                  <Text
-                    fontSize={{ base: "16px", md: "18px" }}
-                    whiteSpace={"nowrap"}
-                  >
-                    {subItem.title}
-                  </Text>
-                </NavLink>
-              </Flex>
-            </Tooltip>
+            <Flex
+              p={3}
+              gap={2}
+              key={index}
+              _currentPage={
+                pathname.split("/")[3] === subItem.to.split("/")[3]
+                  ? active
+                  : {}
+              }
+              asChild
+              onClick={onClick}
+              {...attributes}
+            >
+              <NavLink to={subItem.to} style={{ textDecoration: "none" }}>
+                <Icon asChild boxSize={5}>
+                  {subItem.icon}
+                </Icon>
+                <Text
+                  fontSize={{ base: "16px", md: "18px" }}
+                  whiteSpace={"nowrap"}
+                >
+                  {subItem.title}
+                </Text>
+              </NavLink>
+            </Flex>
           ))}
         </Flex>
       </Collapsible.Content>

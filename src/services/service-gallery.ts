@@ -14,6 +14,14 @@ export interface GalleryResponse {
   description_np: string;
 }
 
+export interface GalleryFrontResponse {
+  id: number;
+  image: string;
+  title: string;
+  description: string;
+  images: Image[];
+}
+
 export interface Image {
   id: number;
   image: string;
@@ -60,10 +68,36 @@ const useDeleteGallery = () => {
   });
 };
 
+const useFetchFrontGalleries = (lang = "en") => {
+  return useFetch<RootResponse<GalleryFrontResponse>>({
+    url: api.gallery.front({ lang }),
+    queryKey: ["front-galleries"],
+  });
+};
+
+const useFetchGalleryImages = ({
+  lang,
+  id,
+}: {
+  id: string | undefined;
+  lang: string;
+}) => {
+  return useFetch<SingleResponse<GalleryFrontResponse>>({
+    url: api.gallery.frontById({
+      id: id + "",
+      lang,
+    }),
+    queryKey: ["gallery-images", id],
+    enabled: !!id,
+  });
+};
+
 export {
   useAddGallery,
   useDeleteGallery,
+  useFetchFrontGalleries,
   useFetchGalleries,
   useFetchGalleryById,
+  useFetchGalleryImages,
   useUpdateGallery,
 };

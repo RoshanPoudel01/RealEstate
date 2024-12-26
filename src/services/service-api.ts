@@ -191,8 +191,11 @@ export const api = {
       }
       return url;
     },
-    byId: `admin/gallery/:id`,
-    index: `admin/gallery`,
-    front: `gallery`,
+    byId: `/admin/gallery/:id`,
+    index: `/admin/gallery`,
+    front: ({ lang }: { lang: string }) => `/gallery?lang=${lang}`,
+    frontById: ({ id, lang }: { id: string; lang: string }) => {
+      return `/gallery/${id}?lang=${lang}`;
+    },
   },
 };

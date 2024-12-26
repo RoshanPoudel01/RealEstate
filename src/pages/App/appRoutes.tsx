@@ -148,6 +148,7 @@ export const adminRoutes = [
         path: NAVIGATION_ROUTES.ADMIN_GALLERY + "/edit/:id",
         element: <NAVIGATION_PAGES.ADMIN_GALLERY_FORM />,
       },
+
       {
         path: "*",
         element: <PageNotFound />,
@@ -196,6 +197,14 @@ export const userRoutes = [
       {
         path: NAVIGATION_ROUTES.PRIVACY_POLICY,
         element: <NAVIGATION_PAGES.PRIVACY_POLICY_FRONT />,
+      },
+      {
+        path: NAVIGATION_ROUTES.GALLERY,
+        element: <NAVIGATION_PAGES.GALLERY />,
+      },
+      {
+        path: NAVIGATION_ROUTES.GALLERY + "/:id",
+        element: <NAVIGATION_PAGES.GALLERY_DETAILS />,
       },
       {
         path: "*",
