@@ -1,5 +1,6 @@
 import {
   Card,
+  Flex,
   Heading,
   HStack,
   Icon,
@@ -34,94 +35,105 @@ const OurTeam = () => {
       >
         {t("team:heading")}
       </Heading>
-
-      <Masonry
-        style={{ width: "100%" }}
-        gap={12}
-        columns={{ 0: 1, 340: 2, 720: 3, 1280: 4 }}
+      <Flex
+        gap={4}
+        maxW={{ base: "100%", sm: "95%", md: "60%", "2xl": "50%" }}
+        w={"full"}
       >
-        {isLoading
-          ? [...Array(4)].fill(0).map(() => <LoadingCard key={Math.random()} />)
-          : teams?.data?.rows.map((team, index) => (
-              <Card.Root key={index} borderColor={"gray.300"} borderRadius={2}>
-                <Card.Header
-                  bg={team?.image ? "transparent" : "gray.100"}
-                  p={team?.image ? 0 : 6}
+        <Masonry style={{ width: "100%" }} gap={12} columns={{ 0: 1, 520: 2 }}>
+          {isLoading
+            ? [...Array(2)]
+                .fill(0)
+                .map(() => <LoadingCard key={Math.random()} />)
+            : teams?.data?.rows.slice(0, 2).map((team, index) => (
+                <Card.Root
+                  key={index}
+                  borderColor={"gray.300"}
+                  borderRadius={2}
+                  _hover={{
+                    transform: "translateY(-5px)",
+                  }}
+                  transition={"transform 0.3s ease"}
                 >
-                  <LazyLoadImage
-                    pos={"relative"}
-                    w={"full"}
-                    aspectRatio={4 / 3}
-                    borderRadius={0}
-                    src={team?.image ?? imageAssets.DefaultAvatar}
-                    objectFit={team?.image ? "cover" : "contain"}
-                  />
-                </Card.Header>
-                <Card.Body gap={2}>
-                  <Card.Title
-                    fontSize={{ base: "14px", sm: "16px", lg: "18px" }}
+                  <Card.Header
+                    bg={team?.image ? "transparent" : "gray.100"}
+                    p={team?.image ? 0 : 6}
                   >
-                    {team.name}
-                  </Card.Title>
-                  <Card.Description
-                    color={"gray.900"}
-                    fontSize={{ base: "12px", md: "14px" }}
-                  >
-                    {team.position}
-                  </Card.Description>
-                  <Card.Description fontSize={{ base: "12px", md: "14px" }}>
-                    {team.description}
-                  </Card.Description>
-                </Card.Body>
-                <Card.Footer>
-                  <HStack>
-                    {team?.facebook && (
-                      <IconButton
-                        rounded={"full"}
-                        variant={"subtle"}
-                        colorPalette={"gray"}
-                        asChild
-                      >
-                        <Link to={team.facebook} target="_blank">
-                          <Icon asChild boxSize={6}>
-                            <FacebookLogo />
-                          </Icon>
-                        </Link>
-                      </IconButton>
-                    )}
-                    {team?.instagram && (
-                      <IconButton
-                        rounded={"full"}
-                        variant={"subtle"}
-                        colorPalette={"gray"}
-                        asChild
-                      >
-                        <Link to={team.instagram} target="_blank">
-                          <Icon asChild boxSize={6}>
-                            <InstagramLogo />
-                          </Icon>
-                        </Link>
-                      </IconButton>
-                    )}
-                    {team?.twitter && (
-                      <IconButton
-                        rounded={"full"}
-                        variant={"subtle"}
-                        colorPalette={"gray"}
-                        asChild
-                      >
-                        <Link to={team.twitter} target="_blank">
-                          <Icon asChild boxSize={6}>
-                            <TwitterLogo />
-                          </Icon>
-                        </Link>
-                      </IconButton>
-                    )}
-                  </HStack>
-                </Card.Footer>
-              </Card.Root>
-            ))}
-      </Masonry>
+                    <LazyLoadImage
+                      pos={"relative"}
+                      w={"full"}
+                      aspectRatio={4 / 3}
+                      borderRadius={0}
+                      src={team?.image ?? imageAssets.DefaultAvatar}
+                      objectFit={team?.image ? "cover" : "contain"}
+                    />
+                  </Card.Header>
+                  <Card.Body gap={2}>
+                    <Card.Title
+                      fontSize={{ base: "14px", sm: "16px", lg: "18px" }}
+                    >
+                      {team.name}
+                    </Card.Title>
+                    <Card.Description
+                      color={"gray.900"}
+                      fontSize={{ base: "12px", md: "14px" }}
+                    >
+                      {team.position}
+                    </Card.Description>
+                    <Card.Description fontSize={{ base: "12px", md: "14px" }}>
+                      {team.description}
+                    </Card.Description>
+                  </Card.Body>
+                  <Card.Footer>
+                    <HStack>
+                      {team?.facebook && (
+                        <IconButton
+                          rounded={"full"}
+                          variant={"subtle"}
+                          colorPalette={"gray"}
+                          asChild
+                        >
+                          <Link to={team.facebook} target="_blank">
+                            <Icon asChild boxSize={6}>
+                              <FacebookLogo />
+                            </Icon>
+                          </Link>
+                        </IconButton>
+                      )}
+                      {team?.instagram && (
+                        <IconButton
+                          rounded={"full"}
+                          variant={"subtle"}
+                          colorPalette={"gray"}
+                          asChild
+                        >
+                          <Link to={team.instagram} target="_blank">
+                            <Icon asChild boxSize={6}>
+                              <InstagramLogo />
+                            </Icon>
+                          </Link>
+                        </IconButton>
+                      )}
+                      {team?.twitter && (
+                        <IconButton
+                          rounded={"full"}
+                          variant={"subtle"}
+                          colorPalette={"gray"}
+                          asChild
+                        >
+                          <Link to={team.twitter} target="_blank">
+                            <Icon asChild boxSize={6}>
+                              <TwitterLogo />
+                            </Icon>
+                          </Link>
+                        </IconButton>
+                      )}
+                    </HStack>
+                  </Card.Footer>
+                </Card.Root>
+              ))}
+        </Masonry>
+      </Flex>
     </Stack>
   );
 };

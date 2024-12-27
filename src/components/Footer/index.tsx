@@ -113,7 +113,19 @@ const Footer = () => {
                 onClick={() => navigate("/")}
               />
               <Text textAlign={"center"} fontSize="sm" color={"gray.600"}>
-                {settingData?.data?.name}
+                {currentLanguage === "en"
+                  ? "Tribinayak Real Estate"
+                  : "त्रिबिनायक रियल स्टेट"}
+              </Text>
+              <Text
+                mb={2}
+                textAlign={"center"}
+                fontSize="sm"
+                color={"gray.600"}
+              >
+                {currentLanguage === "en"
+                  ? "Tribinayak Nirman Sewa "
+                  : "त्रिबिनायक निर्माण सेवा"}
               </Text>
               <Flex gap={4}>
                 {socialLinks.map((social, index) => (
@@ -152,7 +164,14 @@ const Footer = () => {
       </Flex>
       <Separator borderColor={"gray.300"} />
       <Text textAlign={"center"}>
-        © {new Date().getFullYear()} {settingData?.data?.name}
+        © {new Date().getFullYear()}{" "}
+        {currentLanguage === "en"
+          ? "Tribinayak Real Estate"
+          : "त्रिबिनायक रियल स्टेट"}{" "}
+        /{" "}
+        {currentLanguage === "en"
+          ? "Tribinayak Nirman Sewa "
+          : "त्रिबिनायक निर्माण सेवा"}
       </Text>
     </Stack>
   );
