@@ -1,0 +1,1 @@
+import{cc as o}from"./index-CW1wnh8s.js";const{Axios:e,AxiosError:a,CanceledError:s,isCancel:t,CancelToken:i,VERSION:c,all:n,Cancel:l,isAxiosError:x,spread:C,toFormData:d,AxiosHeaders:m,HttpStatusCode:p,formToJSON:A,getAdapter:E,mergeConfig:f}=o;export{d as t};
