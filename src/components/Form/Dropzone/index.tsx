@@ -130,6 +130,7 @@ const ReactDropzone: FC<DropzoneProps & FieldProps & FlexProps> = ({
           }
 
           acceptedFiles.forEach((file) => {
+            console.log({ file });
             const filePreview = {
               url: URL.createObjectURL(file),
               fileName: file.name,

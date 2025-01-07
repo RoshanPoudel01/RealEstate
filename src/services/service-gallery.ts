@@ -8,6 +8,7 @@ export interface GalleryResponse {
   is_active: number;
   display_order: number;
   images: Image[];
+  videos: Video[];
   title_en: string;
   title_np: string;
   description_en: string;
@@ -20,11 +21,17 @@ export interface GalleryFrontResponse {
   title: string;
   description: string;
   images: Image[];
+  videos: Video[];
 }
 
 export interface Image {
   id: number;
   image: string;
+}
+
+export interface Video {
+  id: number;
+  video: string;
 }
 
 const useFetchGalleries = ({ page = 1, perPage = 10, keyword = "" }) => {

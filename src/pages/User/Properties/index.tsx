@@ -200,12 +200,18 @@ const Properties = () => {
             : properties?.data?.rows.map((item, index) => (
                 <PropertyCard
                   key={index}
-                  property={{
-                    ...item,
-                    is_new: propertyType === "new" ? true : false,
-                    is_trending: propertyType === "trending" ? true : false,
-                    is_featured: propertyType === "featured" ? true : false,
-                  }}
+                  property={
+                    propertyType
+                      ? {
+                          ...item,
+                          is_new: propertyType === "new" ? true : false,
+                          is_featured:
+                            propertyType === "featured" ? true : false,
+                          is_trending:
+                            propertyType === "trending" ? true : false,
+                        }
+                      : item
+                  }
                 />
               ))}
         </Masonry>

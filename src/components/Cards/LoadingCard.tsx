@@ -1,9 +1,18 @@
-import { Card, CardRootProps } from "@chakra-ui/react";
+import { Card, CardRootProps, ConditionalValue } from "@chakra-ui/react";
 import { FC } from "react";
 import { useColorModeValue } from "../ui/color-mode";
 import { Skeleton, SkeletonText } from "../ui/skeleton";
 
-const LoadingCard: FC<CardRootProps> = ({ ...rest }) => {
+interface LoadingCardProps {
+  skeletonWidth?: ConditionalValue<string | number>;
+  skeletonAspectRatio?: ConditionalValue<number>;
+}
+
+const LoadingCard: FC<LoadingCardProps & CardRootProps> = ({
+  skeletonWidth,
+  skeletonAspectRatio,
+  ...rest
+}) => {
   const cardBg = useColorModeValue("white", "gray.700");
 
   return (
@@ -21,7 +30,10 @@ const LoadingCard: FC<CardRootProps> = ({ ...rest }) => {
       {...rest}
     >
       <Card.Header p={0}>
-        <Skeleton aspectRatio={4 / 3} w={"full"} />
+        <Skeleton
+          width={skeletonWidth ?? "100%"}
+          aspectRatio={skeletonAspectRatio ?? 4 / 3}
+        />
       </Card.Header>
 
       <Card.Body px={0}>

@@ -1,7 +1,7 @@
 // MultipleFilePreviews.tsx
 
 import { ConditionalValue, Flex, Icon, IconButton } from "@chakra-ui/react";
-import { Trash } from "@phosphor-icons/react";
+import { File, FileVideo, Trash } from "@phosphor-icons/react";
 import LazyLoadImage from "@realState/components/Image";
 import React, { Dispatch, SetStateAction } from "react";
 
@@ -12,6 +12,7 @@ interface IPrevFiles {
 
 interface FilePreview {
   url: string;
+  fileType: string;
   fileName: string;
 }
 
@@ -88,27 +89,112 @@ const MultipleFilePreviews: React.FC<MultipleFilePreviewsProps> = ({
     <>
       {prevFiles &&
         prevFiles?.length > 0 &&
-        prevFiles?.map((file, index) => (
-          <Flex {...flexProps} key={index}>
-            <LazyLoadImage
-              w={width}
-              h={height}
-              objectFit={"cover"}
-              aspectRatio={aspectRatio ?? 1}
-              src={file.url}
-            />
-            {/* <Text {...textProps}>{file.url.split("/").pop()!}</Text> */}
+        prevFiles?.map((file, index) => {
+          const isVideo = /\.(mp4|webm|ogg|mkv)$/i.test(file.url); // Check for common video extensions
+          const isImage = /\.(jpe?g|png|gif|bmp)$/i.test(file.url); // Check for common image extensions
+          return (
+            <Flex {...flexProps} key={index}>
+              {isVideo ? (
+                <Flex
+                  w={width}
+                  h={height}
+                  aspectRatio={aspectRatio ?? 1}
+                  align="center"
+                  justify="center"
+                >
+                  <Icon asChild boxSize={16}>
+                    <FileVideo />
+                  </Icon>
+                </Flex>
+              ) : isImage ? (
+                <LazyLoadImage
+                  w={width}
+                  h={height}
+                  objectFit={"cover"}
+                  aspectRatio={aspectRatio ?? 1}
+                  src={file.url}
+                />
+              ) : (
+                <Flex
+                  w={width}
+                  h={height}
+                  aspectRatio={aspectRatio ?? 1}
+                  align="center"
+                  justify="center"
+                >
+                  <Icon asChild boxSize={16}>
+                    <File />
+                  </Icon>
+                </Flex>
+              )}
+              {/* <Text {...textProps}>{file.url.split("/").pop()!}</Text> */}
 
+              <IconButton
+                {...buttonProps}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  if (setPrevFiles) {
+                    setPrevFiles((prevFiles) =>
+                      prevFiles.filter((prevFile) => prevFile.id !== file.id)
+                    );
+                    setDeleteImages &&
+                      setDeleteImages((ids) => [...ids, String(file.id)]);
+                  }
+                }}
+              >
+                <Icon asChild boxSize={6}>
+                  <Trash />
+                </Icon>
+              </IconButton>
+            </Flex>
+          );
+        })}
+      {files.map((file, index) => {
+        const isVideo = file.fileType.includes("video");
+        const isImage = file.fileType.includes("image");
+        return (
+          <Flex {...flexProps} key={index}>
+            {isVideo ? (
+              <Flex
+                w={width}
+                h={height}
+                aspectRatio={aspectRatio ?? 1}
+                align="center"
+                justify="center"
+              >
+                <Icon asChild boxSize={16}>
+                  <FileVideo />
+                </Icon>
+              </Flex>
+            ) : isImage ? (
+              <LazyLoadImage
+                w={width}
+                h={height}
+                objectFit={"cover"}
+                aspectRatio={aspectRatio ?? 1}
+                src={file.url}
+              />
+            ) : (
+              <Flex
+                w={width}
+                h={height}
+                aspectRatio={aspectRatio ?? 1}
+                align="center"
+                justify="center"
+              >
+                <Icon asChild boxSize={16}>
+                  <File />
+                </Icon>
+              </Flex>
+            )}
+
+            {/* <Text {...textProps}>{file.fileName}</Text> */}
             <IconButton
               {...buttonProps}
               onClick={(e) => {
                 e.stopPropagation();
-                if (setPrevFiles) {
-                  setPrevFiles((prevFiles) =>
-                    prevFiles.filter((prevFile) => prevFile.id !== file.id)
-                  );
-                  setDeleteImages &&
-                    setDeleteImages((ids) => [...ids, String(file.id)]);
+                if (onDelete) {
+                  onDelete(index);
                 }
               }}
             >
@@ -117,33 +203,8 @@ const MultipleFilePreviews: React.FC<MultipleFilePreviewsProps> = ({
               </Icon>
             </IconButton>
           </Flex>
-        ))}
-      {files.map((file, index) => (
-        <Flex {...flexProps} key={index}>
-          <LazyLoadImage
-            w={width}
-            h={height}
-            objectFit={"cover"}
-            aspectRatio={aspectRatio ?? 1}
-            src={file.url}
-          />
-
-          {/* <Text {...textProps}>{file.fileName}</Text> */}
-          <IconButton
-            {...buttonProps}
-            onClick={(e) => {
-              e.stopPropagation();
-              if (onDelete) {
-                onDelete(index);
-              }
-            }}
-          >
-            <Icon asChild boxSize={6}>
-              <Trash />
-            </Icon>
-          </IconButton>
-        </Flex>
-      ))}
+        );
+      })}
     </>
   );
 };

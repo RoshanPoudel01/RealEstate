@@ -1,5 +1,5 @@
 import { Center, Container, Flex, Icon, Stack, Text } from "@chakra-ui/react";
-import { Images } from "@phosphor-icons/react";
+import { Images, Play } from "@phosphor-icons/react";
 import Fancybox from "@realState/components/Fancybox";
 import LazyLoadImage from "@realState/components/Image";
 import { EmptyState } from "@realState/components/ui/empty-state";
@@ -109,6 +109,51 @@ const GalleryDetails = () => {
               ))}
         </Masonry>
       </Fancybox>
+      <Stack gap={4}>
+        <Text textStyle={"heading"}>
+          {currentLanguage === "en" ? "Videos" : "भिडियोहरू"}
+        </Text>
+        <Fancybox>
+          <Masonry gap={6} columns={{ 0: 1, 480: 2, 900: 3, 1400: 4 }}>
+            {isLoading
+              ? [...Array(4)].map((_, index) => (
+                  <Skeleton
+                    key={index}
+                    borderRadius={"lg"}
+                    overflow={"hidden"}
+                    height={"200px"}
+                  />
+                ))
+              : gallery?.data.videos.map((item, index) => (
+                  <Flex
+                    borderRadius={5}
+                    key={index}
+                    overflow={"hidden"}
+                    asChild
+                  >
+                    <a href={item.video} data-fancybox="gallery">
+                      <Flex
+                        justify={"center"}
+                        align={"center"}
+                        border={"1px solid"}
+                        borderColor={"primary.300"}
+                        _hover={{
+                          borderColor: "primary.500",
+                        }}
+                        borderRadius={5}
+                        w={"full"}
+                        h={"150px"}
+                      >
+                        <Icon asChild color={"primary.500"} boxSize={12}>
+                          <Play />
+                        </Icon>
+                      </Flex>
+                    </a>
+                  </Flex>
+                ))}
+          </Masonry>
+        </Fancybox>
+      </Stack>
     </Container>
   );
 };

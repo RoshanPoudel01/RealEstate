@@ -50,6 +50,12 @@ export default function App() {
     >
       <>
         <Routes>
+          {!isAuthenticated && (
+            <Route path="/admin/*" element={<Navigate to="/login" />} />
+          )}
+          {isAuthenticated && (
+            <Route path="/login" element={<Navigate to="/admin" />} />
+          )}
           {appRoutes.map((route, index) => {
             return (
               <Route key={index} path={route?.path} element={route?.element}>

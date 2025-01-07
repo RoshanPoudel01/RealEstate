@@ -1,4 +1,5 @@
 import {
+  Box,
   Card,
   Flex,
   Heading,
@@ -17,7 +18,6 @@ import LoadingCard from "@realState/components/Cards/LoadingCard";
 import LazyLoadImage from "@realState/components/Image";
 import { useFetchFrontTeams } from "@realState/services/service-teams";
 import { t } from "i18next";
-import Masonry from "react-layout-masonry";
 import { Link } from "react-router-dom";
 
 const OurTeam = () => {
@@ -40,11 +40,19 @@ const OurTeam = () => {
         maxW={{ base: "100%", sm: "95%", md: "60%", "2xl": "50%" }}
         w={"full"}
       >
-        <Masonry style={{ width: "100%" }} gap={12} columns={{ 0: 1, 520: 2 }}>
+        <Stack align={"center"} justify={"center"} w={"full"} gap={4}>
           {isLoading
             ? [...Array(2)]
                 .fill(0)
-                .map(() => <LoadingCard key={Math.random()} />)
+                .map(() => (
+                  <LoadingCard
+                    flexDir={{ base: "column", sm: "row" }}
+                    gap={4}
+                    key={Math.random()}
+                    skeletonWidth={"200px"}
+                    skeletonAspectRatio={1}
+                  />
+                ))
             : teams?.data?.rows.slice(0, 2).map((team, index) => (
                 <Card.Root
                   key={index}
@@ -53,24 +61,32 @@ const OurTeam = () => {
                   _hover={{
                     transform: "translateY(-5px)",
                   }}
+                  w={"full"}
                   transition={"transform 0.3s ease"}
+                  flexDir={"row"}
                 >
-                  <Card.Header
-                    bg={team?.image ? "transparent" : "gray.100"}
-                    p={team?.image ? 0 : 6}
-                  >
-                    <LazyLoadImage
-                      pos={"relative"}
-                      w={"full"}
-                      aspectRatio={4 / 3}
-                      borderRadius={0}
-                      src={team?.image ?? imageAssets.DefaultAvatar}
-                      objectFit={team?.image ? "cover" : "contain"}
-                    />
+                  <Card.Header p={0} bg={team?.image ? "gray.200" : "gray.100"}>
+                    <HStack h={"100%"} gap={0}>
+                      <Box w={"10px"} bg={"primary.400"} h={"100%"} />
+                      <LazyLoadImage
+                        pos={"relative"}
+                        w={{ base: "100px", sm: "200px" }}
+                        h={{ base: "100%", sm: "200px" }}
+                        aspectRatio={1}
+                        borderRadius={0}
+                        src={team?.image ?? imageAssets.DefaultAvatar}
+                      />
+                    </HStack>
                   </Card.Header>
-                  <Card.Body gap={2}>
+                  <Card.Body
+                    px={1}
+                    alignItems={"center"}
+                    gap={2}
+                    textAlign={"center"}
+                  >
                     <Card.Title
                       fontSize={{ base: "14px", sm: "16px", lg: "18px" }}
+                      color={"gray.900"}
                     >
                       {team.name}
                     </Card.Title>
@@ -83,8 +99,6 @@ const OurTeam = () => {
                     <Card.Description fontSize={{ base: "12px", md: "14px" }}>
                       {team.description}
                     </Card.Description>
-                  </Card.Body>
-                  <Card.Footer>
                     <HStack>
                       {team?.facebook && (
                         <IconButton
@@ -129,10 +143,10 @@ const OurTeam = () => {
                         </IconButton>
                       )}
                     </HStack>
-                  </Card.Footer>
+                  </Card.Body>
                 </Card.Root>
               ))}
-        </Masonry>
+        </Stack>
       </Flex>
     </Stack>
   );

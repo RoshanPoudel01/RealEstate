@@ -1,7 +1,9 @@
 import { Flex, SimpleGrid, Stack } from "@chakra-ui/react";
 import { ReactDropzone, TextInput } from "@realState/components/Form";
 import { Button } from "@realState/components/ui/button";
+import useGetDirtyData from "@realState/hooks/useGetDirtyData";
 import useGetErrors from "@realState/hooks/useGetErrors";
+import { toFormData } from "@realState/services/service-axios";
 import {
   useAddGallery,
   useFetchGalleryById,
@@ -9,7 +11,6 @@ import {
 } from "@realState/services/service-gallery";
 import Loader from "@realState/utils/Loader";
 import PageHeader from "@realState/utils/PageHeader";
-import { toFormData } from "axios";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
@@ -24,13 +25,20 @@ const GalleryForm = () => {
     description_np: "",
     image: "",
     images: [],
+    videos: [],
     display_order: "" as never as number,
   };
   const navigate = useNavigate();
+  const [removeVideos, setRemoveVideos] = useState<string[]>([]);
   const [removeImage, setRemoveImage] = useState(false);
   const [deleteImages, setDeleteImages] = useState<string[]>([]);
   const [prevFiles, setPrevFiles] = useState<{ id: number; url: string }[]>([]);
-  const { control, handleSubmit, reset } = useForm({ defaultValues });
+  const [prevVideos, setPrevVideos] = useState<{ id: number; url: string }[]>(
+    []
+  );
+  const { control, handleSubmit, reset, formState } = useForm({
+    defaultValues,
+  });
   const { data: gallery, isLoading: galleryLoading } = useFetchGalleryById(id);
 
   useEffect(() => {
@@ -43,11 +51,18 @@ const GalleryForm = () => {
         display_order: gallery.data.display_order,
         image: gallery.data.image,
         images: gallery.data.images.map((image: any) => image.image),
+        videos: gallery.data.videos.map((video: any) => video.video),
       });
       setPrevFiles(
         gallery.data.images.map((image: any) => ({
           id: image.id,
           url: image.image,
+        }))
+      );
+      setPrevVideos(
+        gallery.data.videos.map((video: any) => ({
+          id: video.id,
+          url: video.video,
         }))
       );
     }
@@ -82,9 +97,12 @@ const GalleryForm = () => {
   }, [createError, updateError, isCreateError, isUpdateError]);
 
   const onSubmit = async (data: any) => {
-    const formData = toFormData(data);
+    const formData = toFormData(id ? useGetDirtyData(formState, data) : data);
     if (deleteImages.length) {
       formData.append("delete_images", JSON.stringify(deleteImages));
+    }
+    if (removeVideos.length) {
+      formData.append("remove_videos", JSON.stringify(removeVideos));
     }
     if (removeImage) {
       formData.append("remove_image", "1");
@@ -172,6 +190,23 @@ const GalleryForm = () => {
             prevFiles={prevFiles}
             setPrevFiles={setPrevFiles}
             setDeleteImages={setDeleteImages}
+          />
+          <ReactDropzone
+            control={control}
+            name="videos"
+            label="Videos"
+            backendError={backendError.image}
+            options={{
+              accept: { "video/*": [] },
+            }}
+            noMaxSize
+            isMultiple
+            w={"full"}
+            boxWidth={"250px"}
+            boxAspectRatio={16 / 9}
+            prevFiles={prevVideos}
+            setPrevFiles={setPrevVideos}
+            setDeleteImages={setRemoveVideos}
           />
           <Button
             type="submit"

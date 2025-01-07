@@ -1,4 +1,4 @@
-import { Card, Text, VStack } from "@chakra-ui/react";
+import { Badge, Card, Text, VStack } from "@chakra-ui/react";
 import { imageAssets } from "@realState/assets/images";
 import { NAVIGATION_ROUTES } from "@realState/pages/App/navigationRoutes";
 import React from "react";
@@ -91,19 +91,29 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
           h={"100%"}
           w={"100%"}
         />
-        {is_new ? (
-          <Text {...statusAttrs}>
-            {currentLanguage === "en" ? "New" : "नयाँ"}
-          </Text>
-        ) : is_featured ? (
-          <Text {...statusAttrs}>
-            {currentLanguage === "en" ? "Featured" : "विशेष"}
-          </Text>
-        ) : is_trending ? (
-          <Text {...statusAttrs}>
-            {currentLanguage === "en" ? "Trending" : "ट्रेन्डिंग"}
-          </Text>
-        ) : null}
+        <Badge
+          colorPalette={
+            is_new ? "red" : is_featured ? "green" : is_trending ? "yellow" : ""
+          }
+          display={is_new || is_featured || is_trending ? "flex" : "none"}
+          position="absolute"
+          bottom="12px"
+          left="16px"
+        >
+          {is_new
+            ? currentLanguage === "en"
+              ? "New"
+              : "नयाँ"
+            : is_featured
+              ? currentLanguage === "en"
+                ? "Featured"
+                : "विशेष"
+              : is_trending
+                ? currentLanguage === "en"
+                  ? "Trending"
+                  : "ट्रेन्डिंग"
+                : null}
+        </Badge>
       </Card.Header>
 
       <Card.Body
